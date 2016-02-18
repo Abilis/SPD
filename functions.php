@@ -25,7 +25,7 @@ function get_entryes_all($link) {
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
 function get_entries_num_start($link) {
     
-    $num = 100; //число выводимых записей
+    $num = 1; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
     $page = (int)($_GET['page']);
@@ -38,12 +38,13 @@ function get_entries_num_start($link) {
         die(mysqli_error($link));
     }
     
-    $n = mysqli_fetch_row($result);
-    var_dump($n);
+    $m = mysqli_fetch_row($result);
+    $n = (int)$m[0]; //количество записей в БД
+    
         
     
     //Находим общее число страниц   
-    $total = (($n - 1) / $num) + 1;
+    $total = (int)(($n - 1) / $num) + 1;
  
     //Определяем начало сообщений для текущей страницы
     
@@ -62,7 +63,7 @@ function get_entries_num_start($link) {
     $start = $page * $num - $num;
     
     //Формируем запрос на выборку $num записей начиная с номера $start
-    $query = "SELECT * FROM spd_table LIMIT $start, $num";
+    $query = "SELECT * FROM spd_table ORDER BY id_entry DESC LIMIT $start, $num";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -70,10 +71,20 @@ function get_entries_num_start($link) {
     }
     
     //Разбираем полученный дескриптор в индексный массив
-    while ($entries[] = mysqli_fetch_array($result));
     
+    $entries = array(); //создаем вспомогательный массив
     
-    return $entries;
+    for ($i = 0; $i < $n; $i++) {
+        $entries[] = mysqli_fetch_array($result);
+    }
+     
+    /*Поскольку для отрисовки навигации понадобятся переменные $page, $total и $entries,
+    а передать наружу можно только одну переменную, придется собирать массив*/
+    $entries_arr[0] = $entries;
+    $entries_arr[1] = $page;
+    $entries_arr[2] = $total;
+    
+    return $entries_arr;
 }
 
 
