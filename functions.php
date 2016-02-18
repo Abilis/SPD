@@ -40,12 +40,11 @@ function get_entries_num_start($link) {
     
     $m = mysqli_fetch_row($result);
     $n = (int)$m[0]; //количество записей в БД
-    
-        
+            
     
     //Находим общее число страниц   
     $total = (int)(($n - 1) / $num) + 1;
- 
+     
     //Определяем начало сообщений для текущей страницы
     
     $page = intval($page);
@@ -72,9 +71,11 @@ function get_entries_num_start($link) {
     
     //Разбираем полученный дескриптор в индексный массив
     
-    $entries = array(); //создаем вспомогательный массив
+    $num_rows = mysqli_num_rows($result); //число полученных строк
+       
+    $entries = array(); //создаем вспомогательный массив для записи результата выборки
     
-    for ($i = 0; $i < $n; $i++) {
+    for ($i = 0; $i < $num_rows; $i++) {
         $entries[] = mysqli_fetch_array($result);
     }
      
