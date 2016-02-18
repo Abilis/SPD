@@ -24,7 +24,7 @@ th {
     height: 60px;
 }
 
-#numOrderSearch {
+#numOrderSearch, #vlan_id {
     width: 50px;
     align-content: center;
     margin-left: 4px;

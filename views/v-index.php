@@ -1,7 +1,7 @@
 <?php
 //var_dump($entries);
 ?>
-
+<b>Главная</b> <b>|</b> <a href="editor.php">Редактировать записи</a> <b>|</b> <a href="add.php">Добавить клиента</a>
 <table>
     <tr>
         <th>№ дог</th>
@@ -43,7 +43,7 @@
         <td></td>
         <td>
             <form action="search.php" method="post">
-            <input type="text" name="vlan_id"/> <br />
+            <input id="vlan_id" type="text" name="vlan_id"/> <br />
             <input type="submit" value="Поиск"/>
             
             </form>         
