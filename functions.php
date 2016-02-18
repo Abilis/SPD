@@ -25,7 +25,7 @@ function get_entryes_all($link) {
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
 function get_entries_num_start($link) {
     
-    $num = 1; //число выводимых записей
+    $num = 100; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
     $page = (int)($_GET['page']);
@@ -52,7 +52,7 @@ function get_entries_num_start($link) {
     
     //Если значение $page меньше 1 или 0, переходим на первую страницу
     //А если слишком большое - на последнюю
-    if (empty($page) or $page < 0) {
+    if (empty($page) || $page < 0) {
         $page = 1;
     }
     elseif ($page > $total) {
