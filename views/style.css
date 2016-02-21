@@ -39,3 +39,11 @@ td {
     border: 1px solid black;
     text-align: center;
 }
+
+#nothingSearch {
+    font-size: 30px;    
+}
+
+#entriesFound {
+    height: 15px;
+}

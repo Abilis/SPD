@@ -1,7 +1,7 @@
 <?php
 //var_dump($entries);
 ?>
-<a href="index.php">Главная</a> <b>|</b> <a href="editor.php">Редактировать записи</a> <b>|</b> <a href="add.php">Добавить клиента</a>
+<a href="index.php">Главная</a> <b>|</b> <a href="editor.php">Редактировать записи</a> <b>|</b> <a href="add.php">Добавить клиента</a> <b>|</b> Найдено записей: <?=count($entries)?>
 <table>
     <tr>
         <th>№ дог</th>
@@ -59,6 +59,24 @@
         </td>
         <td></td>
     </tr>
+    
+    <?php if (empty($entries)) { ?>
+    <tr>
+        <td colspan="11" id="nothingSearch">Ничего не найдено!</td>
+    </tr>
+    <?php
+    die();
+    } 
+    
+/*    else { ?>
+        <tr>
+        <td colspan="11" id="entriesFound">Всего записей: <?=count($entries)?></td>
+    </tr>
+    <?php }*/
+    
+    ?>
+    
+    
     
     <?php foreach ($entries as $entry): ?>
         <tr>
