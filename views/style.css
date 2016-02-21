@@ -47,3 +47,18 @@ td {
 #entriesFound {
     height: 15px;
 }
+
+#addTable {
+    height: auto;
+}
+
+#numOrderAdd {
+    width: 50px;
+    align-content: center;
+    margin-left: 4px;
+
+}
+
+#tarifAdd, #ip_addressAdd {
+    width: 100px;
+}

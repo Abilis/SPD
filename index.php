@@ -14,7 +14,7 @@ $entries = get_entryes_all($link);*/
 //Вытаскиваем записи из БД для постраничной навигации
 $entries_arr = get_entries_num_start($link);
 
-//Разрираем полученный массив. Подробнее в functions.php
+//Разбираем полученный массив. Подробнее в functions.php
 $entries = $entries_arr[0];
 $page = $entries_arr[1]; //текущая страница
 $total = $entries_arr[2]; //всего страниц
