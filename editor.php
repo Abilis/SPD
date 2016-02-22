@@ -5,6 +5,9 @@ require_once('functions.php');
 // подключение к БД
 $link = startup();
 
+//вытаскиваем полное число записей из БД
+$numEntriesAll = getEntriesAll($link);
+
 //Вытаскиваем записи из БД для постраничной навигации
 $entries_arr = get_entries_num_start($link);
 

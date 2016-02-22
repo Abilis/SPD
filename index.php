@@ -11,6 +11,9 @@ $link = startup();
 /*//вытаскиваем все записи из БД
 $entries = get_entryes_all($link);*/
 
+//вытаскиваем полное число записей из БД
+$numEntriesAll = getEntriesAll($link);
+
 //Вытаскиваем записи из БД для постраничной навигации
 $entries_arr = get_entries_num_start($link);
 

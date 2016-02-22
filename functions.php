@@ -22,10 +22,26 @@ function get_entryes_all($link) {
     return $entries;
 }
 
+function getEntriesAll($link) {
+    
+    $query = "SELECT COUNT(*) FROM spd_table";
+    $result = mysqli_query($link, $query);
+        
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    $m = mysqli_fetch_row($result);
+    $n = (int)$m[0]; //количество записей в БД
+    
+    return $n;
+    
+}
+
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
 function get_entries_num_start($link) {
     
-    $num = 100; //число выводимых записей
+    $num = 50; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
     $page = (int)($_GET['page']);
