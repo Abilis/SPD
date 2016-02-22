@@ -58,13 +58,31 @@ td {
     height: auto;
 }
 
-#numOrderAdd {
-    width: 50px;
+.addForm {
+    width: 105px;
     align-content: center;
     margin-left: 4px;
 
 }
 
-#tarifAdd, #ip_addressAdd {
-    width: 100px;
+#addNumOrder {
+    width: 35px;
+}
+
+#addVlanId {
+    width: 35px;
+}
+
+#addCommentary {
+    width: 170px;
+    
+}
+
+.bold {
+    font-weight: bold;
+    color: red;
+}
+
+.italic {
+    font-style: italic;
 }

@@ -280,5 +280,78 @@ function get_entry_by_last_editor($link, $last_editor) {
     
 }
 
+function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
+    
+    /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно Null, запись возможна */
+    
+    //подготовка
+    $numOrder = trim($numOrder);
+    $customer = trim($customer);
+    $tarif = trim($tarif);
+    $ip_address = trim($ip_address);
+    $netmask = trim($netmask);
+    $gateway = trim($gateway);
+    $vlan_id = trim($vlan_id);
+    $customer_port = trim($customer_port);
+    $termination_point = trim($termination_point);
+    $commentary = trim($commentary);
+    
+    var_dump($customer);
+    
+    //проверка обязательных параметров
+    if (($customer == '') || ($ip_address == '') || ($vlan_id == '') ) {
+        return false;
+        
+    }
+    
+    //экранирование html-тегов
+    $numOrder = htmlspecialchars($numOrder);
+    $customer = htmlspecialchars($customer);
+    $tarif = htmlspecialchars($tarif);
+    $ip_address = htmlspecialchars($ip_address);
+    $netmask = htmlspecialchars($netmask);
+    $gateway = htmlspecialchars($gateway);
+    $vlan_id = htmlspecialchars($vlan_id);
+    $customer_port = htmlspecialchars($customer_port);
+    $termination_point = htmlspecialchars($termination_point);
+    $commentary = htmlspecialchars($commentary);
+    
+    //установка текущей даты
+    $dt_added = date('Y-m-j G:i:s');
+    
+    //дополнительные параметры: $subnet (subnet); $broadcast (broadcast); $founder (founder)
+    
+    //формируем запрос
+    $sql = "INSERT INTO spd_table 
+                                (numOrder, customer, tarif, ip_address,
+                                netmask, gateway, vlan_id, customer_port,
+                                termination_point, dt_added, commentary)
+                                    VALUES 
+                                        ('%d', '%s', '%s', '%s', '%s', '%s', '%d',
+                                        '%s', '%s', '%s', '%s')";
+    
+    $query = sprintf($sql,
+                    mysqli_real_escape_string($link, $numOrder),
+                    mysqli_real_escape_string($link, $customer),
+                    mysqli_real_escape_string($link, $tarif),
+                    mysqli_real_escape_string($link, $ip_address),
+                    mysqli_real_escape_string($link, $netmask),
+                    mysqli_real_escape_string($link, $gateway),
+                    mysqli_real_escape_string($link, $vlan_id),
+                    mysqli_real_escape_string($link, $customer_port),
+                    mysqli_real_escape_string($link, $termination_point),
+                    mysqli_real_escape_string($link, $dt_added),
+                    mysqli_real_escape_string($link, $commentary));
+    
+    //наконец-то его можно выполнить!
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die('Не получилось :(' . mysqli_error());
+    }
+        
+    return true;
+}
+
 
 ?>
