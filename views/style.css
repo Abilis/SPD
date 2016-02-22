@@ -86,3 +86,7 @@ td {
 .italic {
     font-style: italic;
 }
+
+.small {
+    font-size: 12px;
+}
