@@ -312,8 +312,6 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     $termination_point = trim($termination_point);
     $commentary = trim($commentary);
     
-    var_dump($customer);
-    
     //проверка обязательных параметров
     if (($customer == '') || ($ip_address == '') || ($vlan_id == '') ) {
         return false;
