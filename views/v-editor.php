@@ -75,11 +75,11 @@
             <td><?=$entry['numOrder']?></td>
             <td><?=$entry['customer']?> <br />
                 <span class="small">
-                    <a href="editor.php?id=<?=$entry['id_entry']?>&action=edit"><править></a>
+                    <a href="editor.php?id-entry=<?=$entry['id_entry']?>&action=edit"><править></a>
                 </span>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span class="small">
-                        <a href="editor.php?id=<?=$entry['id_entry']?>&action=delete"><удалить></a>
+                        <a href="editor.php?id-entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
                     </span>
             </td>
             <td><?=$entry['tarif']?></td>
