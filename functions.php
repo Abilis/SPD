@@ -367,5 +367,25 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     return true;
 }
 
+function delete_entry($link, $id_entry) {
+    
+    //формируем запрос
+    $sql = "DELETE FROM spd_table WHERE id_entry ='%d'";
+    
+    $query = sprintf($sql,
+                    mysqli_real_escape_string($link, $id_entry));
+    
+    //выполняем запрос
+    $result = mysqli_query($link, $query);
+    
+    if (!result) {
+        die('Не удалось удалить запись с id = ' . $id_entry . mysql_error());
+    }
+    
+    //запись в лог действия. Пока нереализовано
+    
+    return true;
+}
+
 
 ?>

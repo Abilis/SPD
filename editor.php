@@ -18,6 +18,17 @@ $total = $entries_arr[2]; //всего страниц
 
 
 //Если массив $_GET не пустой, то обработка правки и удаления статей.
+if (($_GET['action']) == 'edit') {
+    //правка записи
+    
+    
+}
+if (($_GET['action']) == 'delete') {
+    if (delete_entry($link, $_GET['id_entry'])) {
+        header('Location: editor.php');
+        die();
+    }
+}
 
 
 
