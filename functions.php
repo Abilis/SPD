@@ -38,6 +38,33 @@ function getEntriesAll($link) {
     
 }
 
+function get_entry($link, $id_entry) {
+    
+    //Подготовка
+    $id_entry = trim($id_entry);
+    $id_entry = (int)($id_entry);
+    
+    if ($id_entry =='') {
+        header('Location: editor.php');
+        die();
+    }
+    
+    //формируем запрос
+    $sql = "SELECT * FROM spd_table WHERE id_entry='$id_entry'";
+    
+    //Выполняем запрос
+    $result = mysqli_query($link, $sql);
+    
+    if (!$result) {
+        die(mysqli_error());
+    }
+    
+    //Собираем из дескриптора ассоциативный массив
+    $entry = mysqli_fetch_assoc($result);    
+    
+    return $entry;
+}
+
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
 function get_entries_num_start($link) {
     
@@ -190,7 +217,7 @@ function get_entry_by_ip($link, $ip_address) {
         die();
     }
     
-    $customer = mysqli_real_escape_string($link, $ip_address);
+    $ip_address = mysqli_real_escape_string($link, $ip_address);
     
     //Запрос
     $query = "SELECT * FROM spd_table WHERE ip_address LIKE '%$ip_address%' ORDER BY id_entry DESC";
@@ -272,7 +299,7 @@ function get_entry_by_last_editor($link, $last_editor) {
         die();
     }
     
-    $customer = mysqli_real_escape_string($link, $last_editor);
+    $last_editor = mysqli_real_escape_string($link, $last_editor);
     
     //Запрос
     $query = "SELECT * FROM spd_table WHERE last_editor LIKE '%$last_editor%' ORDER BY id_entry DESC";
@@ -384,6 +411,77 @@ function delete_entry($link, $id_entry) {
     
     //запись в лог действия. Пока нереализовано
     
+    return true;
+}
+
+function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
+    
+    /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно Null, запись возможна */
+    
+    //подготовка
+    $id_entry = trim($id_entry);
+    $numOrder = trim($numOrder);
+    $customer = trim($customer);
+    $tarif = trim($tarif);
+    $ip_address = trim($ip_address);
+    $netmask = trim($netmask);
+    $gateway = trim($gateway);
+    $vlan_id = trim($vlan_id);
+    $customer_port = trim($customer_port);
+    $termination_point = trim($termination_point);
+    $commentary = trim($commentary);
+    
+    //проверка обязательных параметров
+    if (($id_entry =='') || ($customer == '') || ($ip_address == '') || ($vlan_id == '') ) {
+        return false;
+        
+    }
+    
+    //экранирование html-тегов
+    $numOrder = htmlspecialchars($numOrder);
+    $customer = htmlspecialchars($customer);
+    $tarif = htmlspecialchars($tarif);
+    $ip_address = htmlspecialchars($ip_address);
+    $netmask = htmlspecialchars($netmask);
+    $gateway = htmlspecialchars($gateway);
+    $vlan_id = htmlspecialchars($vlan_id);
+    $customer_port = htmlspecialchars($customer_port);
+    $termination_point = htmlspecialchars($termination_point);
+    $commentary = htmlspecialchars($commentary);
+    
+    //установка текущей даты
+    $dt_last_edited = date('Y-m-j G:i:s');
+    
+    //дополнительные параметры: $subnet (subnet); $broadcast (broadcast); $founder (founder)
+    
+    //формируем запрос
+    $sql = "UPDATE spd_table SET
+                                numOrder='%d', customer='%s', tarif='%s', ip_address='%s',
+                                netmask='%s', gateway='%s', vlan_id='%d', customer_port='%s',
+                                termination_point='%s', dt_last_edited='%s', commentary='%s'
+                                WHERE id_entry='%d'";
+    
+    $query = sprintf($sql,
+                    mysqli_real_escape_string($link, $numOrder),
+                    mysqli_real_escape_string($link, $customer),
+                    mysqli_real_escape_string($link, $tarif),
+                    mysqli_real_escape_string($link, $ip_address),
+                    mysqli_real_escape_string($link, $netmask),
+                    mysqli_real_escape_string($link, $gateway),
+                    mysqli_real_escape_string($link, $vlan_id),
+                    mysqli_real_escape_string($link, $customer_port),
+                    mysqli_real_escape_string($link, $termination_point),
+                    mysqli_real_escape_string($link, $dt_last_edited),
+                    mysqli_real_escape_string($link, $commentary),
+                    mysqli_real_escape_string($link, $id_entry));
+    
+    //наконец-то его можно выполнить!
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die('Не получилось :(' . mysqli_error());
+    }
+        
     return true;
 }
 
