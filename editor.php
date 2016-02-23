@@ -23,7 +23,7 @@ if (($_GET['action']) == 'edit') {
     
     
 }
-if (($_GET['action']) == 'delete') {
+elseif (($_GET['action']) == 'delete') {
     if (delete_entry($link, $_GET['id_entry'])) {
         header('Location: editor.php');
         die();
