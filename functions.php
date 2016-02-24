@@ -325,7 +325,7 @@ function get_entry_by_last_editor($link, $last_editor) {
 
 function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
     
-    /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно Null, запись возможна */
+    /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
     //подготовка
     $numOrder = trim($numOrder);
@@ -416,7 +416,7 @@ function delete_entry($link, $id_entry) {
 
 function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
     
-    /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно Null, запись возможна */
+    /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
     //подготовка
     $id_entry = trim($id_entry);
