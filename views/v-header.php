@@ -7,4 +7,4 @@
     <title>СПД-емкость</title>    
 </head>
 <body>
-    <h1>СПД-емкость</h1>
+    <a href="index.php"><h1>СПД-емкость</h1></a>
