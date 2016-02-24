@@ -34,19 +34,9 @@ $insertValues[]="'" . addslashes(trim($v)) . "'";
 
 $values=implode(',',$insertValues);
     
-
-    
 $sql = "INSERT INTO spd_table ( $columns ) VALUES ( $values )";
-
-
-
-    
-
-    
-
     
 $result = mysqli_query($link, $sql);
-
 
     
 if (!$result) {
