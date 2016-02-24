@@ -63,15 +63,7 @@
     </tr>
     <?php
     die();
-    } 
-    
-/*    else { ?>
-        <tr>
-        <td colspan="11" id="entriesFound">Всего записей: <?=count($entries)?></td>
-    </tr>
-    <?php }*/
-    
-    ?>
+    } ?>
     
     
     

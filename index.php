@@ -8,9 +8,6 @@ require_once('functions.php');
 // подключение к БД
 $link = startup();
 
-/*//вытаскиваем все записи из БД
-$entries = get_entryes_all($link);*/
-
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
 

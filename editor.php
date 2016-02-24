@@ -22,7 +22,6 @@ $total = $entries_arr[2]; //всего страниц
 if (($_GET['action']) == 'edit') {
     //правка записи
     $entry = get_entry($link, $_GET['id_entry']); //вытаскиваем конкретную запись из БД
-//    var_dump($entry);
     
     //Разбираем массив в переменные
     $id_entry = $entry['id_entry'];
