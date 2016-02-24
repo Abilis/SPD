@@ -37,7 +37,7 @@ else {
 
 //Выводим в шаблоны
 include('views/v-header.php');
-include('views/v-index.php');
+include('views/v-editor.php');
 include('views/v-footer.php');
 
 ?>
