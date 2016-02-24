@@ -27,7 +27,8 @@ include('views/v-header.php');
 include('views/v-index.php');
 
 //подключаем нижнее меню навигации
-include('menu_navigation_index.php');
+$current_page = 'index.php';
+include('menu_navigation.php');
 
 include('views/v-footer.php');
 

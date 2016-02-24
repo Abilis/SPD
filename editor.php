@@ -85,7 +85,8 @@ include('views/v-header.php');
 include('views/v-editor.php');
 
 //подключаем нижнее меню навигации
-include('menu_navigation_editor.php');
+$current_page = 'editor.php';
+include('menu_navigation.php');
 
 include('views/v-footer.php');
 ?>
