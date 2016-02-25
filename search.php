@@ -36,8 +36,8 @@ else {
 
 
 //Выводим в шаблоны
-include('views/v-header.php');
-include('views/v-editor.php');
-include('views/v-footer.php');
+include_once('views/v-header.php');
+include_once('views/v-editor.php');
+include_once('views/v-footer.php');
 
 ?>

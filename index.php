@@ -20,13 +20,14 @@ $page = $entries_arr[1]; //текущая страница
 $total = $entries_arr[2]; //всего страниц
     
 //Выводим в шаблоны
-include('views/v-header.php');
-include('views/v-index.php');
+include_once('views/v-header.php');
+include_once('views/v-menu.php');
+include_once('views/v-index.php');
 
 //подключаем нижнее меню навигации
 $current_page = 'index.php';
-include('menu_navigation.php');
+include_once('menu_navigation.php');
 
-include('views/v-footer.php');
+include_once('views/v-footer.php');
 
 ?>

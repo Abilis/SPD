@@ -80,12 +80,13 @@ elseif (!empty($_POST)) { //если массив не пустой
 //Иначе - отображение записей
 
 //Выводим в шаблоны
-include('views/v-header.php');
-include('views/v-editor.php');
+include_once('views/v-header.php');
+include_once('views/v-menu.php');
+include_once('views/v-editor.php');
 
 //подключаем нижнее меню навигации
 $current_page = 'editor.php';
-include('menu_navigation.php');
+include_once('menu_navigation.php');
 
-include('views/v-footer.php');
+include_once('views/v-footer.php');
 ?>

@@ -40,7 +40,7 @@ else {
 
 
 //Выводим в шаблоны
-include('views/v-header.php');
-include('views/v-add.php');
-include('views/v-footer.php');
+include_once('views/v-header.php');
+include_once('views/v-add.php');
+include_once('views/v-footer.php');
 ?>
