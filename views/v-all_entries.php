@@ -18,13 +18,13 @@
             <form action="search.php" method="post">
             <input id="numOrderSearch" type="text" name="numOrder"/> <br />
             <input id="numOrderSearchButton" type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="all_entries" />
             </form>  
         </td>
         <td><form action="search.php" method="post">
             <input type="text" name="customer"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="all_entries" />
             </form>        
         </td>
         <td></td>
@@ -32,7 +32,7 @@
             <form action="search.php" method="post">
             <input type="text" name="ip_address"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="all_entries" />
             </form>   
         </td>
         <td></td>
@@ -41,7 +41,7 @@
             <form action="search.php" method="post">
             <input id="vlan_id" type="text" name="vlan_id"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="all_entries" />
             </form>         
         </td>
         <td></td>
@@ -50,7 +50,7 @@
             <form action="search.php" method="post">
             <input type="text" name="last_editor"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="all_entries" />
             </form>   
         </td>
         <td></td>

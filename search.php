@@ -37,7 +37,19 @@ else {
 
 //Выводим в шаблоны
 include_once('views/v-header.php');
-include_once('views/v-editor.php');
+include_once('views/v-menu.php');
+
+if ($_POST['search_from'] === 'index') {
+    include_once('views/v-index.php');
+}
+elseif ($_POST['search_from'] === 'editor') {
+    include_once('views/v-editor.php');
+}
+elseif ($_POST['search_from'] === 'all_entries') {
+    include_once('views/v-all_entries.php');
+}
+
 include_once('views/v-footer.php');
+
 
 ?>
