@@ -1,5 +1,5 @@
 <?php
-//Сценарий для обработки запросов к БД из views/v-index.php
+//Сценарий для обработки запросов к БД из форм поисков
 require_once('database.php');
 require_once('functions.php');
 
