@@ -146,6 +146,8 @@ function get_entry_by_order($link, $numOrder) {
     
     //Запрос
     $query = "SELECT * FROM spd_table WHERE numOrder='$numOrder' ORDER BY id_entry DESC";
+    
+
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -166,7 +168,7 @@ function get_entry_by_order($link, $numOrder) {
 
 //Вытаскиваем запись по названию клиента
 function get_entry_by_customer($link, $customer) {
-    
+
     //подготовка и проверка
    $customer = trim($customer);
     

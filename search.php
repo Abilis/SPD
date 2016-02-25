@@ -9,9 +9,10 @@ $link = startup();
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
 
+
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
-    $entries = get_entry_by_order($link, $_POST['numOrder']);
+    $entries = get_entry_by_order($link, $_POST['numOrder']);    
 }
 else if (!empty($_POST['customer'])) {
     //Поиск записей по название клиента

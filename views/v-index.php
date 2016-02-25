@@ -17,12 +17,14 @@
         <td>
             <form action="search.php" method="post">
             <input id="numOrderSearch" type="text" name="numOrder"/> <br />
+            
             <input id="numOrderSearchButton" type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="index" />
             </form>  
         </td>
         <td><form action="search.php" method="post">
             <input type="text" name="customer"/> <br />
+            
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="index" />
             </form>        
