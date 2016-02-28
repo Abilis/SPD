@@ -454,13 +454,19 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
     //установка текущей даты
     $dt_last_edited = date('Y-m-j G:i:s');
     
+    //Определение текущего пользователя
+    $user = getCurrentUser($link);
+    
+    $last_editor = $user['login'];
+            
     //дополнительные параметры: $subnet (subnet); $broadcast (broadcast); $founder (founder)
     
     //формируем запрос
     $sql = "UPDATE spd_table SET
                                 numOrder='%d', customer='%s', tarif='%s', ip_address='%s',
                                 netmask='%s', gateway='%s', vlan_id='%d', customer_port='%s',
-                                termination_point='%s', dt_last_edited='%s', commentary='%s'
+                                termination_point='%s', dt_last_edited='%s', commentary='%s',
+                                last_editor='%s'
                                 WHERE id_entry='%d'";
     
     $query = sprintf($sql,
@@ -475,6 +481,7 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
                     mysqli_real_escape_string($link, $termination_point),
                     mysqli_real_escape_string($link, $dt_last_edited),
                     mysqli_real_escape_string($link, $commentary),
+                    mysqli_real_escape_string($link, $last_editor),
                     mysqli_real_escape_string($link, $id_entry));
     
     //наконец-то его можно выполнить!
