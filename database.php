@@ -51,7 +51,7 @@ function getByLogin($link, $login) {
     return $entry;
 }
 
-
+//Запись открытой сессии пользователя в БД
 function openSessionInDb($link, $session) {
     
     //Разбираем полученный массив $session
@@ -76,7 +76,26 @@ function openSessionInDb($link, $session) {
     
 }
 
-
+//удаление устаревших сессий
+function clearSessionsInDB($link) {
+    
+    //время хранения сессий в БД
+    $min = date('Y.m.d G:i:s', time() - 60 * 20);
+    
+    $t = "time_last < '%s'";
+    $where = sprintf($t, $min);
+    
+    //формируем запрос
+    $query = "DELETE FROM `sessions` WHERE $where";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error());
+    }
+        
+    return true;
+}
 
 
 ?>

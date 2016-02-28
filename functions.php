@@ -566,6 +566,7 @@ function open_session($link, $id_user) {
     
 }
 
+
 //Генерация случайной последовательсности символов
 function generateStr($length) {
     

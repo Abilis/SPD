@@ -5,6 +5,9 @@ require_once('functions.php');
 // подключение к БД
 $link = startup();
 
+//очистка старых сессий
+clearSessionsInDB($link);
+
 //обработка отправки формы
 if (!empty($_POST)) { //если массив не пустой
     if (entry_add($link, $_POST['numOrder'], $_POST['customer'], $_POST['tarif'], $_POST['ip_address'],                         $_POST['netmask'], $_POST['gateway'], $_POST['vlan_id'], $_POST['customer_port'],                           $_POST['termination_point'], $_POST['commentary'])) { //запись в базу. Если успешно - редирект на главную
