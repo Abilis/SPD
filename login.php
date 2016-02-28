@@ -10,9 +10,8 @@ $link = startup();
 //очистка старых сессий
 clearSessionsInDB($link);
 
-//выход
-logout();
-
+//Определение текущего пользователя
+$user = getCurrentUser($link);
 
 //обработка отправки формы
 if (!empty($_POST)) {
@@ -24,15 +23,18 @@ if (!empty($_POST)) {
     
 }
 
-
-
-
 //Если форма пуста или залогиниться не удалось, выводим шаблоны залогинивания
 
 
 include_once('views/v-header.php');
-include_once('views/v-menu.php');
+
+if ($user == null) {
 include_once('views/v-login.php');
+}
+if ($user != null) {
+include_once('views/v-logout.php');   
+}
+
 include_once('views/v-footer.php');
 
 
