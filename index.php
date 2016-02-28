@@ -1,6 +1,6 @@
 <?php
  
-//error_reporting(E_ERROR);
+error_reporting(E_ERROR);
 
 require_once('database.php');
 require_once('functions.php');
@@ -10,6 +10,9 @@ $link = startup();
 
 //очистка старых сессий
 clearSessionsInDB($link);
+
+//Определение текущего пользователя
+$user = getCurrentUser($link);
 
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);

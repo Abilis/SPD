@@ -487,111 +487,7 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
     return true;
 }
 
-//функция получения имени залогиненного пользователя, если оно есть
-/*function getCurrentUser($link, $id_user = null) {
-    
-     //Если id_user не указан, берем его по текущей сессии
-    if ($id_user == null) {
-        $id_user = getUid($link);
-    }
-    if ($id_user == null) {
-        return null;
-    }
-    
-    //Ищем в БД пользователя по id_user
-    
-    
-    
-    return $_SESSION['sid'];
-}*/
 
-//Получение текущего пользователя
-/*function getUid($link) {
-    
-    //берем из текущей сессии
-    $sid = getSid($link);
-    
-    if ($sid == null) {
-        return null;
-    }
-    
-    //Если же в $sid что-то есть, то делаем запрос в БД
-        
-    
-    return $_SESSION['sid'];
-}*/
-
-/*function getSid($link) {
-    
-    //Ищем sid в сессии
-    $sid = $_SESSION['sid'];
-    
-    //Если нашли, пробуем обновить last_time в БД. Заодно проверим,
-    //есть ли там сессия
-    
-    if ($sid != null) {
-        
-        $time_last = date('Y.m.d G:i:s');
-        $time_last = mysqli_real_escape_string($link, $time_last);
-        
-        //Формируем запрос
-        $query = "UPDATE sessions SET `time_last`='$time_last' WHERE sid = '$sid'";
-        
-        //Выполняем запрос
-        $result = mysqli_query($link, $query);
-        
-        if (!$result) {
-            die(mysqli_error($link));
-        }
-        
-        $affected_rows = mysqli_affected_rows($link);
-        //Если была затронута 1 строка, значит, обновление прошло успешно.
-        //Значит, в БД была запись о сессии
-        
-        
-        //если $affected_rows == 0, это еще не значит, что апдейта не произошло. Поэтому нужна проверка
-        if ($affected_rows == 0) {
-            //пробуем сделать SELECT. Если запрос вернет затронутых строк 0, значит, записи сессии не было
-            
-            //формируем запрос
-            
-            $sid = mysqli_real_escape_string($link, $sid);
-            $query = "SELECT * FROM sessions WHERE `sid`='$sid'";
-            
-            //выполняем запрос
-                        
-            $result = mysqli_query($link, $query);
-            
-            if (!$result) {
-                die(mysqli_error($link));
-            }
-            
-            //Собираем из дескриптора ассоциативный массив
-            $entry = mysqli_fetch_assoc($result);
-            $sid = $entry['sid'];
-            
-            if ($sid != null) {
-                return $sid;
-            }
-            
-        } //конец проверки по SELECT
-        
-    
-    
-    }
-    //Раз мы дошли досюда, значит, в $_SESSION не было sid. Будем искать login и password в куках,
-    //чтобы переподключиться
-    if ($sid = null && !isset($_COOKEI['login'])) {
-        
-        $user = getByLogin($link, $_COOKIE['login']);
-        
-        if ($user != null && $user['password'] == $_COOKIE['password']) {
-            $sid = open_session($link, $user['id_user']);
-        }
-    }   
-    
-    return $sid;
-}*/
 
 //функция разлогинивания
 function logout() {
@@ -673,6 +569,132 @@ function generateStr($length) {
     
     return $code;
 }
+
+//Определение имени текущего пользователя
+function getCurrentUser($link) {
+    
+    //Сначала ищем sid в $_SESSION
+    $sid = getSidInSession($link);
+    
+    //Если там найти ничего не удалось, то ищем в куках
+    if ($sid == null) {
+        
+        $sid = getSidInCookie($link);
+            
+            if ($sid == null) {
+                //если и в куках не удалось найти, значит, пользователь неавторизован
+                return null;
+            }
+            
+        
+        
+    } //конец поиска sid в куках
+    //раз мы пришли сюда, значит, в $sid что-то есть
+    //Извлекаем из БД из таблицы sessions $id_user
+    
+    //формируем запрос    
+    $sql = mysqli_real_escape_string($link, $sid);
+    
+    $query = "SELECT * FROM sessions WHERE `sid`='$sql'";
+    
+    $result = mysqli_query($link, $query);
+    if (!$result) {
+        die(mysqli_error());
+    }
+    
+    //разбираем дескриптор в массив
+    $array = mysqli_fetch_assoc($result);
+    $id_user = $array['id_user']; 
+    
+    
+    //Извлекаем из БД из таблицы users поле login для полученного $id_user
+    
+    //формируем запрос
+    $sql = mysqli_real_escape_string($link, $id_user);
+    
+    $query = "SELECT * FROM users WHERE `id_user`='$sql'";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        dir(mysqli_error());
+    }
+    
+    //разбираем дескриптор в массив
+    $user = mysqli_fetch_assoc($result);
+            
+    return $user;
+}
+
+//Поиск $sid в $_SESSION
+function getSidInSession($link) {
+    
+    $sid = $_SESSION['sid'];
+    
+    if ($sid == null) {
+        return null;
+    }
+    
+    //Если же в $sid что-то есть, делаем запрос в БД
+    $time_last = date('Y.m.d G:i:s');
+    $time_last = mysqli_real_escape_string($link, $time_last);
+    
+    //Формируем запрос
+    $query = "UPDATE sessions SET `time_last`='$time_last' WHERE sid = '$sid'";
+
+    //Выполняем запрос
+    $result = mysqli_query($link, $query);
+
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+
+    $affected_rows = mysqli_affected_rows($link);
+    
+    //Если была затронута 1 строка, значит, обновление прошло успешно.
+    //Значит, в БД была запись о сессии. И полученная $sid верна
+    if ($affected_rows == 1) {
+        return $sid;        
+    }
+    
+    //Если же было затронуто 0 строк, это еще не значит, что в БД не было записи о сессии.
+    //Поэтому нужно сделать проверку по SELECT
+    if ($affected_rows == 0) {
+        //формируем запрос
+            
+        $sid = mysqli_real_escape_string($link, $sid);
+        $query = "SELECT * FROM sessions WHERE `sid`='$sid'";
+
+        //выполняем запрос
+        $result = mysqli_query($link, $query);
+
+        if (!$result) {
+            die(mysqli_error($link));
+        }
+        
+        //Собираем из дескриптора ассоциативный массив
+        $entry = mysqli_fetch_assoc($result);
+        $sid = $entry['sid'];
+
+        if ($sid == null) {
+            return null;
+        }
+        
+        //Если в результате этих манипуляций в $sid что-то есть, возвращаем его
+        return $sid;
+    }   
+    
+    //
+    return $sid;
+}
+
+//Поиск $sid в куках
+function getSidInCookie($link) {
+    
+    $sid = '18887676';
+    return $sid;
+}
+
 
 
 ?>

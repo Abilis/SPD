@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR);
+
 require_once('database.php');
 require_once('functions.php');
 
@@ -7,6 +9,9 @@ $link = startup();
 
 //очистка старых сессий
 clearSessionsInDB($link);
+
+//Определение текущего пользователя
+$user = getCurrentUser($link);
 
 //обработка отправки формы
 if (!empty($_POST)) { //если массив не пустой

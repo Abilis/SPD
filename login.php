@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ERROR);
+error_reporting(E_ERROR);
 
 require_once('database.php');
 require_once('functions.php');
@@ -12,6 +12,7 @@ clearSessionsInDB($link);
 
 //выход
 logout();
+
 
 //обработка отправки формы
 if (!empty($_POST)) {
