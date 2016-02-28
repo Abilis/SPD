@@ -90,3 +90,11 @@ td {
 .small {
     font-size: 12px;
 }
+
+.login {
+    width: 120px;
+}
+
+.loginText {
+    width: 180px;
+}
