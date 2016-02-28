@@ -533,7 +533,7 @@ function login($link, $login, $password, $remember){
     if ($remember) {
         $expire = time() + 3600 * 24 * 7;
         setcookie('login', $login, $expire);
-        setcookie('password', $password, $expire);
+        setcookie('password', md5($password), $expire);
     }
     
     //открываем сессию и запоминаем SID
