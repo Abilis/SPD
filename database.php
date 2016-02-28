@@ -21,4 +21,62 @@ function startup()
 	return $link;	
 }
 
+function getByLogin($link, $login) {
+    
+    
+    
+    //подготовка и проверка
+    $login = trim($login);
+    
+    if ($login == "") {
+        header('Location: login.php');
+        die();
+    }
+    
+    $login = mysqli_real_escape_string($link, $login);
+       
+    //Формируем запрос
+    $sql = "SELECT * FROM users WHERE login = '%s'";
+    $query = sprintf($sql, $login);
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Собираем из дескриптора ассоциативный массив
+    $entry = mysqli_fetch_assoc($result);    
+    
+    return $entry;
+}
+
+
+function openSessionInDb($link, $session) {
+    
+    //Разбираем полученный массив $session
+    $id_user = $session['id_user'];
+    $sid = $session['sid'];
+    $time_start = $session['time_start'];
+    $time_last = $session['time_last'];
+    
+    //Формируем запрос
+    $sql = "INSERT INTO sessions
+            (id_user, sid, time_start, time_last)
+            VALUES ('$id_user', '$sid', '$time_start', '$time_last')";
+    
+    //Выполняем запрос
+    $result = mysqli_query($link, $sql);
+    
+    if (!result) {
+        die(mysqli_error());
+    }
+    
+    return true;
+    
+}
+
+
+
+
 ?>

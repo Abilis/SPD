@@ -1,6 +1,6 @@
 <?php
  
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 
 require_once('database.php');
 require_once('functions.php');
@@ -21,7 +21,6 @@ $total = $entries_arr[2]; //всего страниц
     
 //Выводим в шаблоны
 include_once('views/v-header.php');
-include_once('views/v-login.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
 

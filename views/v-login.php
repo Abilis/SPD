@@ -8,6 +8,9 @@
             </td>
             <td><input type="submit" value="Залогиниться"/>
             </td>
+            <?php if ($user != null) { ?>
+            <br />Вы вошли как <b><?=$user['login']?></b>
+	           <?php } ?>
         </tr>
 	</form>
 <br />

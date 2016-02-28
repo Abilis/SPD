@@ -487,5 +487,98 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
     return true;
 }
 
+//функция получения имени залогиненного пользователя, если оно есть
+/*function get_current_user($link) {
+    
+    //Пока не реализовано
+    
+    return $result[0];
+}*/
+
+//функция разлогинивания
+function logout() {
+    setcookie('login', '', time() - 1);
+    setcookie('password', '', time() - 1);
+    unset($_COOKIE['login']);
+    unset($_COOKIE['password']);
+    unset($_SESSION['sid']);
+    $sid = null;
+    $uid = null;
+}
+
+//функция залогинивания
+//return true - залогинивание успешно, return false - неуспешно
+function login($link, $login, $password, $remember){
+    
+/*    var_dump($link);
+    var_dump($login);
+    var_dump($password);
+    die();*/
+    
+    //вытаскиваем пользователя из БД
+    $user = getByLogin($link, $login);
+    
+    if ($user == null) {
+        return false; //если не удалось найти пользователя с таким логином
+    }
+    
+    $id_user = $user['id_user'];
+    
+    //Проверяем пароль
+    if ($user['password'] != md5($password)) {
+        return false; //если пароль в БД не совпадает с введенным
+    }
+    
+    //если было установлено "запомнить меня", вешаем куки на логин и пароль
+    if ($remember) {
+        $expire = time() + 3600 * 24 * 7;
+        setcookie('login', $login, $expire);
+        setcookie('password', $password, $expire);
+    }
+    
+    //открываем сессию и запоминаем SID
+    open_session($link, $id_user);
+    
+    
+    return true;
+}
+
+//Открытие новой сессии. Результат SID
+function open_session($link, $id_user) {
+    
+    //генерируем SID
+    $sid = generateStr(15);
+    
+    //Вставляем SID в БД
+    $now = date('Y.m.d G:i:s');
+    $session = array();
+    $session['id_user'] = $id_user;
+    $session['sid'] = $sid;
+    $session['time_start'] = $now;
+    $session['time_last'] = $now;
+    
+    openSessionInDb($link, $session);
+    
+    //Регистрируем сессию в PHP-сессии
+    $_SESSION['sid'] = $sid;
+    
+    return $sid;
+    
+}
+
+//Генерация случайной последовательсности символов
+function generateStr($length) {
+    
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
+    $code = "";
+    $clen = iconv_strlen($chars) - 1;
+    
+    while (iconv_strlen($code) < $length) {
+        $code .= $chars[mt_rand(0, $clen)];
+    }
+    
+    return $code;
+}
+
 
 ?>
