@@ -496,8 +496,7 @@ function logout() {
     unset($_COOKIE['login']);
     unset($_COOKIE['password']);
     unset($_SESSION['sid']);
-    $sid = null;
-    $uid = null;
+    $sid = null;    
 }
 
 //функция залогинивания
@@ -691,7 +690,22 @@ function getSidInSession($link) {
 //Поиск $sid в куках
 function getSidInCookie($link) {
     
-    $sid = '18887676';
+    $login = $_COOKIE['login'];
+    $password = $_COOKIE['password'];
+    
+    if ($login == null) {
+        return null;
+    }
+    
+    //Если же в куках есть какой-то логин, то ищем его в БД
+    $user = getByLogin($link, $login);
+    
+    //Если что-то находится и пароль в базе совпадает с паролем из кук, то заново открываем сессию
+    if ($user != null && $user['password'] == $password) {
+        $sid = open_session($link, $user['id_user']);
+    }
+    
+    
     return $sid;
 }
 

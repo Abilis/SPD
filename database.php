@@ -21,10 +21,9 @@ function startup()
 	return $link;	
 }
 
+//функция возвращает из БД строку о пользователе
 function getByLogin($link, $login) {
-    
-    
-    
+        
     //подготовка и проверка
     $login = trim($login);
     
