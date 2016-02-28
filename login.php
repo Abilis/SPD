@@ -17,7 +17,7 @@ logout();
 if (!empty($_POST)) {
    
     if ( login($link, $_POST['login'], $_POST['password'], isset($_POST['remember'])) ) {
-        header('Location: index.php');
+        header('Location: editor.php');
         die();
     }
     

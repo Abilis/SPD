@@ -488,11 +488,109 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
 }
 
 //функция получения имени залогиненного пользователя, если оно есть
-/*function get_current_user($link) {
+/*function getCurrentUser($link, $id_user = null) {
     
-    //Пока не реализовано
+     //Если id_user не указан, берем его по текущей сессии
+    if ($id_user == null) {
+        $id_user = getUid($link);
+    }
+    if ($id_user == null) {
+        return null;
+    }
     
-    return $result[0];
+    //Ищем в БД пользователя по id_user
+    
+    
+    
+    return $_SESSION['sid'];
+}*/
+
+//Получение текущего пользователя
+/*function getUid($link) {
+    
+    //берем из текущей сессии
+    $sid = getSid($link);
+    
+    if ($sid == null) {
+        return null;
+    }
+    
+    //Если же в $sid что-то есть, то делаем запрос в БД
+        
+    
+    return $_SESSION['sid'];
+}*/
+
+/*function getSid($link) {
+    
+    //Ищем sid в сессии
+    $sid = $_SESSION['sid'];
+    
+    //Если нашли, пробуем обновить last_time в БД. Заодно проверим,
+    //есть ли там сессия
+    
+    if ($sid != null) {
+        
+        $time_last = date('Y.m.d G:i:s');
+        $time_last = mysqli_real_escape_string($link, $time_last);
+        
+        //Формируем запрос
+        $query = "UPDATE sessions SET `time_last`='$time_last' WHERE sid = '$sid'";
+        
+        //Выполняем запрос
+        $result = mysqli_query($link, $query);
+        
+        if (!$result) {
+            die(mysqli_error($link));
+        }
+        
+        $affected_rows = mysqli_affected_rows($link);
+        //Если была затронута 1 строка, значит, обновление прошло успешно.
+        //Значит, в БД была запись о сессии
+        
+        
+        //если $affected_rows == 0, это еще не значит, что апдейта не произошло. Поэтому нужна проверка
+        if ($affected_rows == 0) {
+            //пробуем сделать SELECT. Если запрос вернет затронутых строк 0, значит, записи сессии не было
+            
+            //формируем запрос
+            
+            $sid = mysqli_real_escape_string($link, $sid);
+            $query = "SELECT * FROM sessions WHERE `sid`='$sid'";
+            
+            //выполняем запрос
+                        
+            $result = mysqli_query($link, $query);
+            
+            if (!$result) {
+                die(mysqli_error($link));
+            }
+            
+            //Собираем из дескриптора ассоциативный массив
+            $entry = mysqli_fetch_assoc($result);
+            $sid = $entry['sid'];
+            
+            if ($sid != null) {
+                return $sid;
+            }
+            
+        } //конец проверки по SELECT
+        
+    
+    
+    }
+    //Раз мы дошли досюда, значит, в $_SESSION не было sid. Будем искать login и password в куках,
+    //чтобы переподключиться
+    if ($sid = null && !isset($_COOKEI['login'])) {
+        
+        $user = getByLogin($link, $_COOKIE['login']);
+        
+        if ($user != null && $user['password'] == $_COOKIE['password']) {
+            $sid = open_session($link, $user['id_user']);
+        }
+    }   
+    
+    return $sid;
 }*/
 
 //функция разлогинивания
@@ -510,19 +608,14 @@ function logout() {
 //return true - залогинивание успешно, return false - неуспешно
 function login($link, $login, $password, $remember){
     
-/*    var_dump($link);
-    var_dump($login);
-    var_dump($password);
-    die();*/
-    
     //вытаскиваем пользователя из БД
-    $user = getByLogin($link, $login);
+    $user = getByLogin($link, $login); //database.php
     
     if ($user == null) {
         return false; //если не удалось найти пользователя с таким логином
     }
     
-    $id_user = $user['id_user'];
+    $id_user = $user['id_user']; //из полученного ассоциативного массива
     
     //Проверяем пароль
     if ($user['password'] != md5($password)) {
@@ -557,7 +650,7 @@ function open_session($link, $id_user) {
     $session['time_start'] = $now;
     $session['time_last'] = $now;
     
-    openSessionInDb($link, $session);
+    openSessionInDb($link, $session); //записываем сессию в БД. database.php
     
     //Регистрируем сессию в PHP-сессии
     $_SESSION['sid'] = $sid;
