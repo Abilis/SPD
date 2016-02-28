@@ -562,7 +562,7 @@ function open_session($link, $id_user) {
 }
 
 
-//Генерация случайной последовательсности символов
+//Генерация случайной последовательности символов
 function generateStr($length) {
     
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
