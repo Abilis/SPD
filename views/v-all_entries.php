@@ -71,14 +71,14 @@
             <td><?=$entry['numOrder']?></td>
             <td><?=$entry['customer']?> <br />
                 
-                <?php if ($user != null) { ?>
+                <?php if ($canDoEdit) { ?>
                     <span class="small">
                         <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
                     </span>
                 <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
-                <?php if (false) { ?>
+                <?php if ($canDoDelete) { ?>
                     <span class="small">
                         <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
                     </span>
