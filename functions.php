@@ -360,8 +360,8 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_added = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //Определение текущего пользователя
     $user = getCurrentUser($link);
@@ -469,7 +469,7 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //Определение текущего пользователя
     $user = getCurrentUser($link);
@@ -546,7 +546,7 @@ function login($link, $login, $password, $remember){
     
     //если было установлено "запомнить меня", вешаем куки на логин и пароль
     if ($remember) {
-        $expire = time() + 3600 * 24 * 7;
+        $expire = time() + 3600 * 24 * 7 + 3600 * 3;
         setcookie('login', $login, $expire);
         setcookie('password', md5($password), $expire);
     }
@@ -565,7 +565,7 @@ function open_session($link, $id_user) {
     $sid = generateStr(15);
     
     //Вставляем SID в БД
-    $now = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    $now = date('Y.m.d G:i:s', time() + 3600 * 3);
     $session = array();
     $session['id_user'] = $id_user;
     $session['sid'] = $sid;
@@ -662,7 +662,7 @@ function getSidInSession($link) {
     }
     
     //Если же в $sid что-то есть, делаем запрос в БД
-    $time_last = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    $time_last = date('Y.m.d G:i:s', time() + 3600 * 3);
     $time_last = mysqli_real_escape_string($link, $time_last);
     
     //Формируем запрос
