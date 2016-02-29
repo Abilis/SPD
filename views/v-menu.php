@@ -10,7 +10,9 @@
 
 <a href="index.php">Главная</a> <b>|</b> <a href="all_entries.php">Показать все</a> <b>|</b> <a href="add.php">Добавить клиента</a> <b>|</b> Найдено записей: <?=count($entries)?> <b>|</b> Всего записей: <?=$numEntriesAll?>
 <br />
+
 <?php
+//Отображение успешности добавления, правки и удаления записи
 if (isset($_SESSION['add_success'])) {
     echo '<span class="bold">' . $_SESSION['add_success'] . '</span>';
     $_SESSION['add_success'] = null;
