@@ -403,7 +403,10 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     if (!$result) {
         die('Не получилось :(' . mysqli_error());
     }
-        
+    
+    //Запись в сессию о том, что добавление прошло успешно
+    $_SESSION['add_success'] = "Запись успешно добавлена!";
+    
     return true;
 }
 
@@ -423,6 +426,9 @@ function delete_entry($link, $id_entry) {
     }
     
     //запись в лог действия. Пока нереализовано
+    
+    //Запись в сессию о том, что удаление прошло успешно
+    $_SESSION['delete_success'] = "Запись успешно удалена!";
     
     return true;
 }
@@ -502,6 +508,9 @@ function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address,
         die('Не получилось :(' . mysqli_error());
     }
         
+    //Запись в сессию о том, что редактирование прошло успешно
+    $_SESSION['edit_success'] = "Запись успешно изменена!";
+    
     return true;
 }
 
