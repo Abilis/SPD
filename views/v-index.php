@@ -17,16 +17,14 @@
         <td>
             <form action="search.php" method="post">
             <input id="numOrderSearch" type="text" name="numOrder"/> <br />
-            
             <input id="numOrderSearchButton" type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="editor" />
             </form>  
         </td>
         <td><form action="search.php" method="post">
             <input type="text" name="customer"/> <br />
-            
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="editor" />
             </form>        
         </td>
         <td></td>
@@ -34,7 +32,7 @@
             <form action="search.php" method="post">
             <input type="text" name="ip_address"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="editor" />
             </form>   
         </td>
         <td></td>
@@ -43,7 +41,7 @@
             <form action="search.php" method="post">
             <input id="vlan_id" type="text" name="vlan_id"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="editor" />
             </form>         
         </td>
         <td></td>
@@ -52,7 +50,7 @@
             <form action="search.php" method="post">
             <input type="text" name="last_editor"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="index" />
+            <input type="hidden" name="search_from" value="editor" />
             </form>   
         </td>
         <td></td>
@@ -71,7 +69,22 @@
     <?php foreach ($entries as $entry): ?>
         <tr>
             <td><?=$entry['numOrder']?></td>
-            <td><?=$entry['customer']?></td>
+            <td><?=$entry['customer']?> <br />
+                
+                <?php if ($user != null) { ?>
+                    <span class="small">
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
+                    </span>
+                <?php } ?>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                <?php if ($user != null) { ?>
+                    <span class="small">
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
+                    </span>
+                 <?php } ?>
+                        
+            </td>
             <td><?=$entry['tarif']?></td>
             <td><?=$entry['ip_address']?></td>
             <td><?=$entry['netmask']?></td>

@@ -1,4 +1,4 @@
-<a href="index.php">Главная</a> <b>|</b> <a href="editor.php">Редактировать записи</a> <b>|</b> <a href="add.php">Добавить клиента</a>
+<a href="index.php">Главная</a> <b>|</b> <a href="add.php">Добавить клиента</a>
 <br />
 <table id = "addTable">
     <tr>
@@ -14,7 +14,7 @@
         
         <th>Комментарий</th>
     </tr>
-    <form action="editor.php" method="post">
+    <form action="index.php" method="post">
         <tr>
             <td><input id="addNumOrder" class="addForm" type="text" name="numOrder" value="<?=$numOrder?>" /> <br />
                 <div class="italic">Рек.</div>
