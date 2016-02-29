@@ -13,7 +13,10 @@ clearSessionsInDB($link);
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
+//разлогинивание
 logout();
+    
 
+//Перенаправление на главную
 header('Location: index.php');
 ?>
