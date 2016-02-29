@@ -361,6 +361,13 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     
     //установка текущей даты
     $dt_added = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 60 * 60 * 3);
+    
+    //Определение текущего пользователя
+    $user = getCurrentUser($link);
+    
+    $founder = $user['login'];
+    $last_editor = $user['login'];
     
     //дополнительные параметры: $subnet (subnet); $broadcast (broadcast); $founder (founder)
     
@@ -368,10 +375,11 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     $sql = "INSERT INTO spd_table 
                                 (numOrder, customer, tarif, ip_address,
                                 netmask, gateway, vlan_id, customer_port,
-                                termination_point, dt_added, commentary)
+                                termination_point, dt_added, commentary,
+                                dt_last_edited, founder, last_editor)
                                     VALUES 
                                         ('%d', '%s', '%s', '%s', '%s', '%s', '%d',
-                                        '%s', '%s', '%s', '%s')";
+                                        '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
     
     $query = sprintf($sql,
                     mysqli_real_escape_string($link, $numOrder),
@@ -384,7 +392,10 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
                     mysqli_real_escape_string($link, $customer_port),
                     mysqli_real_escape_string($link, $termination_point),
                     mysqli_real_escape_string($link, $dt_added),
-                    mysqli_real_escape_string($link, $commentary));
+                    mysqli_real_escape_string($link, $commentary),
+                    mysqli_real_escape_string($link, $dt_last_edited),
+                    mysqli_real_escape_string($link, $founder),
+                    mysqli_real_escape_string($link, $last_editor));
     
     //наконец-то его можно выполнить!
     $result = mysqli_query($link, $query);
