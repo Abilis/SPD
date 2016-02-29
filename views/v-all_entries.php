@@ -78,7 +78,7 @@
                 <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
-                <?php if ($user != null) { ?>
+                <?php if (false) { ?>
                     <span class="small">
                         <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
                     </span>
