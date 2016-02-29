@@ -6,7 +6,7 @@ function canDo($link, $user, $action) {
     
     //Получаем id_role пользователя
     $id_role = $user['id_role'];
-    
+        
     //Вытаскиваем привилегии, которые полагаются с данным id_role
     
     //Запрос
