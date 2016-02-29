@@ -8,9 +8,6 @@ require_once('functions.php');
 // подключение к БД
 $link = startup();
 
-//очистка старых сессий
-clearSessionsInDB($link);
-
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
 
