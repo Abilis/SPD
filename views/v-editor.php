@@ -70,13 +70,20 @@
         <tr>
             <td><?=$entry['numOrder']?></td>
             <td><?=$entry['customer']?> <br />
-                <span class="small">
-                    <a href="editor.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
-                </span>
+                
+                <?php if ($user != null) { ?>
+                    <span class="small">
+                        <a href="editor.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
+                    </span>
+                <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span class="small">
+                    
+                <?php if ($user != null) { ?>
+                    <span class="small">
                         <a href="editor.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
                     </span>
+                 <?php } ?>
+                        
             </td>
             <td><?=$entry['tarif']?></td>
             <td><?=$entry['ip_address']?></td>
