@@ -69,7 +69,22 @@
     <?php foreach ($entries as $entry): ?>
         <tr>
             <td><?=$entry['numOrder']?></td>
-            <td><?=$entry['customer']?></td>
+            <td><?=$entry['customer']?> <br />
+                
+                <?php if ($user != null) { ?>
+                    <span class="small">
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
+                    </span>
+                <?php } ?>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                <?php if ($user != null) { ?>
+                    <span class="small">
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
+                    </span>
+                 <?php } ?>
+                        
+            </td>
             <td><?=$entry['tarif']?></td>
             <td><?=$entry['ip_address']?></td>
             <td><?=$entry['netmask']?></td>
