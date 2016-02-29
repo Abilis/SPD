@@ -24,16 +24,8 @@ if (!empty($_POST)) {
 }
 
 //Если форма пуста или залогиниться не удалось, выводим шаблоны залогинивания
-
-
 include_once('views/v-header.php');
-
-if ($user == null) {
 include_once('views/v-login.php');
-}
-
 include_once('views/v-footer.php');
-
-
 
 ?>
