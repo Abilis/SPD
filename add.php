@@ -3,6 +3,7 @@ error_reporting(E_ERROR);
 
 require_once('database.php');
 require_once('functions.php');
+require_once('access.php');
 
 // подключение к БД
 $link = startup();
@@ -17,11 +18,24 @@ $user = getCurrentUser($link);
 if ($user == null) {
     
     //Выводим в шаблоны
-include_once('views/v-header.php');
-include_once('views/v-add-error.php');
-include_once('views/v-footer.php');
+    include_once('views/v-header.php');
+    include_once('views/v-add-error.php');
+    include_once('views/v-footer.php');
+        die();
+}
+
+//Определяем, может ли пользователь добавлять записи
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
+
+if (!$canDoAdd) {
+    
+    //Выводим в шаблоны
+    include_once('views/v-header.php');
+    include_once('views/v-add-error.php');
+    include_once('views/v-footer.php');
     die();
 }
+
 
 //обработка отправки формы
 if (!empty($_POST)) { //если массив не пустой

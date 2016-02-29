@@ -42,8 +42,7 @@ function canDo($link, $user, $action) {
     //Вытаскивание id_priv из результата
     $id_priv = mysqli_fetch_assoc($result)['id_privs'];
     
-    //Поиск $id_priv в $entries. Успешное нахождение будет означать наличие привилегии
-        
+    //Поиск $id_priv в $entries. Успешное нахождение будет означать наличие привилегии        
     foreach ($entries as $entry) {
         if ($id_priv == $entry['id_priv']) {
             
