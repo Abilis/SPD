@@ -76,7 +76,7 @@
                         <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
                     </span>
                 <?php } ?>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                 <?php if ($canDoDelete) { ?>
                     <span class="small">
