@@ -35,4 +35,10 @@ else if (isset($_SESSION['delete_success'])) {
     echo '<span class="bold">' . $_SESSION['delete_success'] . '</span>';
     $_SESSION['delete_success'] = null;
 }
+
+//Отображение неуспешности логирования
+if (isset($_SESSION['logging'])) {
+    echo '<span class="bold"> ' . $_SESSION['logging'] . '</span>';
+    $_SESSION['logging'] = null;
+}
 ?>

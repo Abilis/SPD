@@ -407,6 +407,29 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     //Запись в сессию о том, что добавление прошло успешно
     $_SESSION['add_success'] = "Запись успешно добавлена!";
     
+    //Запись в лог
+    //Формирование $entry_for_log
+    $entry_for_log = array();
+    
+    $entry_for_log['№ договора'] = $numOrder;
+    $entry_for_log['клиент'] = $customer;
+    $entry_for_log['скорость'] = $tarif;
+    $entry_for_log['IP-адрес'] = $ip_address;
+    $entry_for_log['маска'] = $netmask;
+    $entry_for_log['шлюза'] = $gateway;
+    $entry_for_log['влан'] = $vlan_id;
+    $entry_for_log['порт клиента'] = $customer_port;
+    $entry_for_log['терминация'] = $termination_point;
+    $entry_for_log['комментарий'] = $commentary;
+    
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+        
+    if (!logging($link, $founder, 'добавление', $entry_for_log, $dt_added)) {
+                //Запись в сессию в случае неудачного логирования
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }  
+    
     return true;
 }
 
