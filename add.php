@@ -22,8 +22,9 @@ if ($user == null) {
         die();
 }
 
-//Определяем, может ли пользователь добавлять записи
+//Определяем, может ли пользователь добавлять записи и видеть панель администратора
 $canDoAdd = canDo($link, $user, 'ADD_ENTRY');
+$canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
 if (!$canDoAdd) {
     

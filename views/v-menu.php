@@ -8,7 +8,11 @@
             <br /><b>Вы не залогинены</b>
 <?php } ?><br /><br />
 
-<a href="index.php">Главная</a> <b>|</b> <a href="all_entries.php">Показать все</a> <b>|</b> <a href="add.php">Добавить клиента</a> 
+<a href="index.php">Главная</a> <b>|</b> <a href="all_entries.php">Показать все</a> <b>|</b> <a href="add.php">Добавить клиента</a>
+
+<?php if ($canDoViewAdminPanel) { ?>
+<b>|</b> <a href="admin.php">Панель администратора</a> 
+<?php } ?>
 
 <?php if (count($entries)) { ?>
 <b>|</b> Найдено записей: <?=count($entries)?>

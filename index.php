@@ -16,6 +16,7 @@ $user = getCurrentUser($link);
 //Определяем, может ли пользователь редактировать и удалять записи
 $canDoEdit = canDo($link, $user, 'EDIT_ENTRY');
 $canDoDelete = canDo($link, $user, 'DELETE_ENTRY');
+$canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
