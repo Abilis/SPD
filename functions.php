@@ -534,6 +534,9 @@ function login($link, $login, $password, $remember){
     $user = getByLogin($link, $login); //database.php
     
     if ($user == null) {
+        
+        //Запоминаем в сессии результат логина
+        $_SESSION['login_success'] = 'Неверно введен логин или пароль!';
         return false; //если не удалось найти пользователя с таким логином
     }
     
@@ -541,6 +544,9 @@ function login($link, $login, $password, $remember){
     
     //Проверяем пароль
     if ($user['password'] != md5($password)) {
+        
+        //Запоминаем в сессии результат логина
+        $_SESSION['login_success'] = 'Неверно введен логин или пароль!';
         return false; //если пароль в БД не совпадает с введенным
     }
     
@@ -553,7 +559,6 @@ function login($link, $login, $password, $remember){
     
     //открываем сессию и запоминаем SID
     open_session($link, $id_user);
-    
     
     return true;
 }

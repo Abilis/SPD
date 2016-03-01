@@ -8,6 +8,11 @@
             <br /><b>Вы не залогинены</b>
 <?php } ?><br /><br />
 
+<?php if (isset($_SESSION['login_success'])) { 
+        echo '<span class="bold">' . $_SESSION['login_success'] . '</span>';
+        $_SESSION['login_success'] = null;    
+ } ?>
+
 <?php if ($user == null) { ?>
 <form action="login.php" method="post">
     <tr >
