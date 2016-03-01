@@ -6,6 +6,8 @@
 
 5. sessions (id_session, id_user, sid, time_start, time_last)
 
-6.spd_table(id_entry, numOrder, customer, tarif, ip_address, netmask,
+6.spd_table (id_entry, numOrder, customer, tarif, ip_address, netmask,
 			gateway, vlan_id, customer_port, termination_point, subnet,
 			bloadcast, df_added, dt_last_adited, commentary, founder, last_editor)
+
+7. logs (id_log, login, action, entry_log, dt_action)
