@@ -8,7 +8,17 @@
             <br /><b>Вы не залогинены</b>
 <?php } ?><br /><br />
 
-<a href="index.php">Главная</a> <b>|</b> <a href="all_entries.php">Показать все</a> <b>|</b> <a href="add.php">Добавить клиента</a> <b>|</b> Найдено записей: <?=count($entries)?> <b>|</b> Всего записей: <?=$numEntriesAll?>
+<a href="index.php">Главная</a> <b>|</b> <a href="all_entries.php">Показать все</a> <b>|</b> <a href="add.php">Добавить клиента</a> 
+
+<?php if (count($entries)) { ?>
+<b>|</b> Найдено записей: <?=count($entries)?>
+
+<?php }
+
+if ($numEntriesAll) { ?> 
+<b>|</b> Всего записей: <?=$numEntriesAll?>
+<?php } ?>
+
 <br />
 
 <?php

@@ -16,6 +16,7 @@ if ($user == null) {
     
     //Выводим в шаблоны
     include_once('views/v-header.php');
+    include_once('views/v-menu.php');
     include_once('views/v-add-error.php');
     include_once('views/v-footer.php');
         die();
@@ -28,6 +29,7 @@ if (!$canDoAdd) {
     
     //Выводим в шаблоны
     include_once('views/v-header.php');
+    include_once('views/v-menu.php');
     include_once('views/v-add-error.php');
     include_once('views/v-footer.php');
     die();
@@ -70,6 +72,7 @@ else {
 
 //Выводим в шаблоны
 include_once('views/v-header.php');
+include_once('views/v-menu.php');
 include_once('views/v-add.php');
 include_once('views/v-footer.php');
 ?>
