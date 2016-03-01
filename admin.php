@@ -6,9 +6,6 @@ require_once('access.php');
 // подключение к БД
 $link = startup();
 
-//очистка старых сессий
-clearSessionsInDB($link);
-
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
