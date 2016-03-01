@@ -70,7 +70,7 @@ elseif (!empty($_POST)) { //если массив не пустой
     if (entry_edit($link, $user, $_POST['id_entry'], $_POST['numOrder'], $_POST['customer'],
                    $_POST['tarif'], $_POST['ip_address'], $_POST['netmask'], $_POST['gateway'],
                    $_POST['vlan_id'], $_POST['customer_port'], $_POST['termination_point'],
-                   $_POST['commentary'])) { //update в базе. Если успешно - редирект на editor.php
+                   $_POST['commentary'])) { //update в базе. Если успешно - редирект на главную
         header('Location: index.php');
         die();
     }

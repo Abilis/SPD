@@ -73,14 +73,14 @@
                 
                 <?php if ($canDoEdit) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit">[править]</a>
                     </span>
                 <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                 <?php if ($canDoDelete) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete">[удалить]</a>
                     </span>
                  <?php } ?>
                         

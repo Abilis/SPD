@@ -16,13 +16,12 @@
     <tr class="search">
         <td>
             <form action="search.php" method="post">
-            <input id="numOrderSearch" type="text" name="numOrder"/> <br />
+            <input id="numOrderSearch" type="search" name="numOrder"/> <br />
             <input id="numOrderSearchButton" type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="editor" />
             </form>  
         </td>
         <td><form action="search.php" method="post">
-            <input type="text" name="customer"/> <br />
+            <input type="search" name="customer"/> <br />
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="editor" />
             </form>        
@@ -30,7 +29,7 @@
         <td></td>
         <td> 
             <form action="search.php" method="post">
-            <input type="text" name="ip_address"/> <br />
+            <input type="search" name="ip_address"/> <br />
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="editor" />
             </form>   
@@ -39,7 +38,7 @@
         <td></td>
         <td>
             <form action="search.php" method="post">
-            <input id="vlan_id" type="text" name="vlan_id"/> <br />
+            <input id="vlan_id" type="search" name="vlan_id"/> <br />
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="editor" />
             </form>         
@@ -48,7 +47,7 @@
         <td></td>
         <td>
             <form action="search.php" method="post">
-            <input type="text" name="last_editor"/> <br />
+            <input type="search" name="last_editor"/> <br />
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="editor" />
             </form>   
@@ -73,14 +72,14 @@
                 
                 <?php if ($canDoEdit) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit"><править></a>
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit">[править]</a>
                     </span>
                 <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                 <?php if ($canDoDelete) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete"><удалить></a>
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete">[удалить]</a>
                     </span>
                  <?php } ?>
                         

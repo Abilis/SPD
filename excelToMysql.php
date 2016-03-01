@@ -51,12 +51,15 @@ $numbers++;
 
 }
 fclose($handle_o);
+include_once('views/v-header.php');
 
 echo 'Добавлено строк: ' . $numbers . '<br />';
 
 $timeFinish = time();
 $timeGone = $timeFinish - $timeBegin;
-echo 'Затрачено секунд: ' . $timeGone;
-
-
+echo 'Затрачено секунд: ' . $timeGone;?>
+<br />
+<br />
+<a href="index.php">На главную</a> <b>|</b> <a href="admin.php">Вернуться в панель администратора</a>
+<?php include_once('views/v-index.php');
 ?>

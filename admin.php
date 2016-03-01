@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 require_once('database.php');
 require_once('functions.php');
 require_once('access.php');
@@ -12,6 +12,9 @@ $user = getCurrentUser($link);
 
 //Определяем, может ли пользователь находиться в панели администратор
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
+
+//Определяем, может ли пользователь делать импорт в БД файлов .cvs
+$canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
 
 if (!$canDoViewAdminPanel) {
     header('Location: index.php');
