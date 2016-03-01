@@ -840,6 +840,32 @@ function getSidInCookie($link) {
     return $sid;
 }
 
+//функция возвращает массив пользователей онлайн
+function getWhoIsOnline($link) {
+    
+    //формируем запрос для вытаскивания логинов залогиненных пользователей
+    $query = "SELECT DISTINCT `login` FROM `users` JOIN `sessions` ON users.id_user = sessions.id_user";
+    
+    //Выполняем запрос
+    $result = mysqli_query($link, $query);
+
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //разбираем дескриптор в ассоциативный массив
+    
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $whoUsersOnline = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $whoUsersOnline[] = $row;
+    }
+            
+    return $whoUsersOnline;
+}
 
 
 ?>
