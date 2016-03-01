@@ -1,4 +1,5 @@
 <?php
+//error_reporting(E_ERROR);
 require_once('database.php');
 require_once('functions.php');
 require_once('access.php');
@@ -16,6 +17,9 @@ if (!$canDoViewAdminPanel) {
     header('Location: index.php');
     die('не положено!');
 }
+
+//вытаскиваем полное число записей из БД
+$numEntriesAll = getEntriesAll($link);
 
 
 
