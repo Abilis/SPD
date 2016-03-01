@@ -10,4 +10,4 @@
 			gateway, vlan_id, customer_port, termination_point, subnet,
 			bloadcast, df_added, dt_last_adited, commentary, founder, last_editor)
 
-7. logs (id_log, login, action, entry_log, dt_action)
+7. logs (id_log, login, action, entry_old_log, entry_new_log, dt_action)

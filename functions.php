@@ -422,7 +422,7 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     //подключение файла с функцией логирования
     require_once('logging.php');
         
-    if (!logging($link, $founder, 'добавление', $entry_for_log, $dt_added)) {
+    if (!logging($link, $founder, 'добавление', null, $entry_for_log, $dt_added)) {
                 //Запись в сессию в случае неудачного логирования
         $_SESSION['logging'] = 'Логирование действия не удалось!';
     }  
@@ -438,11 +438,11 @@ function delete_entry($link, $user, $id_entry) {
     //Формирование нового запроса, чтобы понять, что будем удалять
     $sql_for_log = "SELECT * FROM `spd_table` WHERE `id_entry` ='%d'";
     
-    $query = sprintf($sql_for_log,
+    $query_for_log = sprintf($sql_for_log,
                     mysqli_real_escape_string($link, $id_entry));
     
     //выполняем запрос на выборку
-    $result_for_log = mysqli_query($link, $query);
+    $result_for_log = mysqli_query($link, $query_for_log);
     
     if (!$result_for_log) {
         die($id_entry . mysql_error());
@@ -460,7 +460,7 @@ function delete_entry($link, $user, $id_entry) {
     //Определение логина
     $founder = $user['login'];
         
-    if (!logging($link, $founder, 'удаление', $entry_for_log, $dt_added)) {
+    if (!logging($link, $founder, 'удаление', $entry_for_log, null, $dt_added)) {
                 //Запись в сессию в случае неудачного логирования
         $_SESSION['logging'] = 'Логирование действия не удалось!';
     }  //логирование завершено
@@ -522,22 +522,37 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
     //установка текущей даты
     $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
-    //Определение текущего пользователя
-    $user = getCurrentUser($link);
-    
+    //Определение логина
     $last_editor = $user['login'];
-            
+    
+    //формируем запрос для логирования
+    $sql_for_log_old = "SELECT * FROM `spd_table` WHERE `id_entry` ='%d'";
+    
+    $query_for_log_old = sprintf($sql_for_log_old,
+                    mysqli_real_escape_string($link, $id_entry));
+    
+    //выполняем запрос на выборку
+    $result_for_log_old = mysqli_query($link, $query_for_log_old);
+    
+    if (!$result_for_log_old) {
+        die($id_entry . mysql_error());
+    }
+    
+    //Разбираем дескриптор в ассоциативный массив
+    $entry_for_log_old = mysqli_fetch_assoc($result_for_log_old);
+    
+    //Теперь делаем UPDATE            
     //дополнительные параметры: $subnet (subnet); $broadcast (broadcast); $founder (founder)
     
     //формируем запрос
-    $sql = "UPDATE spd_table SET
+    $sql_for_update = "UPDATE spd_table SET
                                 numOrder='%d', customer='%s', tarif='%s', ip_address='%s',
                                 netmask='%s', gateway='%s', vlan_id='%d', customer_port='%s',
                                 termination_point='%s', dt_last_edited='%s', commentary='%s',
                                 last_editor='%s'
                                 WHERE id_entry='%d'";
     
-    $query = sprintf($sql,
+    $query_for_update = sprintf($sql_for_update,
                     mysqli_real_escape_string($link, $numOrder),
                     mysqli_real_escape_string($link, $customer),
                     mysqli_real_escape_string($link, $tarif),
@@ -552,12 +567,45 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
                     mysqli_real_escape_string($link, $last_editor),
                     mysqli_real_escape_string($link, $id_entry));
     
-    //наконец-то его можно выполнить!
-    $result = mysqli_query($link, $query);
+    //Выполняем UPDATE
+    $result_for_update = mysqli_query($link, $query_for_update);
     
-    if (!$result) {
+    if (!$result_for_update) {
         die('Не получилось :(' . mysqli_error());
     }
+    
+    
+    //Теперь формируем запрос на логирование, чтобы получить отредактированную запись
+    
+    $sql_for_log_new = "SELECT * FROM `spd_table` WHERE `id_entry` ='%d'";
+    
+    $query_for_log_new = sprintf($sql_for_log_new,
+                    mysqli_real_escape_string($link, $id_entry));
+    
+    //выполняем запрос на выборку
+    $result_for_log_new = mysqli_query($link, $query_for_log_new);
+    
+    if (!$result_for_log_new) {
+        die($id_entry . mysql_error());
+    }
+    
+    //Разбираем дескриптор в ассоциативный массив
+    $entry_for_log_new = mysqli_fetch_assoc($result_for_log_new);
+    
+    
+    //В этом местей у нас есть $entry_for_log_old со старым вариантом записи и $entry_for_log_new с новым
+        
+    //Теперь совершаем логирование
+    
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+    
+    if (!logging($link, $last_editor, 'правка', $entry_for_log_old, $entry_for_log_new, $dt_last_edited)) {
+                //Запись в сессию в случае неудачного логирования
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }  //логирование завершено
+        
+    //окончание логирования
         
     //Запись в сессию о том, что редактирование прошло успешно
     $_SESSION['edit_success'] = "Запись успешно изменена!";
