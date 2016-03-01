@@ -325,7 +325,7 @@ function get_entry_by_last_editor($link, $last_editor) {
     
 }
 
-function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
+function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
     
     /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
@@ -362,9 +362,6 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     //установка текущей даты
     $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
     $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
-    
-    //Определение текущего пользователя
-    $user = getCurrentUser($link);
     
     $founder = $user['login'];
     $last_editor = $user['login'];
@@ -433,51 +430,61 @@ function entry_add($link, $numOrder, $customer, $tarif, $ip_address, $netmask, $
     return true;
 }
 
-function delete_entry($link, $id_entry) {
+function delete_entry($link, $user, $id_entry) {
     
-    //формируем запрос
-    $sql = "DELETE FROM spd_table WHERE id_entry ='%d'";
+    //Сначала пишем в лог
+    //Формирование $entry_for_log
+        
+    //Формирование нового запроса, чтобы понять, что будем удалять
+    $sql_for_log = "SELECT * FROM `spd_table` WHERE `id_entry` ='%d'";
     
-    $query = sprintf($sql,
+    $query = sprintf($sql_for_log,
                     mysqli_real_escape_string($link, $id_entry));
     
-    //выполняем запрос
-    $result = mysqli_query($link, $query);
+    //выполняем запрос на выборку
+    $result_for_log = mysqli_query($link, $query);
     
-    if (!result) {
+    if (!$result_for_log) {
+        die($id_entry . mysql_error());
+    }
+    
+    //Разбираем дескриптор в ассоциативный массив
+    $entry_for_log = mysqli_fetch_assoc($result_for_log);
+        
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+    
+    //установка текущей даты
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    
+    //Определение логина
+    $founder = $user['login'];
+        
+    if (!logging($link, $founder, 'удаление', $entry_for_log, $dt_added)) {
+                //Запись в сессию в случае неудачного логирования
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }  //логирование завершено
+    
+    //Теперь формируем запрос для удаления
+    $sql_delete = "DELETE FROM `spd_table` WHERE `id_entry` ='%d'";
+    
+    $query_for_delete = sprintf($sql_delete,
+                    mysqli_real_escape_string($link, $id_entry));
+    
+    //выполняем запрос на удаление
+    $result_for_delete = mysqli_query($link, $query_for_delete);
+    
+    if (!result_for_delete) {
         die('Не удалось удалить запись с id = ' . $id_entry . mysql_error());
     }
     
     //Запись в сессию о том, что удаление прошло успешно
     $_SESSION['delete_success'] = "Запись успешно удалена!";
     
-   /* //Запись в лог
-    //Формирование $entry_for_log
-    $entry_for_log = array();
-    
-    $entry_for_log['№ договора'] = $numOrder;
-    $entry_for_log['клиент'] = $customer;
-    $entry_for_log['скорость'] = $tarif;
-    $entry_for_log['IP-адрес'] = $ip_address;
-    $entry_for_log['маска'] = $netmask;
-    $entry_for_log['шлюза'] = $gateway;
-    $entry_for_log['влан'] = $vlan_id;
-    $entry_for_log['порт клиента'] = $customer_port;
-    $entry_for_log['терминация'] = $termination_point;
-    $entry_for_log['комментарий'] = $commentary;
-    
-    //подключение файла с функцией логирования
-    require_once('logging.php');
-        
-    if (!logging($link, $founder, 'удаление', $entry_for_log, $dt_added)) {
-                //Запись в сессию в случае неудачного логирования
-        $_SESSION['logging'] = 'Логирование действия не удалось!';
-    }  */
-    
     return true;
 }
 
-function entry_edit($link, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
+function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
     
     /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     

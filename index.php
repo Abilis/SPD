@@ -58,7 +58,7 @@ if (($_GET['action']) == 'edit') {
     
 }
 elseif (($_GET['action']) == 'delete') {
-    if (delete_entry($link, $_GET['id_entry'])) {
+    if (delete_entry($link, $user, $_GET['id_entry'])) {
         header('Location: index.php');
         die();
     }
@@ -66,7 +66,7 @@ elseif (($_GET['action']) == 'delete') {
 
 //обработка отправки формы
 elseif (!empty($_POST)) { //если массив не пустой
-    if (entry_edit($link, $_POST['id_entry'], $_POST['numOrder'], $_POST['customer'],
+    if (entry_edit($link, $user, $_POST['id_entry'], $_POST['numOrder'], $_POST['customer'],
                    $_POST['tarif'], $_POST['ip_address'], $_POST['netmask'], $_POST['gateway'],
                    $_POST['vlan_id'], $_POST['customer_port'], $_POST['termination_point'],
                    $_POST['commentary'])) { //update в базе. Если успешно - редирект на editor.php
