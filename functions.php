@@ -448,10 +448,31 @@ function delete_entry($link, $id_entry) {
         die('Не удалось удалить запись с id = ' . $id_entry . mysql_error());
     }
     
-    //запись в лог действия. Пока нереализовано
-    
     //Запись в сессию о том, что удаление прошло успешно
     $_SESSION['delete_success'] = "Запись успешно удалена!";
+    
+   /* //Запись в лог
+    //Формирование $entry_for_log
+    $entry_for_log = array();
+    
+    $entry_for_log['№ договора'] = $numOrder;
+    $entry_for_log['клиент'] = $customer;
+    $entry_for_log['скорость'] = $tarif;
+    $entry_for_log['IP-адрес'] = $ip_address;
+    $entry_for_log['маска'] = $netmask;
+    $entry_for_log['шлюза'] = $gateway;
+    $entry_for_log['влан'] = $vlan_id;
+    $entry_for_log['порт клиента'] = $customer_port;
+    $entry_for_log['терминация'] = $termination_point;
+    $entry_for_log['комментарий'] = $commentary;
+    
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+        
+    if (!logging($link, $founder, 'удаление', $entry_for_log, $dt_added)) {
+                //Запись в сессию в случае неудачного логирования
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }  */
     
     return true;
 }
