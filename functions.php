@@ -329,6 +329,14 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     
     /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
+    //проверка на наличие прав
+    
+    $canDoAdd = canDo($link, $user, 'EDIT_ENTRY');
+    if (!$canDoAdd) {
+        header('Location: index.php');
+        die();
+    }
+    
     //подготовка
     $numOrder = trim($numOrder);
     $customer = trim($customer);

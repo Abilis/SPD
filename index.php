@@ -33,7 +33,15 @@ $total = $entries_arr[2]; //всего страниц
 //Если массив $_GET не пустой, то обработка правки и удаления статей.
 if (($_GET['action']) == 'edit') {
     //правка записи
+    
+    //если нет прав - редирект на главную
+    if (!$canDoEdit) {
+        header('Location: index.php');
+        die();
+    }
+    
     $entry = get_entry($link, $_GET['id_entry']); //вытаскиваем конкретную запись из БД
+    
     
     //Разбираем массив в переменные
     $id_entry = $entry['id_entry'];
@@ -59,9 +67,11 @@ if (($_GET['action']) == 'edit') {
     
 }
 elseif (($_GET['action']) == 'delete') {
-    if (delete_entry($link, $user, $_GET['id_entry'])) {
-        header('Location: index.php');
-        die();
+    if ($canDoDelete) { //проверка, есть ли права удалять записи
+            if (delete_entry($link, $user, $_GET['id_entry'])) {        
+            header('Location: index.php');
+            die();
+            }
     }
 }
 
