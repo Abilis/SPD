@@ -5,7 +5,7 @@
 <?php } ?>
 <br />
 <br />
-<table>Сообщение дня <a href="#">[править]</a>
+<table>Сообщение дня <a href="admin.php?action=edit">[править]</a>
     <tr>
         <td><?=$motd['text']?> <br /><br />
             Разместил <?='<b>' . $motd['autor'] . '</b> <i>' . $motd['dt_motd'] . '<i>'?>

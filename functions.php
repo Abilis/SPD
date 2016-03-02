@@ -1024,4 +1024,16 @@ function get_motd($link) {
     return $motd  ;  
 }
 
+//Функция обновляет сообщение дня в панели администратора
+function updateMotd($link, $user, $motd) {
+    
+    
+    
+    
+    
+    
+    
+    return true;
+}
+
 ?>

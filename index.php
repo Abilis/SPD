@@ -56,10 +56,11 @@ if (($_GET['action']) == 'edit') {
     $termination_point = $entry['termination_point'];
     $commentary = $entry['commentary'];
         
-    //Выводим в шаблон
-    include('views/v-header.php');
-    include('views/v-edit.php');
-    include('views/v-footer.php');
+    //Выводим в шаблоны
+    include_once('views/v-header.php');
+    include_once('views/v-menu.php');
+    include_once('views/v-edit.php');
+    include_once('views/v-footer.php');
     die();
     
     

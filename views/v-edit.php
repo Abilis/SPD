@@ -1,5 +1,3 @@
-<a href="index.php">Главная</a> <b>|</b> <a href="add.php">Добавить клиента</a>
-<br />
 <table id = "addTable">
     <tr>
         <th>№ дог</th>
