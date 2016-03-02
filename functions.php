@@ -416,16 +416,16 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     //Формирование $entry_for_log
     $entry_for_log = array();
     
-    $entry_for_log['№ договора'] = $numOrder;
-    $entry_for_log['клиент'] = $customer;
-    $entry_for_log['скорость'] = $tarif;
-    $entry_for_log['IP-адрес'] = $ip_address;
-    $entry_for_log['маска'] = $netmask;
-    $entry_for_log['шлюза'] = $gateway;
-    $entry_for_log['влан'] = $vlan_id;
-    $entry_for_log['порт клиента'] = $customer_port;
-    $entry_for_log['терминация'] = $termination_point;
-    $entry_for_log['комментарий'] = $commentary;
+    $entry_for_log['numOrder'] = $numOrder;
+    $entry_for_log['customer'] = $customer;
+    $entry_for_log['tarif'] = $tarif;
+    $entry_for_log['ip_address'] = $ip_address;
+    $entry_for_log['netmask'] = $netmask;
+    $entry_for_log['gateway'] = $gateway;
+    $entry_for_log['vlan_id'] = $vlan_id;
+    $entry_for_log['customer_port'] = $customer_port;
+    $entry_for_log['termination_point'] = $termination_point;
+    $entry_for_log['commentary'] = $commentary;
     
     //подключение файла с функцией логирования
     require_once('logging.php');
@@ -936,30 +936,56 @@ function format_new_log($logs, $whichLog, $num) {
     //Создание массивов
     $arrayLogInside = array();
     $arrayLogs = array();
+    
+    
+    //магия! не трогать!
+        for ($i = 0; $i < $num; $i++) {
+            
+            if ($logs[$i]['action'] == "добавление") {
+                
+                $format_current_log = explode(";", $logs[$i]['entry_new_log']);
+            
+                $arrayLogInside[0] = iconv_substr($format_current_log[0], 10);
+                $arrayLogInside[1] = iconv_substr($format_current_log[1], 12);
+                $arrayLogInside[2] = iconv_substr($format_current_log[2], 9);
+                $arrayLogInside[3] = iconv_substr($format_current_log[3], 13);
+                $arrayLogInside[4] = iconv_substr($format_current_log[4], 10);
+                $arrayLogInside[5] = iconv_substr($format_current_log[5], 10);
+                $arrayLogInside[6] = iconv_substr($format_current_log[6], 10);
+                $arrayLogInside[7] = iconv_substr($format_current_log[7], 17);
+                $arrayLogInside[8] = iconv_substr($format_current_log[8], 20);
+                $arrayLogInside[9] = iconv_substr($format_current_log[9], 13);
 
-    for ($i = 1; $i < $num; $i++) {
+                $arrayLogs[$i] = $arrayLogInside;
+                
+            }
+            
+        else {
+                                        
+                $format_current_log = explode(";", $logs[$i][$whichLog]);
+                
+                $arrayLogInside[0] = iconv_substr($format_current_log[1], 12);
+                $arrayLogInside[1] = iconv_substr($format_current_log[2], 12);
+                $arrayLogInside[2] = iconv_substr($format_current_log[3], 9);
+                $arrayLogInside[3] = iconv_substr($format_current_log[4], 13);
+                $arrayLogInside[4] = iconv_substr($format_current_log[5], 10);
+                $arrayLogInside[5] = iconv_substr($format_current_log[6], 10);
+                $arrayLogInside[6] = iconv_substr($format_current_log[7], 10);
+                $arrayLogInside[7] = iconv_substr($format_current_log[8], 16);
+                $arrayLogInside[8] = iconv_substr($format_current_log[9], 21);
+                $arrayLogInside[9] = iconv_substr($format_current_log[14], 14);
 
-        $format_current_log = explode(";", $logs[$i][$whichLog]);
-        
-        $arrayLogInside[0] = iconv_substr($format_current_log[0], 13);
-        $arrayLogInside[1] = iconv_substr($format_current_log[1], 10);
-        $arrayLogInside[2] = iconv_substr($format_current_log[2], 12);
-        $arrayLogInside[3] = iconv_substr($format_current_log[3], 11);
-        $arrayLogInside[4] = iconv_substr($format_current_log[4], 8);
-        $arrayLogInside[5] = iconv_substr($format_current_log[5], 8);
-        $arrayLogInside[6] = iconv_substr($format_current_log[6], 7);
-        $arrayLogInside[7] = iconv_substr($format_current_log[7], 16);
-        $arrayLogInside[8] = iconv_substr($format_current_log[8], 13);
-        $arrayLogInside[9] = iconv_substr($format_current_log[9], 15);
+                $arrayLogs[$i] = $arrayLogInside;
 
-        $arrayLogs[$i] = $arrayLogInside;
-
-    }
+            }            
+                        
+        }
     
     
     
     return $arrayLogs;
 }
+
 
 //Функция создает названия полей для отображения логов в панели администратора
 function createLogName() {
