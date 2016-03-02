@@ -330,8 +330,8 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
     //проверка на наличие прав
-    
-    $canDoAdd = canDo($link, $user, 'EDIT_ENTRY');
+    require_once('access.php');
+    $canDoAdd = canDo($link, $user, 'ADD_ENTRY');
     if (!$canDoAdd) {
         header('Location: index.php');
         die();
@@ -440,6 +440,14 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
 
 function delete_entry($link, $user, $id_entry) {
     
+    //проверка на наличие прав
+    require_once('access.php');
+    $canDoAdd = canDo($link, $user, 'DELETE_ENTRY');
+    if (!$canDoAdd) {
+        header('Location: index.php');
+        die();
+    }
+    
     //Сначала пишем в лог
     //Формирование $entry_for_log
         
@@ -495,6 +503,14 @@ function delete_entry($link, $user, $id_entry) {
 function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
     
     /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
+    
+    //проверка на наличие прав
+    require_once('access.php');
+    $canDoAdd = canDo($link, $user, 'EDIT_ENTRY');
+    if (!$canDoAdd) {
+        header('Location: index.php');
+        die();
+    }
     
     //подготовка
     $id_entry = trim($id_entry);
@@ -1027,11 +1043,43 @@ function get_motd($link) {
 //Функция обновляет сообщение дня в панели администратора
 function updateMotd($link, $user, $motd) {
     
+    //Подготовка
+    $motd = trim($motd);
     
+    if ($motd == '') {
+        return false;
+    }
     
+    //проверка на наличие прав
+    require_once('access.php');
+    $canDoAdd = canDo($link, $user, 'EDIT_MOTD');
+    if (!$canDoAdd) {
+        header('Location: index.php');
+        die();
+    }
     
+    //Экранирование html-тегов
+    $motd = htmlspecialchars($motd);
     
+    //установка текущей даты
+    $dt_motd = date('Y.m.d G:i:s', time() + 3600 * 3);
     
+    //Установка Текущего пользователя в качестве автора
+    $autor = $user['login'];
+    
+    //формируем запрос
+    $sql = "UPDATE `motd` SET `text`='%s', `autor`='%s', `dt_motd`='%s'";
+    
+    $query = sprintf($sql,  mysqli_real_escape_string($link, $motd),
+                            mysqli_real_escape_string($link, $autor),
+                            mysqli_real_escape_string($link, $dt_motd));
+    
+    //выполняем запрос
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_errror());
+    }
     
     return true;
 }
