@@ -79,7 +79,7 @@
                     
                 <?php if ($canDoDelete) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete">[удалить]</a>
+                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete" onClick="return window.confirm('Вы действительно хотите удалить эту запись?')">[удалить]</a>
                     </span>
                  <?php } ?>
                         
