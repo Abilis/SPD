@@ -13,6 +13,9 @@ $user = getCurrentUser($link);
 //Определяем, может ли пользователь находиться в панели администратор
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
+//Определяем, может ли пользователь добавлять записи
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
+
 //Определяем, может ли пользователь делать импорт в БД файлов .cvs
 $canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
 

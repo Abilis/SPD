@@ -13,9 +13,10 @@ clearSessionsInDB($link);
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
-//Определяем, может ли пользователь редактировать и удалять записи
+//Определяем, может ли пользователь редактировать и удалять и добавлять записи, а также находиться в админ-панели
 $canDoEdit = canDo($link, $user, 'EDIT_ENTRY');
 $canDoDelete = canDo($link, $user, 'DELETE_ENTRY');
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
 //вытаскиваем полное число записей из БД
