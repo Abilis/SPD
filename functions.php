@@ -875,5 +875,109 @@ function getWhoIsOnline($link) {
     return $whoUsersOnline;
 }
 
+//Функция возвращает массив с логами
+function getLogs($link) {
+    
+    //Запрос
+    $query = "SELECT * FROM `logs` ORDER BY `id_log` DESC";
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Разбираем дескриптор в ассоциативный массив
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $logs = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $logs[] = $row;
+    }
+        
+    return $logs;
+}
+
+//функция преобразует старые логи в массив массивов логов для показа в панели администратора
+function format_log($logs, $whichLog, $num) {
+    
+    //Создание массивов
+    $arrayLogInside = array();
+    $arrayLogs = array();
+
+    for ($i = 0; $i < $num; $i++) {
+
+        $format_current_log = explode(";", $logs[$i][$whichLog]);
+
+        $arrayLogInside[0] = iconv_substr($format_current_log[1], 12);
+        $arrayLogInside[1] = iconv_substr($format_current_log[2], 12);
+        $arrayLogInside[2] = iconv_substr($format_current_log[3], 9);
+        $arrayLogInside[3] = iconv_substr($format_current_log[4], 14);
+        $arrayLogInside[4] = iconv_substr($format_current_log[5], 11);
+        $arrayLogInside[5] = iconv_substr($format_current_log[6], 11);
+        $arrayLogInside[6] = iconv_substr($format_current_log[7], 11);
+        $arrayLogInside[7] = iconv_substr($format_current_log[8], 17);
+        $arrayLogInside[8] = iconv_substr($format_current_log[9], 21);
+        $arrayLogInside[9] = iconv_substr($format_current_log[14], 14);
+
+        $arrayLogs[$i] = $arrayLogInside;
+
+    }
+    
+    
+    
+    return $arrayLogs;
+}
+
+//функция преобразует новые логи в массив массивов логов для показа в панели администратора
+function format_new_log($logs, $whichLog, $num) {
+    
+    //Создание массивов
+    $arrayLogInside = array();
+    $arrayLogs = array();
+
+    for ($i = 1; $i < $num; $i++) {
+
+        $format_current_log = explode(";", $logs[$i][$whichLog]);
+        
+        $arrayLogInside[0] = iconv_substr($format_current_log[0], 13);
+        $arrayLogInside[1] = iconv_substr($format_current_log[1], 10);
+        $arrayLogInside[2] = iconv_substr($format_current_log[2], 12);
+        $arrayLogInside[3] = iconv_substr($format_current_log[3], 11);
+        $arrayLogInside[4] = iconv_substr($format_current_log[4], 8);
+        $arrayLogInside[5] = iconv_substr($format_current_log[5], 8);
+        $arrayLogInside[6] = iconv_substr($format_current_log[6], 7);
+        $arrayLogInside[7] = iconv_substr($format_current_log[7], 16);
+        $arrayLogInside[8] = iconv_substr($format_current_log[8], 13);
+        $arrayLogInside[9] = iconv_substr($format_current_log[9], 15);
+
+        $arrayLogs[$i] = $arrayLogInside;
+
+    }
+    
+    
+    
+    return $arrayLogs;
+}
+
+//Функция создает названия полей для отображения логов в панели администратора
+function createLogName() {
+    
+    $log_name = array();
+    $log_name[0] = "№ дог.";
+    $log_name[1] = "Клиент";
+    $log_name[2] = "Скорость";
+    $log_name[3] = "IP-адрес";
+    $log_name[4] = "Маска";
+    $log_name[5] = "Шлюз";
+    $log_name[6] = "Влан";
+    $log_name[7] = "Порт клиента";
+    $log_name[8] = "Терминация";
+    $log_name[9] = "Комментарий";
+    
+    return $log_name;
+}
+
 
 ?>
