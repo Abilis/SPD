@@ -9,8 +9,8 @@
         <th>Влан</th>
         <th>Порт клиента</th>
         <th>Терминация</th>
-        <th>Отредактировано</th>
         <th>Комментарий</th>
+        <th>Отредактировано</th>
     </tr>
     
     <tr class="search">
@@ -45,14 +45,14 @@
         </td>
         <td></td>
         <td></td>
+        <td></td>
         <td>
             <form action="search.php" method="post">
             <input type="search" name="last_editor"/> <br />
             <input type="submit" value="Поиск"/>
             <input type="hidden" name="search_from" value="editor" />
             </form>   
-        </td>
-        <td></td>
+        </td>        
     </tr>
     
     <?php if (empty($entries)) { ?>
@@ -91,9 +91,9 @@
             <td><?=$entry['vlan_id']?></td>
             <td><?=$entry['customer_port']?></td>
             <td><?=$entry['termination_point']?></td>
-            <td><?=$entry['dt_last_edited'] . ' by ' . $entry['last_editor'] ?></td>
             <td><?=$entry['commentary']?></td>
-            
+            <td><?=$entry['dt_last_edited'] . ' by ' . $entry['last_editor'] ?></td>
+                        
         </tr>
     <?php endforeach ?>
 

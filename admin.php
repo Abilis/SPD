@@ -29,6 +29,9 @@ $whoUsersOnline = getWhoIsOnline($link);
 
 
 
+
+
+
 //Выводим в шаблоны
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
