@@ -1005,5 +1005,23 @@ function createLogName() {
     return $log_name;
 }
 
+//функция вытаскивает из БД сообщение дня в панели администратор
+function get_motd($link) {
+    
+   //формируем запрос
+    $sql = "SELECT * FROM `motd`";
+        
+    //Выполняем запрос
+    $result = mysqli_query($link, $sql);
+    
+    if (!$result) {
+        die(mysqli_error());
+    }
+    
+    //Собираем из дескриптора ассоциативный массив
+    $motd = mysqli_fetch_assoc($result); 
+    
+    return $motd  ;  
+}
 
 ?>

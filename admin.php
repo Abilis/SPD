@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 require_once('database.php');
 require_once('functions.php');
 require_once('access.php');
@@ -34,10 +34,17 @@ $logs = getLogs($link);
 $format_old_log = format_log($logs, 'entry_old_log', 10);
 $format_new_log = format_new_log($logs, 'entry_new_log', 10);
 
-
-
 //Создаем массив названий
 $log_name = createLogName();
+
+
+
+
+//Вытаскивание сообщения дня
+$motd = get_motd($link, $user);
+    
+var_dump($motd);    
+
 
 
 

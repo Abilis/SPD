@@ -7,8 +7,8 @@
 <br />
 <table>Сообщение дня <a href="#">[править]</a>
     <tr>
-        <td>Какой-то текст
-            <br /><span class="italic">Разместил <b>username</b> date</span>
+        <td><?=$motd['text']?> <br /><br />
+            Разместил <?='<b>' . $motd['autor'] . '</b> <i>' . $motd['dt_motd'] . '<i>'?>
         </td>
     </tr>    
 </table>
