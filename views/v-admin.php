@@ -60,6 +60,10 @@
     <input type="text" name="network" /><br />
     <label>Префикс маски (например, /27):</label><br />
     <input type="text" name="netmask" value="/" /><br />
+    <label>Влан:</label><br />
+    <input type="text" name="vlan" /><br />
+    <label>Терминация:</label><br />
+    <input type="text" name="termination" /><br />    
     <span class="bold">Шлюз будет отмечен как первый возможный адрес</span><br />
     <input type="submit"/>
 </form>
