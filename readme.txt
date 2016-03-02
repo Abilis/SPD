@@ -11,3 +11,5 @@
 			bloadcast, df_added, dt_last_adited, commentary, founder, last_editor)
 
 7. logs (id_log, login, action, entry_old_log, entry_new_log, dt_action)
+
+8. motd (id_motd, text, autor, dt_motd)
