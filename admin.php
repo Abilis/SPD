@@ -13,18 +13,16 @@ $user = getCurrentUser($link);
 //Определяем, может ли пользователь находиться в панели администратор
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
-//Определяем, может ли пользователь добавлять записи
-$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
-
-//Определяем, может ли пользователь делать импорт в БД файлов .cvs
-$canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
-
-//Определяем, может ли пользователь находиться в админке
 if (!$canDoViewAdminPanel) {
     header('Location: index.php');
     die('не положено!');
 }
 
+//Определяем, может ли пользователь добавлять записи
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
+
+//Определяем, может ли пользователь делать импорт в БД файлов .cvs
+$canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
 
 //Обработка правки сообщения дня
 if ($_GET['action'] == 'edit') {
@@ -89,7 +87,8 @@ $motd = get_motd($link);
 
 
 
-
+//Устанавливаем значение радиоточки по умолчанию
+$checkedAccessUser = 'checked';
 
 //Выводим в шаблоны
 include_once('views/v-header.php');

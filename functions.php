@@ -1084,4 +1084,61 @@ function updateMotd($link, $user, $motd) {
     return true;
 }
 
+//функция создает нового пользователя
+function createNewUser($link, $user, $login, $password, $confirmPassword, $username, $accessUser, $accessOperator,                          $accessAdministrator, $accessMainAdministrator) {
+  
+    //Определяем, может ли пользователь управлять пользователями
+    $canDoUsersControl = canDo($link, $user, 'USERS_CONTROL');
+
+    if (!$canDoUsersControl) {        
+        return false;
+    }
+    
+    //проверяем, совпадают ли введенные пароли
+     if ($password != $confirmPassword) {
+         
+         $_SESSION['notSamePassword'] = "Пароли не совпадают!";                 
+         return false;
+     }
+    
+    //проверка значимых полей
+    if ((!isset($login) || !isset($password) || !isset($confirmPassword))) {
+        
+        $_SESSION['errorCreateUser'] = "Не отмечено одно из полей!";        
+        return false;
+    }
+    
+    //выбор id_role
+    if ($accessUser) {
+        $id_role = 1;
+    }
+    elseif ($accessOperator) {
+        $id_role = 2;
+    }
+    elseif ($accessAdministrator) {
+        $id_role = 5;
+    }
+    elseif ($accessMainAdministrator) {
+        $id_role = 10;
+    }
+    else {
+        return false;
+    }
+    
+    
+    //проверяем, нет ли в БД пользователя с таким логином
+    
+    
+    
+    //формируем запрос
+    
+    
+    //выполняем его
+    
+    
+    
+    return true;
+}
+
+
 ?>

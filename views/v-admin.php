@@ -53,20 +53,34 @@
 <br />
 
 Создать нового пользователя:
-<form action="create_new_user.php" method="post">
+<?php
+if ($_SESSION['notSamePassword']) ?>
+    <br /><span class="bold"><?=$_SESSION['notSamePassword']?></span>
+<?php
+    $_SESSION['notSamePassword'] = null;
+?>
+
+<?php
+if ($_SESSION['errorCreateUser']) ?>
+    <br /><span class="bold"><?=$_SESSION['errorCreateUser']?></span>
+<?php
+    $_SESSION['errorCreateUser'] = null;
+?>
+
+<form action="users.php" method="post">
     <label class="italic">Логин:</label><br />
-    <input type="text" name="login"/><br>
+    <input type="text" name="login" value="<?=$login?>" /><br>
     <label class="italic">Пароль:</label><br />
-    <input type="password" name="password"/><br>
+    <input type="password" name="password"value="<?=$password?>" /><br>
     <label class="italic">Повторите пароль:</label><br />
-    <input type="password" name="confirmPassword"/><br>
+    <input type="password" name="confirmPassword"value="<?=$comfirmPassword?>" /><br>
     <label class="italic">Имя:</label><br />
-    <input type="text" name="username"/><br>
+    <input type="text" name="username" value="<?=$username?>" /><br>
     <label class="italic">Права:</label><br />   
-    <label class="italic">Пользователь </label><input type=radio name="access" value="user" checked/> (Только просмотр)<br>
-    <label class="italic">Оператор </label><input type=radio name="access" value="operator"/> (Плюс правка и добавление)<br>
-    <label class="italic">Администратор</label><input type=radio name="access" value="administrator"/> (Плюс удаление и доступ сюда)<br>
-    <label class="italic">Главный администратор</label><input type=radio name="access" value="mainAdministrator"/> (Плюс импорт в БД файлов .cvs)<br>
+    <label class="italic">Пользователь </label><input type=radio name="access" value="accessUser" <?=$checkedAccessUser?> /> (Только просмотр)<br>
+    <label class="italic">Оператор </label><input type=radio name="access" value="accessOperator" <?=$checkedAccessOperator?> /> (Плюс правка и добавление)<br>
+    <label class="italic">Администратор</label><input type=radio name="access" value="accessAdministrator" <?=$checkedAccessAdministrator?> /> (Плюс удаление и доступ сюда)<br>
+    <label class="italic">Главный администратор</label><input type=radio name="access" value="accessMainAdministrator" <?=$checkedAccessMainAdministrator?>/> (Плюс импорт в БД файлов .cvs)<br>
     <input type="submit" value="Создать"/>    
 </form>
 <br />
