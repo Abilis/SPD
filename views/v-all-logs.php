@@ -1,4 +1,3 @@
-Логи:
 <table>
     <tr>
         <th>Имя</th>
@@ -34,3 +33,8 @@
     <?php } ?>
     
 </table>
+<form class="deleteOldLogs" action="#" method="post">
+    <label>Удалить логи, старше 3 месяцев</label>
+    <input type="submit" value="Выполнить!"/>
+</form>
+<br />
