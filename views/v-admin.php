@@ -107,6 +107,15 @@ if ($_SESSION['successCreateUser']) ?>
 
 <br />
 <b>Добавить сеть в БД с пометкой:</b>
+<br />
+
+<?php
+if ($_SESSION['noAccessImportInDb']) ?>
+    <span class="bold"><?=$_SESSION['noAccessImportInDb']?></span>
+<?php
+    $_SESSION['noAccessImportInDb'] = null;
+?>
+
 <form action="#" method="post">
     <label>Метка адреса:</label><br />
     <input type="text" name="markAddress" value="Свободен" /><br />

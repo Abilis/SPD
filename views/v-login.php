@@ -1,13 +1,3 @@
-<?php if ($user != null) { ?>
-            <br />Вы вошли как <b><?=$user['login']?></b><br />
-            <a href="logout.php">Выйти</a>
-<?php } ?>
-
-<?php if ($user == null) { ?>
-            <a href="login.php">Войти</a>
-            <br /><b>Вы не залогинены</b>
-<?php } ?><br /><br />
-
 <?php if (isset($_SESSION['login_success'])) { 
         echo '<span class="bold">' . $_SESSION['login_success'] . '</span>';
         $_SESSION['login_success'] = null;    

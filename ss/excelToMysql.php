@@ -1,6 +1,24 @@
 <?php
-//require_once('database.php');
-//без необходимости не расскоментировать
+error_reporting(E_ERROR);
+require_once('../database.php');
+require_once('../functions.php');
+require_once('../access.php');
+
+//подключение к БД
+$link = startup();
+
+//Определение текущего пользователя
+$user = getCurrentUser($link);
+
+//Определяем, может ли пользователь делать импорт
+$canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
+
+if (!$canDoImportInDb) {
+    $_SESSION['noAccessImportInDb'] = "Недостаточно прав для импорта данных в БД!";
+    header('Location: ../admin.php');
+    die('не положено!');
+}
+
 
 $timeBegin = time();
 
@@ -60,6 +78,6 @@ $timeGone = $timeFinish - $timeBegin;
 echo 'Затрачено секунд: ' . $timeGone;?>
 <br />
 <br />
-<a href="index.php">На главную</a> <b>|</b> <a href="admin.php">Вернуться в панель администратора</a>
+<a href="../index.php">На главную</a> <b>|</b> <a href="../admin.php">Вернуться в панель администратора</a>
 <?php include_once('views/v-index.php');
 ?>

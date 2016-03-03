@@ -4,6 +4,8 @@ require_once('database.php');
 require_once('functions.php');
 require_once('access.php');
 
+$_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сесси больше не нужна
+
 // подключение к БД
 $link = startup();
 

@@ -1,14 +1,18 @@
 <?php
 error_reporting(E_ERROR);
-
 require_once('database.php');
 require_once('functions.php');
+require_once('access.php');
 
 //подключение к БД
 $link = startup();
 
 //Определение текущего пользователя
 $user = getCurrentUser($link);
+
+//Определяем, может ли пользователь добавлять записи и находиться в панели администратора
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
+$canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
 //обработка отправки формы
 if (!empty($_POST)) {
