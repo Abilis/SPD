@@ -53,30 +53,31 @@
 <br />
 
 Создать нового пользователя:
+<br />
 <?php
 if ($_SESSION['notSamePassword']) ?>
-    <br /><span class="bold"><?=$_SESSION['notSamePassword']?></span>
+    <span class="bold"><?=$_SESSION['notSamePassword']?></span>
 <?php
     $_SESSION['notSamePassword'] = null;
 ?>
 
 <?php
 if ($_SESSION['existSuchUser']) ?>
-    <br /><span class="bold"><?=$_SESSION['existSuchUser']?></span>
+    <span class="bold"><?=$_SESSION['existSuchUser']?></span>
 <?php
     $_SESSION['existSuchUser'] = null;
 ?>
 
 <?php
 if ($_SESSION['errorCreateUser']) ?>
-    <br /><span class="bold"><?=$_SESSION['errorCreateUser']?></span>
+    <span class="bold"><?=$_SESSION['errorCreateUser']?></span>
 <?php
     $_SESSION['errorCreateUser'] = null;
 ?>
 
 <?php
 if ($_SESSION['successCreateUser']) ?>
-    <br /><span class="bold"><?=$_SESSION['successCreateUser']?></span>
+    <span class="bold"><?=$_SESSION['successCreateUser']?></span>
 <?php
     $_SESSION['successCreateUser'] = null;
 ?>
@@ -97,6 +98,13 @@ if ($_SESSION['successCreateUser']) ?>
     <label class="italic">Главный администратор</label><input type=radio name="access" value="accessMainAdministrator" <?=$checkedAccessMainAdministrator?>/> (Плюс импорт в БД файлов .cvs)<br>
     <input type="submit" value="Создать"/>    
 </form>
+
+<form>
+    
+
+    
+</form>
+
 <br />
 <b>Добавить сеть в БД с пометкой:</b>
 <form action="#" method="post">
