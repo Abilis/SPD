@@ -1085,7 +1085,7 @@ function updateMotd($link, $user, $motd) {
 }
 
 //функция создает нового пользователя
-function createNewUser($link, $user, $login, $password, $confirmPassword, $username, $accessUser, $accessOperator,                          $accessAdministrator, $accessMainAdministrator) {
+function createNewUser($link, $user, $login, $password, $confirmPassword, $username, $access) {
   
     //Определяем, может ли пользователь управлять пользователями
     $canDoUsersControl = canDo($link, $user, 'USERS_CONTROL');
@@ -1108,34 +1108,60 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
         return false;
     }
     
+    
     //выбор id_role
-    if ($accessUser) {
+    if ($access == 'accessUser') {
         $id_role = 1;
     }
-    elseif ($accessOperator) {
+    elseif ($access == 'accessOperator') {
         $id_role = 2;
     }
-    elseif ($accessAdministrator) {
+    elseif ($access == 'accessAdministrator') {
         $id_role = 5;
     }
-    elseif ($accessMainAdministrator) {
+    elseif ($access == 'accessMainAdministrator') {
         $id_role = 10;
     }
     else {
         return false;
     }
     
-    
     //проверяем, нет ли в БД пользователя с таким логином
     
+    $sqlFromDB = "SELECT `login` FROM `users` WHERE `login`='%s'";
+    $queryFromDb = sprintf($sqlFromDB, mysqli_real_escape_string($link, $login));
     
+    $resultFromDb = mysqli_query($link, $queryFromDb);
     
-    //формируем запрос
+    if (!$resultFromDb) {
+        die(mysqli_errror());
+    }
     
+    $num = mysqli_affected_rows($link);
+    if ($num != 0) {
+        
+        $_SESSION['existSuchUser'] = "Пользователь с логином $login уже существует!"; 
+        return false;
+    }
     
-    //выполняем его
+    //если дошли до сюда, значит, можно создавать пользователя
     
+    $password = md5($password);
     
+    $sqlCreateUser = "INSERT INTO `users` (`login`, `password`, `id_role`, `name`) VALUES ('%s', '%s', '%d', '%s')";
+    
+    $queryCreateUser = sprintf($sqlCreateUser, mysqli_real_escape_string($link, $login),
+                                                mysqli_real_escape_string($link, $password),
+                                                mysqli_real_escape_string($link, $id_role),
+                                                mysqli_real_escape_string($link, $username));
+        
+    $resultCreateUser = mysqli_query($link, $queryCreateUser);
+    
+    if (!$resultCreateUser) {
+        die(mysqli_errror());
+    }
+    
+    $_SESSION['successCreateUser'] = "Пользователь $login успешно создан!"; 
     
     return true;
 }

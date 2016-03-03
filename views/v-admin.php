@@ -61,10 +61,24 @@ if ($_SESSION['notSamePassword']) ?>
 ?>
 
 <?php
+if ($_SESSION['existSuchUser']) ?>
+    <br /><span class="bold"><?=$_SESSION['existSuchUser']?></span>
+<?php
+    $_SESSION['existSuchUser'] = null;
+?>
+
+<?php
 if ($_SESSION['errorCreateUser']) ?>
     <br /><span class="bold"><?=$_SESSION['errorCreateUser']?></span>
 <?php
     $_SESSION['errorCreateUser'] = null;
+?>
+
+<?php
+if ($_SESSION['successCreateUser']) ?>
+    <br /><span class="bold"><?=$_SESSION['successCreateUser']?></span>
+<?php
+    $_SESSION['successCreateUser'] = null;
 ?>
 
 <form action="users.php" method="post">

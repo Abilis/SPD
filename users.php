@@ -21,10 +21,11 @@ if (!$canDoUsersControl) {
 }
 
 //Обработка формы
-if (($_POST['login'] != null) && ($_POST['login'] != null)) { //если вбиты логин и пароль 
-    
+if (($_POST['login'] != null) && ($_POST['password'] != null)) { //если вбиты логин и пароль     
+        
     if (createNewUser($link, $user, $_POST['login'], $_POST['password'], $_POST['confirmPassword'],
-                      $_POST['username'], $_POST['accessUser'], $_POST['accessOperator'],           $_POST['accessAdministrator'], $_POST['accessMainAdministrator'])) {
+                      $_POST['username'], $_POST['access'])) {
+        
         
         //если мы здесь, значит, пользователь успешно создался
         header('Location: admin.php');
