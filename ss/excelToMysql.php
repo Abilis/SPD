@@ -19,11 +19,37 @@ if (!$canDoImportInDb) {
     die('не положено!');
 }
 
+//Загрузка файла
 
+if ($_FILES['filename']['size'] > 3000000) {
+    
+    echo 'Слишком большой размер файла!';
+    die();
+}
+
+if ($_FILES['filename']['type'] != application/vnd.ms-excel) {
+    
+    echo 'Некорректный тип файла! Файл должен быть в формате .csv';
+    die();
+}
+
+
+//Установка переменных
+$tmpName = $_FILES['filename']['tmp_name'];
+$name = 'spd.csv';
+
+if (!move_uploaded_file($tmpName, $name)) {
+    
+   die('Не получилось загрузить файл :(');
+}
+
+
+
+
+
+
+//начало исполнение импорта
 $timeBegin = time();
-
-// подключение к БД
-$link = startup();
 
 $file_name = 'spd.csv';
 
@@ -58,6 +84,7 @@ $result = mysqli_query($link, $sql);
 
     
 if (!$result) {
+    
     die('Что-то пошло не так :(' . mysql_error());
 }
   

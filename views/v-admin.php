@@ -173,9 +173,9 @@ if ($_SESSION['noAccessImportInDb']) ?>
 <br />
 
 <?php if ($canDoImportInDb) { ?>
-<form action="#" method="post"><b>Добавить в БД данные .cvs</b><br />
+<form action="./ss/excelToMysql.php" method="post" enctype="multipart/form-data"><b>Добавить в БД данные .cvs</b><br />
     <label>Файл в формате .cvs в кодировке uft8</label><br>
-    <input type="file" name="importCSV"/><br>
+    <input type="file" name="filename"/><br>
     <input type="submit" value="Импортировать!"/>
 </form>
 <?php } ?>
