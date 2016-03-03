@@ -58,7 +58,10 @@ if ($_GET['action'] == 'edit') {
 $numEntriesAll = getEntriesAll($link);
 
 //Запрашиваем залогиненных пользователей
-$whoUsersOnline = getWhoIsOnline($link);
+$whoUsersOnline_arr = getWhoIsOnline($link);
+
+$whoUsersOnline = $whoUsersOnline_arr[0];
+$numOnlineUsers = $whoUsersOnline_arr[1];
 
 //Вытаскиваем логи из БД
 $logs = getLogs($link);
@@ -71,17 +74,15 @@ $format_new_log = format_new_log($logs, 'entry_new_log', 10);
 //Создаем массив названий
 $log_name = createLogName();
 
-
-
-
-
 //Вытаскивание сообщения дня
 $motd = get_motd($link);
     
+//Получаем список пользователей
+$users_arr = getUsers($link);
 
-
-
-
+//Разбираем полученный массив
+$users = $users_arr[0];
+$numUsers = $users_arr[1];
 
 
 

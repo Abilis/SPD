@@ -887,8 +887,11 @@ function getWhoIsOnline($link) {
         $row = mysqli_fetch_assoc($result);
         $whoUsersOnline[] = $row;
     }
+    
+    $whoUsersOnline_arr[0] = $whoUsersOnline;
+    $whoUsersOnline_arr[1] = $n;    
             
-    return $whoUsersOnline;
+    return $whoUsersOnline_arr;
 }
 
 //Функция возвращает массив с логами
@@ -1232,6 +1235,31 @@ function get_logs_num_start($link) {
     return $entries_arr;
 }
 
-
+//Функция для получения всех пользователей системы
+function getUsers($link) {
+    
+   //Запрос
+    $query = "SELECT * FROM `users` ORDER BY `id_user` DESC";
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $users = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $users[] = $row;
+    }
+    
+    $users_arr[0] = $users;
+    $users_arr[1] = $n;
+    
+    return $users_arr; 
+    
+}
 
 ?>

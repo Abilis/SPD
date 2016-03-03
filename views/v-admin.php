@@ -101,7 +101,10 @@ if ($_SESSION['successCreateUser']) ?>
 
 <br />
 
-Список пользователей:
+Список пользователей: (всего пользователей: <?=$numUsers?>, онлайн: <?=$numOnlineUsers?> 
+                        (<?php foreach($whoUsersOnline as $userOnline) { ?>
+                                    <b><?=$userOnline['login']?></b>
+                        <?php } ?>))
 <table class="viewUsers">
     <tr>
         <th><label>Пользователь</label>
@@ -111,48 +114,37 @@ if ($_SESSION['successCreateUser']) ?>
         <th><label>Имя</label>       
         </th>
     </tr>
+    
+    <?php foreach ($users as $user) { ?>
+    
     <tr>
-        <td>какой-то пользователь
+        <td><b><?=$user['login']?></b>
         </td>
-        <td>Какие-то права
+        <td>
+            <?php
+             if ($user['id_role'] == 1) {
+                echo 'Пользователь';
+             }
+             elseif ($user['id_role'] == 2) {
+                echo 'Оператор';
+             }
+             elseif ($user['id_role'] == 5) {
+                echo 'Администратор';
+             }
+             elseif ($user['id_role'] == 10) {
+                echo 'Администратор';
+             }
+             else
+    
+            ?>
         </td>
-        <td>Какое-то имя
+        <td><?=$user['name']?>
         </td>
     </tr>
+    
+<?php } ?>
+    
 </table>
-
-<br />
-Редактирование прав пользователей:
-<form action="#" method="post">
-    <table class="viewUsers">
-        <tr>
-            <th><label>Пользователь</label>
-            </th>
-            <th><label>Права</label>       
-            </th>
-            <th><label>Имя</label>       
-            </th>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" name="login" value="Логин"/>               
-            </td>
-            
-            <td> 
-                <select>
-                    <option name="accessUser">Пользователь</option>
-                    <option name="accessOperator">Оператор</option>
-                    <option name="accessAdministrator">Администратор</option>
-                </select> 
-            </td>
-                
-            <td>   
-                <input type="text" name="username" value="Имя"/>
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Изменить"/>
-</form>
 
 <br />
 <b>Добавить сеть в БД с пометкой:</b>
