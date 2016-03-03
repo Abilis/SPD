@@ -12,6 +12,13 @@ if ($_SESSION['noAccessImportInDb']) ?>
     $_SESSION['noAccessImportInDb'] = null;
 ?>
 
+<?php
+if ($_SESSION['networkGeneration']) ?>
+    <span class="bold"><?=$_SESSION['networkGeneration']?></span>
+<?php
+    $_SESSION['networkGeneration'] = null;
+?>
+
 <br />
 <table>Сообщение дня <a href="admin.php?action=edit">[править]</a>
     <tr>
@@ -21,7 +28,7 @@ if ($_SESSION['noAccessImportInDb']) ?>
     </tr>    
 </table>
 <br />
-Последние 10 событий: <a href="all_logs.php">Все логи</a>
+Последние 10 событий: (Всего логов: <?=$numLogs?> <b>|</b> <a href="all_logs.php">Все логи</a>)
 <table>
     <tr>
         <th>Имя</th>
@@ -103,7 +110,11 @@ if ($_SESSION['successCreateUser']) ?>
     <label class="italic">Пользователь </label><input type=radio name="access" value="accessUser" <?=$checkedAccessUser?> /> (Только просмотр)<br>
     <label class="italic">Оператор </label><input type=radio name="access" value="accessOperator" <?=$checkedAccessOperator?> /> (Плюс правка и добавление)<br>
     <label class="italic">Администратор</label><input type=radio name="access" value="accessAdministrator" <?=$checkedAccessAdministrator?> /> (Плюс удаление и доступ сюда)<br>
+    
+    <?php if (false) { ?>
     <label class="italic">Главный администратор</label><input type=radio name="access" value="accessMainAdministrator" <?=$checkedAccessMainAdministrator?>/> (Плюс импорт в БД файлов .cvs)<br>
+    <?php } ?>
+    
     <input type="submit" value="Создать"/>    
 </form>
 
@@ -157,7 +168,7 @@ if ($_SESSION['successCreateUser']) ?>
 <b>Добавить сеть в БД с пометкой:</b>
 <br />
 
-<form action="#" method="post">
+<form action="admin.php" method="post">
     <label>Метка адреса:</label><br />
     <input type="text" name="markAddress" value="Свободен" /><br />
     <label>Адрес сети (первый адрес):</label><br />

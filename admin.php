@@ -52,6 +52,15 @@ if ($_GET['action'] == 'edit') {
         }
 }
 
+//обработка формы генерации сети
+if ($_POST['markAddress'] && $_POST['network'] && $_POST['netmask'] && $_POST['vlan'] && $_POST['termination']) {
+    
+    networkGeneration($link, $user, $_POST['markAddress'], $_POST['network'], $_POST['netmask'], $_POST['vlan'], $_POST['termination']);
+    header('Location: admin.php');
+    die();
+    
+}
+
 
 
 //вытаскиваем полное число записей из БД
@@ -83,6 +92,9 @@ $users_arr = getUsers($link);
 //Разбираем полученный массив
 $users = $users_arr[0];
 $numUsers = $users_arr[1];
+
+//Достаем общее количество логов
+$numLogs = getNumLogs($link);
 
 
 

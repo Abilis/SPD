@@ -1313,4 +1313,23 @@ function getNumLogs($link) {
     return $numLOgs;
 }
 
+//Функция генерация сети из панели администратора
+function networkGeneration($link, $user, $markAddress, $network, $netmask, $vlan, $termination) {
+    
+    //проверка прав
+    require_once('access.php');
+    $canDoNetworkGeneration = canDo($link, $user, 'NETWORK_GENERATION');
+    
+    if (!$canDoNetworkGeneration) {
+        $_SESSION['networkGeneration'] = "Недостаточно прав генерации сети!";
+        header('Location: admin.php');
+        die();
+    }
+    
+    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов $markAddress успешно создана! Влан $vlan терминируется на $termination.";
+    
+    //Запись в сессию
+    return true;
+}
+
 ?>
