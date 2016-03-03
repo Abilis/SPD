@@ -1263,4 +1263,54 @@ function getUsers($link) {
     
 }
 
+//Функция, очищающие логи, старше 3х месяцев
+function deleteOldLogs($link, $user) {
+    
+    //Проверка прав
+    require_once('access.php');
+    $canDoDeleteOldLogs = canDo($link, $user, 'DELETE_OLD_LOGS');
+    
+    if (!$canDoDeleteOldLogs) {
+        $_SESSION['deleteOldLogs'] = "Недостаточно прав для удаления логов!";
+        header('Location: all_logs.php');
+        die();
+    }
+    
+    //установка даты
+    $dt_min = date('Y.m.d G:i:s', time() + 3600 * 3 - 3600 * 24 * 90);
+    
+    //формируем запрос
+    $sql = "DELETE FROM `logs` WHERE `dt_action` < '%s'";
+        $query = sprintf($sql, mysqli_real_escape_string($link, $dt_min));
+    
+    //выполнение запроса
+    $result = mysqli_query($link, $query);
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    $n = mysqli_affected_rows($link);
+        
+    //Запись в сессии
+    $_SESSION['deleteOldLogs'] = "Операция успешно завершена. Удалено $n строк.";    
+    
+    return true;
+}
+
+//функция возвращает количество логов
+function getNumLogs($link) {
+    
+    //Запрос
+    $query = "SELECT COUNT(*) FROM `logs`";
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+        
+    $numLOgs = mysqli_fetch_row($result)[0];
+            
+    return $numLOgs;
+}
+
 ?>

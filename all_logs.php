@@ -30,6 +30,7 @@ $page = $logs_arr[1]; //текущая страница
 $total = $logs_arr[2]; //всего страниц
 $num_rows = $logs_arr[3]; //количество логов на странице
 
+$numLogs = getNumLogs($link);
 
 //Форматирование вытащенных записей логов в удобный вид
 $format_old_log = format_log($logs, 'entry_old_log', 10);
@@ -37,6 +38,16 @@ $format_new_log = format_new_log($logs, 'entry_new_log', 10);
 
 //Создаем массив названий
 $log_name = createLogName();
+
+
+//обработка $_POST-запроса по очистке логов
+if ($_POST['deleteOldLogs']) {
+    deleteOldLogs($link, $user);
+    header('Location: all_logs.php');
+    die();
+    
+}
+
 
 //Выводим в шаблоны
 include_once('views/v-header.php');

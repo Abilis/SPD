@@ -1,3 +1,10 @@
+<?php
+        if ($_SESSION['deleteOldLogs']) {
+            echo '<span class="bold">' . $_SESSION['deleteOldLogs'] . ' </span>';
+            $_SESSION['deleteOldLogs'] = null;
+        }    
+    ?>
+Всего логов: <?=$numLogs?>
 <table>
     <tr>
         <th>Имя</th>
@@ -33,8 +40,8 @@
     <?php } ?>
     
 </table>
-<form class="deleteOldLogs" action="#" method="post">
+<form class="deleteOldLogs" action="all_logs.php" method="post">
     <label>Удалить логи, старше 3 месяцев</label>
-    <input type="submit" value="Выполнить!"/>
+    <input type="submit" name="deleteOldLogs" value="Выполнить!"/>    
 </form>
 <br />
