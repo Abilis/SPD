@@ -25,7 +25,7 @@ $timeBegin = time();
 // подключение к БД
 $link = startup();
 
-$file_name = 'SPD.csv';
+$file_name = 'spd.csv';
 
 $numbers = 0;
 
@@ -69,6 +69,8 @@ $numbers++;
 
 }
 fclose($handle_o);
+unlink('spd.csv');
+
 include_once('views/v-header.php');
 
 echo 'Добавлено строк: ' . $numbers . '<br />';
