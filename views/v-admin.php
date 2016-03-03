@@ -4,6 +4,14 @@
     <b><?=$userOnline['login']?> </b>
 <?php } ?>
 <br />
+
+<?php
+if ($_SESSION['noAccessImportInDb']) ?>
+    <span class="bold"><?=$_SESSION['noAccessImportInDb']?></span>
+<?php
+    $_SESSION['noAccessImportInDb'] = null;
+?>
+
 <br />
 <table>Сообщение дня <a href="admin.php?action=edit">[править]</a>
     <tr>
@@ -149,13 +157,6 @@ if ($_SESSION['successCreateUser']) ?>
 <b>Добавить сеть в БД с пометкой:</b>
 <br />
 
-<?php
-if ($_SESSION['noAccessImportInDb']) ?>
-    <span class="bold"><?=$_SESSION['noAccessImportInDb']?></span>
-<?php
-    $_SESSION['noAccessImportInDb'] = null;
-?>
-
 <form action="#" method="post">
     <label>Метка адреса:</label><br />
     <input type="text" name="markAddress" value="Свободен" /><br />
@@ -172,7 +173,7 @@ if ($_SESSION['noAccessImportInDb']) ?>
 </form>
 <br />
 
-<?php if ($canDoImportInDb) { ?>
+<?php if (true) { ?>
 <form action="./ss/excelToMysql.php" method="post" enctype="multipart/form-data"><b>Добавить в БД данные .cvs</b><br />
     <label>Файл в формате .cvs в кодировке uft8</label><br>
     <input type="file" name="filename"/><br>
