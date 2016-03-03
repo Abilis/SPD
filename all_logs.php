@@ -28,6 +28,8 @@ $logs_arr = get_logs_num_start($link);
 $logs = $logs_arr[0];
 $page = $logs_arr[1]; //текущая страница
 $total = $logs_arr[2]; //всего страниц
+$num_rows = $logs_arr[3]; //количество логов на странице
+
 
 //Форматирование вытащенных записей логов в удобный вид
 $format_old_log = format_log($logs, 'entry_old_log', 10);

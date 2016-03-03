@@ -1231,6 +1231,7 @@ function get_logs_num_start($link) {
     $entries_arr[0] = $entries;
     $entries_arr[1] = $page;
     $entries_arr[2] = $total;
+    $entries_arr[3] = $num_rows;
     
     return $entries_arr;
 }
