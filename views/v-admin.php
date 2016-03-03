@@ -178,4 +178,13 @@ if ($_SESSION['noAccessImportInDb']) ?>
     <input type="file" name="filename"/><br>
     <input type="submit" value="Импортировать!"/>
 </form>
+
+<p>Первая строка в файле должна иметь заголовки следующего вида:<br />
+    № договора = <i>numOrder</i>, Клиент = <i>customer</i>, Скорость = <i>tarif</i>, IP-адрес = <i>ip_address</i>,<br /> 
+    Маска = <i>netmask</i>, Шлюз = <i>gateway</i>, Влан = <i>vlan_id</i>, Порт клиента = <i>customer_port</i>, <br />
+    Терминация = <i>termination_point</i>, Подсеть = <i>subnet</i>, Бродкаст = <i>broadcast</i>, Комментарий = <i>commentary</i>, <br />
+    Дата добавления = <i>dt_added</i>, Дата последней правки = <i>dt_last_edited</i> <br /><br />
+    
+    Допускается отсутствие одного или нескольких столбцов    
+</p>
 <?php } ?>
