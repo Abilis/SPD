@@ -99,10 +99,59 @@ if ($_SESSION['successCreateUser']) ?>
     <input type="submit" value="Создать"/>    
 </form>
 
-<form>
-    
+<br />
 
-    
+Список пользователей:
+<table class="viewUsers">
+    <tr>
+        <th><label>Пользователь</label>
+        </th>
+        <th><label>Права</label>       
+        </th>
+        <th><label>Имя</label>       
+        </th>
+    </tr>
+    <tr>
+        <td>какой-то пользователь
+        </td>
+        <td>Какие-то права
+        </td>
+        <td>Какое-то имя
+        </td>
+    </tr>
+</table>
+
+<br />
+Редактирование прав пользователей:
+<form action="#" method="post">
+    <table class="viewUsers">
+        <tr>
+            <th><label>Пользователь</label>
+            </th>
+            <th><label>Права</label>       
+            </th>
+            <th><label>Имя</label>       
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" name="login" value="Логин"/>               
+            </td>
+            
+            <td> 
+                <select>
+                    <option name="accessUser">Пользователь</option>
+                    <option name="accessOperator">Оператор</option>
+                    <option name="accessAdministrator">Администратор</option>
+                </select> 
+            </td>
+                
+            <td>   
+                <input type="text" name="username" value="Имя"/>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Изменить"/>
 </form>
 
 <br />

@@ -112,6 +112,11 @@ td {
     height: 200px;    
 }
 
-.deleteOldLogs {
-    float: right;
+.deleteOldLogs {    
+    float: right;   
+}
+
+.viewUsers {
+    width: auto;
+    text-align: center;
 }
