@@ -1092,6 +1092,9 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
   
     //Определяем, может ли пользователь управлять пользователями
     $canDoUsersControl = canDo($link, $user, 'USERS_CONTROL');
+    
+    //Определяем, может ли пользователь управлять пользователями (расширенный вариант)
+    $canDoSuperusersControl = canDo($link, $user, 'SUPERUSERS_CONTROL');
 
     if (!$canDoUsersControl) {        
         return false;
@@ -1100,14 +1103,14 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
     //проверяем, совпадают ли введенные пароли
      if ($password != $confirmPassword) {
          
-         $_SESSION['notSamePassword'] = "Пароли не совпадают!";                 
+         $_SESSION['CreateUser'] = "Пароли не совпадают!";                 
          return false;
      }
     
     //проверка значимых полей
     if ((!isset($login) || !isset($password) || !isset($confirmPassword))) {
         
-        $_SESSION['errorCreateUser'] = "Не отмечено одно из полей!";        
+        $_SESSION['CreateUser'] = "Не отмечено одно из полей!";        
         return false;
     }
     
@@ -1123,7 +1126,14 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
         $id_role = 5;
     }
     elseif ($access == 'accessMainAdministrator') {
-        $id_role = 10;
+        
+        if (!$canDoSuperusersControl) { //невозможно создать полного администратора без привилегии SUPERUSERS_CONTROL
+            $_SESSION['CreateUser'] = "Недостаточно прав!"; 
+            return false;            
+        }
+        else {
+            $id_role = 10;
+        }
     }
     else {
         return false;
@@ -1143,7 +1153,7 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
     $num = mysqli_affected_rows($link);
     if ($num != 0) {
         
-        $_SESSION['existSuchUser'] = "Пользователь с логином $login уже существует!"; 
+        $_SESSION['CreateUser'] = "Пользователь с логином $login уже существует!"; 
         return false;
     }
     
@@ -1164,7 +1174,7 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
         die(mysqli_errror());
     }
     
-    $_SESSION['successCreateUser'] = "Пользователь $login успешно создан!"; 
+    $_SESSION['CreateUser'] = "Пользователь $login успешно создан!"; 
     
     return true;
 }

@@ -19,6 +19,13 @@ if ($_SESSION['networkGeneration']) ?>
     $_SESSION['networkGeneration'] = null;
 ?>
 
+<?php
+if ($_SESSION['CreateUser']) ?>
+    <span class="bold"><?=$_SESSION['CreateUser']?></span>
+<?php
+    $_SESSION['CreateUser'] = null;
+?>
+
 <br />
 <table>Сообщение дня <a href="admin.php?action=edit">[править]</a>
     <tr>
@@ -68,35 +75,6 @@ if ($_SESSION['networkGeneration']) ?>
 <br />
 
 Создать нового пользователя:
-<br />
-<?php
-if ($_SESSION['notSamePassword']) ?>
-    <span class="bold"><?=$_SESSION['notSamePassword']?></span>
-<?php
-    $_SESSION['notSamePassword'] = null;
-?>
-
-<?php
-if ($_SESSION['existSuchUser']) ?>
-    <span class="bold"><?=$_SESSION['existSuchUser']?></span>
-<?php
-    $_SESSION['existSuchUser'] = null;
-?>
-
-<?php
-if ($_SESSION['errorCreateUser']) ?>
-    <span class="bold"><?=$_SESSION['errorCreateUser']?></span>
-<?php
-    $_SESSION['errorCreateUser'] = null;
-?>
-
-<?php
-if ($_SESSION['successCreateUser']) ?>
-    <span class="bold"><?=$_SESSION['successCreateUser']?></span>
-<?php
-    $_SESSION['successCreateUser'] = null;
-?>
-
 <form action="users.php" method="post">
     <label class="italic">Логин:</label><br />
     <input type="text" name="login" value="<?=$login?>" /><br>
@@ -111,7 +89,7 @@ if ($_SESSION['successCreateUser']) ?>
     <label class="italic">Оператор </label><input type=radio name="access" value="accessOperator" <?=$checkedAccessOperator?> /> (Плюс правка и добавление)<br>
     <label class="italic">Администратор</label><input type=radio name="access" value="accessAdministrator" <?=$checkedAccessAdministrator?> /> (Плюс удаление и доступ сюда)<br>
     
-    <?php if (false) { ?>
+    <?php if ($canDoSuperusersControl) { ?>
     <label class="italic">Главный администратор</label><input type=radio name="access" value="accessMainAdministrator" <?=$checkedAccessMainAdministrator?>/> (Плюс импорт в БД файлов .cvs)<br>
     <?php } ?>
     

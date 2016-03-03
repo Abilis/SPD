@@ -24,6 +24,9 @@ $canDoAdd = canDo($link, $user, 'ADD_ENTRY');
 //Определяем, может ли пользователь делать импорт в БД файлов .cvs
 $canDoImportInDb = canDo($link, $user, 'IMPORT_IN_DB');
 
+//Определяем, может ли пользователь управлять пользователями (расширенный вариант)
+$canDoSuperusersControl = canDo($link, $user, 'SUPERUSERS_CONTROL');
+
 //Обработка правки сообщения дня
 if ($_GET['action'] == 'edit') {
     
