@@ -133,8 +133,7 @@ if ($_SESSION['successCreateUser']) ?>
              }
              elseif ($user['id_role'] == 10) {
                 echo 'Администратор';
-             }
-             else
+             }             
     
             ?>
         </td>
