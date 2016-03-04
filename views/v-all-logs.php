@@ -15,6 +15,10 @@
     </tr>
     
     <?php for($i = 0; $i < $num_rows; $i++) { //$i задает количество последних логов для отображения
+    
+ //   var_dump($format_old_log);
+ //   die();
+    
     ?>
     <tr>
         <td><?=($i + 1) . '&nbsp;&nbsp;&nbsp;<b>' . $logs[$i]['login']?></b></td>

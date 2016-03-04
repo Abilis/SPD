@@ -919,13 +919,15 @@ function getLogs($link) {
 }
 
 //функция преобразует старые логи в массив массивов логов для показа в панели администратора
-function format_log($logs, $whichLog, $num) {
-    
+function format_log($logs, $whichLog, $num) { 
+
     //Создание массивов
     $arrayLogInside = array();
     $arrayLogs = array();
 
     for ($i = 0; $i < $num; $i++) {
+        
+        
 
         $format_current_log = explode(";", $logs[$i][$whichLog]);
 

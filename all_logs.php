@@ -34,8 +34,8 @@ $num_rows = $logs_arr[3]; //количество логов на страниц�
 $numLogs = getNumLogs($link);
 
 //Форматирование вытащенных записей логов в удобный вид
-$format_old_log = format_log($logs, 'entry_old_log', 10);
-$format_new_log = format_new_log($logs, 'entry_new_log', 10);
+$format_old_log = format_log($logs, 'entry_old_log', 50);
+$format_new_log = format_new_log($logs, 'entry_new_log', 50);
 
 //Создаем массив названий
 $log_name = createLogName();
