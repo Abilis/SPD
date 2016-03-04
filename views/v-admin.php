@@ -186,8 +186,9 @@ if ($_SESSION['CreateUser']) ?>
 <br />
 
 <?php if (true) { ?>
-<form action="./ss/excelToMysql.php" method="post" enctype="multipart/form-data"><b>Добавить в БД данные .cvs</b><br />
-    <label>Файл в формате .cvs в кодировке uft8</label><br>
+<form action="./ss/excelToMysql.php" method="post" enctype="multipart/form-data"><b>Добавить в СПД данные .cvs</b><br />
+    <label>Файл в формате .cvs в кодировке uft8</label>
+    <input type="hidden" name="tableName" value="spd_table"/><br>
     <input type="file" name="filename"/><br>
     <input type="submit" value="Импортировать!"/>
 </form>

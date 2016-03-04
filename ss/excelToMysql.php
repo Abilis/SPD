@@ -44,7 +44,8 @@ if (!move_uploaded_file($tmpName, $name)) {
 }
 
 
-
+//установка таблицы импорта
+$tableName = mysqli_real_escape_string($link, $_POST['tableName']);
 
 
 
@@ -78,7 +79,7 @@ $insertValues[]="'" . addslashes(trim($v)) . "'";
 
 $values=implode(',',$insertValues);
     
-$sql = "INSERT INTO spd_table ( $columns ) VALUES ( $values )";
+$sql = "INSERT INTO `$tableName` ( $columns ) VALUES ( $values )";
     
 $result = mysqli_query($link, $sql);
 
@@ -106,7 +107,7 @@ $userLogin = $user['login'];
 //установка текущей даты
 $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
 
-$message = "Пользователем $userLogin импортирован файл в БД. Добавлено строк: $numbers";
+$message = "Пользователем $userLogin импортирован файл в БД в таблицу \"$tableName\". Добавлено строк: $numbers";
 
 //подключение файла с функцией логирования
 require_once('../logging.php');
