@@ -1560,6 +1560,26 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     //Запись в сессию
     $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов \"$markAddress\" успешно создана! Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numAddresses";
     
+    
+    //записываем в лог действий
+    //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
+    $userLogin = $user['login'];
+    
+    $dt_action = $dt_added;
+    
+    $message = "Пользователем $userLogin создана сеть $network с пометкой свободных адресов \"$markAddress\". Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numAddresses";
+    
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+    
+    //выполняем логирование
+    if (!loggingAction($link, $user, $message, $dt_action)) {
+        //запись неиспешности в сессию
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }
+    
+    
+    
     return true;
 }
 
