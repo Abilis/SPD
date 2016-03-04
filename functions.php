@@ -1334,7 +1334,7 @@ function deleteOldLogs($link, $user) {
     
     //формируем запрос
     $sql = "DELETE FROM `logs` WHERE `dt_action` < '%s'";
-        $query = sprintf($sql, mysqli_real_escape_string($link, $dt_min));
+    $query = sprintf($sql, mysqli_real_escape_string($link, $dt_min));
     
     //выполнение запроса
     $result = mysqli_query($link, $query);
@@ -1342,7 +1342,24 @@ function deleteOldLogs($link, $user) {
         die(mysqli_error($link));
     }
     
-    $n = mysqli_affected_rows($link);
+    $n1 = mysqli_affected_rows($link);
+    
+    
+    //удаление старых логов событий
+    //формируем запрос
+    $sql = "DELETE FROM `logs_action` WHERE `dt_action` < '%s'";
+    $query = sprintf($sql, mysqli_real_escape_string($link, $dt_min));
+    
+    //выполнение запроса
+    $result = mysqli_query($link, $query);
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    $n2 = mysqli_affected_rows($link);
+    
+    //Общее количество удаленных логов
+    $n = $n1 + $n2;
         
     //Запись в сессии
     $_SESSION['deleteOldLogs'] = "Операция успешно завершена. Удалено $n строк.";    
