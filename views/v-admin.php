@@ -83,7 +83,7 @@ if ($_SESSION['CreateUser']) ?>
     <?php for($i = 0; $i < $numLogsActionInAdminPanel; $i++) { ?>
      <tr>
         <td>
-            <?=$i + 1 . ". <b>" . $logsAction[$i]['login'] . '</b>'?>
+            <?=$i + 1 . ".&nbsp;<b>" . $logsAction[$i]['login'] . '</b>'?>
         </td>
         <td>
             <?=$logsAction[$i]['message']?>
