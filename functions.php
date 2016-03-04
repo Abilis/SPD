@@ -1507,7 +1507,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
         
     
     
-    //установка маски и подсети
+    //установка маски и подсети. Здесь $numAddresses - полное количество адресов в сети
     
         switch ($numAddresses) {
                 case 4:     $netmask = '255.255.255.252';
@@ -1539,11 +1539,13 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
         }
     
     
+    //корректируем число $numAddresses. Исключаем адреса сети, бродкаста и шлюза
+    $numAddresses -= 3;
     
     //Все проверки пройдены, теперь можно делать генерацию
     for ($i = 0; $i < $numAddresses; $i++) {
         
-        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i);
+        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i + 2);
         $sql = "INSERT INTO `spd_table`
                             (`customer`, `ip_address`, `netmask`, `gateway`, `vlan_id`,
                             `termination_point`, `subnet`, `broadcast`, `dt_added`,

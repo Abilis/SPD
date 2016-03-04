@@ -12,8 +12,9 @@ $link = startup();
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
-//Определяем, может ли пользователь редактировать, удалять записи и видеть панель администратора
+//Определяем, может ли пользователь редактировать, добавлять, удалять записи и видеть панель администратора
 $canDoEdit = canDo($link, $user, 'EDIT_ENTRY');
+$canDoAdd = canDo($link, $user, 'ADD_ENTRY');
 $canDoDelete = canDo($link, $user, 'DELETE_ENTRY');
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 

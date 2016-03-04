@@ -80,7 +80,7 @@ if ($_SESSION['CreateUser']) ?>
         <th>Дата</th>
     </tr>
     
-    <?php for($i = 0; $i < $numLogsAction; $i++) { ?>
+    <?php for($i = 0; $i < $numLogsActionInAdminPanel; $i++) { ?>
      <tr>
         <td>
             <?=$i + 1 . ". <b>" . $logsAction[$i]['login'] . '</b>'?>
