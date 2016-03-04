@@ -1520,7 +1520,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     }
     
     //Запись в сессию
-    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов $markAddress успешно создана! Влан $vlan терминируется на $termination. Добавлено адресов: $numAddresses";
+    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов \"$markAddress\" успешно создана! Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numAddresses";
     
     return true;
 }
