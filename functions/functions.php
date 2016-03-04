@@ -1551,7 +1551,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
                 case 256:   $netmask = '255.255.255.0';
                             $subnet = $network . '/24';
                             break;
-                default:  $_SESSION['networkGeneration'] = "Не удалось вычислить маску для числа адресов                                                            $numAddresses";
+                default:  $_SESSION['networkGeneration'] = "Не удалось вычислить маску для полного числа адресов                                                            $numAddresses";
                             return false;
                 
                 
