@@ -304,7 +304,7 @@ function get_entry_by_last_editor($link, $last_editor) {
     $last_editor = mysqli_real_escape_string($link, $last_editor);
     
     //Запрос
-    $query = "SELECT * FROM spd_table WHERE last_editor LIKE '%$last_editor%' ORDER BY id_entry DESC";
+    $query = "SELECT * FROM `spd_table` WHERE `last_editor` LIKE '%$last_editor%' ORDER BY `dt_last_edited` DESC";
     
     $result = mysqli_query($link, $query);
     
