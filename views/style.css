@@ -141,3 +141,7 @@ td {
 .color2:hover {
     background: #F5ECCE;
 }
+
+.free {
+    background-color: yellow;
+}

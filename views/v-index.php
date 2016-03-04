@@ -63,12 +63,13 @@
     die();
     } ?>
     
+    <?php for ($i = 0; $i < count($entries); $i++) { ?> 
     
     
-    <?php for ($i = 0; $i < count($entries); $i++) { ?>
+    
         <tr <?php if ($i % 2 == 0) echo 'class="color1"'; else echo 'class="color2"';?>>
             <td> <?=$entries[$i]['numOrder']?> </td>
-            <td> <?=$entries[$i]['customer']?> <br />
+            <td <?php if (is_int(stripos($entries[$i]['customer'], 'вободен'))) { echo  'class="free"'; } ?> > <?=$entries[$i]['customer']?> <br />
                 
                 <?php if ($canDoEdit) { ?>
                     <span class="small">
