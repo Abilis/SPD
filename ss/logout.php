@@ -1,8 +1,8 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 
-require_once('database.php');
-require_once('functions.php');
+require_once('../functions/database.php');
+require_once('../functions/functions.php');
 
 //подключение к БД
 $link = startup();
@@ -11,5 +11,5 @@ $link = startup();
 logout();
 
 //Перенаправление на главную
-header('Location: index.php');
+header('Location: ../index.php');
 ?>

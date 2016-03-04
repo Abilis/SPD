@@ -98,7 +98,7 @@ if ($_SESSION['CreateUser']) ?>
 <br />
 
 Создать нового пользователя:
-<form action="users.php" method="post">
+<form action="ss/users.php" method="post">
     <label class="italic">Логин:</label><br />
     <input type="text" name="login" value="<?=$login?>" /><br>
     <label class="italic">Пароль:</label><br />

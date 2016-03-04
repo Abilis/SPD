@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ERROR);
-require_once('../database.php');
-require_once('../functions.php');
-require_once('../access.php');
+require_once('../functions/database.php');
+require_once('../functions/functions.php');
+require_once('../functions/access.php');
 
 //подключение к БД
 $link = startup();
@@ -110,7 +110,7 @@ $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
 $message = "Пользователем $userLogin импортирован файл в БД в таблицу \"$tableName\". Добавлено строк: $numbers";
 
 //подключение файла с функцией логирования
-require_once('../logging.php');
+require_once('../functions/logging.php');
 
 //выполняем логирование
 if (!loggingAction($link, $user, $message, $dt_action)) {

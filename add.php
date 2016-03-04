@@ -1,9 +1,9 @@
 <?php
 error_reporting(E_ERROR);
 
-require_once('database.php');
-require_once('functions.php');
-require_once('access.php');
+require_once('functions/database.php');
+require_once('functions/functions.php');
+require_once('functions/access.php');
 
 // подключение к БД
 $link = startup();

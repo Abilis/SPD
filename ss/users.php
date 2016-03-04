@@ -1,8 +1,8 @@
 <?php
 //скрипт для создания, редактирования и удаления пользователей
-require_once('database.php');
-require_once('functions.php');
-require_once('access.php');
+require_once('../functions/database.php');
+require_once('../functions/functions.php');
+require_once('../functions/access.php');
 
 // подключение к БД
 $link = startup();
@@ -16,7 +16,7 @@ $user = getCurrentUser($link);
 $canDoUsersControl = canDo($link, $user, 'USERS_CONTROL');
 
 if (!$canDoUsersControl) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     die('123');
 }
 
@@ -28,12 +28,12 @@ if (($_POST['login'] != null) && ($_POST['password'] != null)) { //если вб
         
         
         //если мы здесь, значит, пользователь успешно создался
-        header('Location: admin.php');
+        header('Location: ../admin.php');
         
     }
         
 }
 
 //если пустой - то делать тут нечего
-header('Location: admin.php');
+header('Location: ../admin.php');
 ?>

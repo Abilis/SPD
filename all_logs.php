@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ERROR);
-require_once('database.php');
-require_once('functions.php');
-require_once('access.php');
+require_once('functions/database.php');
+require_once('functions/functions.php');
+require_once('functions/access.php');
 
 // подключение к БД
 $link = startup();
@@ -57,7 +57,7 @@ include_once('views/v-all-logs.php');
 
 //подключаем нижнее меню навигации
 $current_page = 'all_logs.php';
-include_once('menu_navigation.php');
+include_once('ss/menu_navigation.php');
 
 include_once('views/v-footer.php');
 ?>

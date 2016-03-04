@@ -2,9 +2,9 @@
 error_reporting(E_ERROR);
 
 //Сценарий для обработки запросов к БД из форм поисков
-require_once('database.php');
-require_once('functions.php');
-require_once('access.php');
+require_once('functions/database.php');
+require_once('functions/functions.php');
+require_once('functions/access.php');
 
 // подключение к БД
 $link = startup();
@@ -43,7 +43,7 @@ else if (!empty($_POST['last_editor'])) {
     $entries = get_entry_by_last_editor($link, $_POST['last_editor']);    
 }
 else {
-   header('Location: index.php'); 
+   header('Location: ../index.php'); 
 }
 
 

@@ -2,7 +2,7 @@
 error_reporting(E_ERROR);
 if ($user != null) { ?>
             <br />Вы вошли как <b><?=$user['login']?></b><br />
-            <a href="logout.php">Выйти</a>
+            <a href="./ss/logout.php">Выйти</a>
 <?php } ?>
 
 <?php if ($user == null) { ?>

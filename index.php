@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ERROR);
-require_once('database.php');
-require_once('functions.php');
-require_once('access.php');
+require_once('functions/database.php');
+require_once('functions/functions.php');
+require_once('functions/access.php');
 
 $_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сесси больше не нужна
 
@@ -112,7 +112,7 @@ include_once('views/v-index.php');
 
 //подключаем нижнее меню навигации
 $current_page = 'index.php';
-include_once('menu_navigation.php');
+include_once('ss/menu_navigation.php');
 
 include_once('views/v-footer.php');
 ?>

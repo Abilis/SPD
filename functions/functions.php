@@ -640,9 +640,9 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
 
 
 //функция разлогинивания
-function logout() {
-    setcookie('login', '', time() - 1);
-    setcookie('password', '', time() - 1);
+function logout() { 
+    setcookie('login', '', time() - 1, '/');
+    setcookie('password', '', time() - 1, '/');
     unset($_COOKIE['login']);
     unset($_COOKIE['password']);
     unset($_SESSION['sid']);
@@ -676,8 +676,8 @@ function login($link, $login, $password, $remember){
     //если было установлено "запомнить меня", вешаем куки на логин и пароль
     if ($remember) {
         $expire = time() + 3600 * 24 * 7 + 3600 * 3;
-        setcookie('login', $login, $expire);
-        setcookie('password', md5($password), $expire);
+        setcookie('login', $login, $expire, '/');
+        setcookie('password', md5($password), $expire, '/');
     }
     
     //открываем сессию и запоминаем SID
