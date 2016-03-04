@@ -66,36 +66,36 @@
     
     
     
-    <?php foreach ($entries as $entry): ?>
-        <tr>
-            <td><?=$entry['numOrder']?></td>
-            <td><?=$entry['customer']?> <br />
+    <?php for ($i = 0; $i < count($entries); $i++) { ?>
+        <tr <?php if ($i % 2 == 0) echo 'class="color1"'; else echo 'class="color2"';?>>
+            <td> <?=$entries[$i]['numOrder']?> </td>
+            <td> <?=$entries[$i]['customer']?> <br />
                 
                 <?php if ($canDoEdit) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=edit">[править]</a>
+                        <a href="index.php?id_entry=<?=$entries[$i]['id_entry']?>&action=edit">[править]</a>
                     </span>
                 <?php } ?>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                 <?php if ($canDoDelete) { ?>
                     <span class="small">
-                        <a href="index.php?id_entry=<?=$entry['id_entry']?>&action=delete">[удалить]</a>
+                        <a href="index.php?id_entry=<?=$entries[$i]['id_entry']?>&action=delete" onClick="return window.confirm('Вы действительно хотите удалить эту запись?')">[удалить]</a>
                     </span>
                  <?php } ?>
                         
             </td>
-            <td><?=$entry['tarif']?></td>
-            <td><?=$entry['ip_address']?></td>
-            <td><?=$entry['netmask']?></td>
-            <td><?=$entry['gateway']?></td>
-            <td><?=$entry['vlan_id']?></td>
-            <td><?=$entry['customer_port']?></td>
-            <td><?=$entry['termination_point']?></td>
-            <td><?=$entry['commentary']?></td>
-            <td><?=$entry['dt_last_edited'] . ' by ' . $entry['last_editor'] ?></td>
+            <td><?=$entries[$i]['tarif']?></td>
+            <td><?=$entries[$i]['ip_address']?></td>
+            <td><?=$entries[$i]['netmask']?></td>
+            <td><?=$entries[$i]['gateway']?></td>
+            <td><?=$entries[$i]['vlan_id']?></td>
+            <td><?=$entries[$i]['customer_port']?></td>
+            <td><?=$entries[$i]['termination_point']?></td>
+            <td><?=$entries[$i]['commentary']?></td>
+            <td><?=$entries[$i]['dt_last_edited'] . ' by ' . $entries[$i]['last_editor'] ?></td>
                         
         </tr>
-    <?php endforeach ?>
+    <?php } ?>
 
 </table>

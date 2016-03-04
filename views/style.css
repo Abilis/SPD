@@ -120,3 +120,19 @@ td {
     width: auto;
     text-align: center;    
 }
+
+.color1 {
+    background-color: bisque;
+}
+
+.color1:hover {
+    background: #BCF5A9;
+}
+
+.color2 {
+    background-color: #B4CDCD;
+}
+
+.color2:hover {
+    background: #BCF5A9;
+}
