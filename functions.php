@@ -222,7 +222,7 @@ function get_entry_by_ip($link, $ip_address) {
     $ip_address = mysqli_real_escape_string($link, $ip_address);
     
     //Запрос
-    $query = "SELECT * FROM spd_table WHERE ip_address LIKE '%$ip_address%' ORDER BY id_entry DESC";
+    $query = "SELECT * FROM `spd_table` WHERE `ip_address` LIKE '%$ip_address%' ORDER BY `id_entry` DESC";
     
     $result = mysqli_query($link, $query);
     
@@ -1324,7 +1324,7 @@ function getNumLogs($link) {
 }
 
 //Функция генерация сети из панели администратора
-function networkGeneration($link, $user, $markAddress, $network, $netmask, $vlan, $termination) {
+function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination) {
     
     //проверка прав
     require_once('access.php');
@@ -1332,13 +1332,196 @@ function networkGeneration($link, $user, $markAddress, $network, $netmask, $vlan
     
     if (!$canDoNetworkGeneration) {
         $_SESSION['networkGeneration'] = "Недостаточно прав генерации сети!";
-        header('Location: admin.php');
-        die();
+        return false;
     }
     
-    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов $markAddress успешно создана! Влан $vlan терминируется на $termination.";
+    //Вытаскиваем последние числа из $network и $broadcast    
+    $firstOctetArr = explode('.', $network);
+    $firstOctet = $firstOctetArr[3];    
+
+    if (($firstOctetArr[0] == null) || ($firstOctetArr[1] == null) || ($firstOctetArr[2] == null) ||       ($firstOctetArr[3]) == null) {        
+        
+        $_SESSION['networkGeneration'] = "Введенный адрес сети не является допустимым адресом!";
+        return false;
+    }
+    
+    $lastOctetArr = explode('.', $broadcast);
+    $lastOctet = $lastOctetArr[3];
+    
+    if (($lastOctetArr[0] == null) || ($lastOctetArr[1] == null) || ($lastOctetArr[2] == null) ||       ($lastOctetArr[3]) == null) {
+        
+        $_SESSION['networkGeneration'] = "Введенный адрес бродкаста не является допустимым адресом!";
+        return false;
+    }
+    
+    
+    //проверки на существование адресов
+    if ($firstOctet > 255 || $firstOctet < 0) {
+        $_SESSION['networkGeneration'] = "Последний октет адреса сети должен быть в диапазоне 0 - 255!";
+        return false;
+    }
+    
+    if ($lastOctet > 255 || $lastOctet < 0) {
+        $_SESSION['networkGeneration'] = "Последний октет бродкаста должен быть в диапазоне 0 - 255!";
+        return false;
+    }
+    
+    //Проверка на принадлежность сети и бродкаста одному диапазону
+    $networkStr = $firstOctetArr[0] . $firstOctetArr[1] . $firstOctetArr[2];
+    $broadcastArr = $lastOctetArr[0] . $lastOctetArr[1] . $lastOctetArr[2];
+    
+    if ($networkStr != $broadcastArr) {
+        $_SESSION['networkGeneration'] = "Сеть и бродкаст не принадлежат одному диапазону!";
+        return false;
+    }
+    
+    //количество адресов, которое необходимо сгенерить
+    $numAddresses = $lastOctet - $firstOctet + 1;
+    
+    //Преобразуем в строку первые три октета сети вместе с точкой в конце
+    unset($firstOctetArr[3]);    
+    $firstThreeOctetsOfNetwork = implode('.', $firstOctetArr) . '.';
+    
+    unset($lastOctetArr[3]);
+    $lastThreeOctetsOfBroadcast = implode('.', $lastOctetArr) . '.';
+    
+    //Проверка на существование записей с адресами из генерируемого диапазона в БД    
+    
+    for ($i = 0; $i < $numAddresses; $i++) {
+        
+        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i);
+        $sql = "SELECT `ip_address` FROM `spd_table` WHERE `ip_address`='%s'";
+        $query = sprintf($sql, mysqli_real_escape_string($link, $ipAddressForQuery));        
+
+        $result = mysqli_query($link, $query);
+        
+        if (!$result) {
+            die(mysqli_error($link));
+        }
+        
+        $num = mysqli_fetch_row($result)[0];
+        
+        if ($num != 0) {
+            
+            $_SESSION['networkGeneration'] = "Адрес $ipAddressForQuery уже существует!";
+            return false;
+        }
+        
+    }
+    
+    
+    //проверка на существование влан
+    if ($vlan < 2 || $vlan > 4095) {
+        $_SESSION['networkGeneration'] = "Не может быть влана с номером $vlan!";
+            return false;
+    }
+    
+    //проверка на существование записей с таким вланом в БД
+    
+    $sql = "SELECT `vlan_id` FROM `spd_table` WHERE `vlan_id`='%d'";
+    $query = sprintf($sql, mysqli_real_escape_string($link, $vlan));
+        
+    $result = mysqli_query($link, $query);
+        
+    if (!$result) {
+            die(mysqli_error($link));
+    }
+    
+    $num = mysqli_fetch_row($result)[0];
+        
+    if ($num != 0) {
+
+        $_SESSION['networkGeneration'] = "Влан $vlan уже существует!";
+        return false;
+    }
+    
+    //установка переменных
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
+    
+    $founder = $user['login'];
+    $last_editor = $user['login'];
+    
+    //установка шлюза
+    $gateway = $firstThreeOctetsOfNetwork . ($firstOctet + 1);
+        
+    
+    
+    //установка маски и подсети
+    
+        switch ($numAddresses) {
+                case 4:     $netmask = '255.255.255.252';
+                            $subnet = $network . '/30';
+                            break;
+                case 8:      $netmask = '255.255.255.248';
+                            $subnet = $network . '/29';
+                            break;
+                case 16:     $netmask = '255.255.255.240';
+                            $subnet = $network . '/28';
+                            break;
+                case 32:    $netmask = '255.255.255.224';
+                            $subnet = $network . '/27';
+                            break;
+                case 64:    $netmask = '255.255.255.192';
+                            $subnet = $network . '/26';
+                            break;
+                case 128:   $netmask = '255.255.255.128';
+                            $subnet = $network . '/25';
+                            break;
+                case 256:   $netmask = '255.255.255.0';
+                            $subnet = $network . '/24';
+                            break;
+                default:  $_SESSION['networkGeneration'] = "Не удалось вычислить маску для числа адресов                                                            $numAddresses";
+                            return false;
+                
+                
+                
+        }
+    
+    
+    
+    //Все проверки пройдены, теперь можно делать генерацию
+    for ($i = 0; $i < $numAddresses; $i++) {
+        
+        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i);
+        $sql = "INSERT INTO `spd_table`
+                            (`customer`, `ip_address`, `netmask`, `gateway`, `vlan_id`,
+                            `termination_point`, `subnet`, `broadcast`, `dt_added`,
+                            `dt_last_edited`, `founder`, `last_editor`)
+                        VALUES 
+                        ('%s', '%s', '%s', '%s', '%d',
+                        '%s', '%s', '%s', '%s',
+                        '%s', '%s', '%s')";
+        
+        $query = sprintf($sql, mysqli_real_escape_string($link, $markAddress),
+                             mysqli_real_escape_string($link, $ipAddressForQuery),
+                             mysqli_real_escape_string($link, $netmask), //вычислить
+                             mysqli_real_escape_string($link, $gateway),
+                             mysqli_real_escape_string($link, $vlan),
+                             mysqli_real_escape_string($link, $termination), 
+                             mysqli_real_escape_string($link, $subnet), //вычислить
+                             mysqli_real_escape_string($link, $broadcast),
+                             mysqli_real_escape_string($link, $dt_added),
+                             mysqli_real_escape_string($link, $dt_last_edited),
+                             mysqli_real_escape_string($link, $founder),
+                             mysqli_real_escape_string($link, $last_editor),
+                             mysqli_real_escape_string($link, $markAddress)  );
+        
+        
+        
+        $result = mysqli_query($link, $query);
+        
+        if (!$result) {
+            die("Не удалось добавить адрес $ipAddressForQuery" . mysqli_error($link));
+        }
+        
+        $num = mysqli_fetch_row($result)[0];   
+
+    }
     
     //Запись в сессию
+    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов $markAddress успешно создана! Влан $vlan терминируется на $termination. Добавлено адресов: $numAddresses";
+    
     return true;
 }
 

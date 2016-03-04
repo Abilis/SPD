@@ -56,9 +56,9 @@ if ($_GET['action'] == 'edit') {
 }
 
 //обработка формы генерации сети
-if ($_POST['markAddress'] && $_POST['network'] && $_POST['netmask'] && $_POST['vlan'] && $_POST['termination']) {
+if ($_POST['markAddress'] && $_POST['network'] && $_POST['broadcast'] && $_POST['vlan'] && $_POST['termination']) {
     
-    networkGeneration($link, $user, $_POST['markAddress'], $_POST['network'], $_POST['netmask'], $_POST['vlan'], $_POST['termination']);
+    networkGeneration($link, $user, $_POST['markAddress'], $_POST['network'], $_POST['broadcast'], $_POST['vlan'], $_POST['termination']);
     header('Location: admin.php');
     die();
     

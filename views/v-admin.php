@@ -151,8 +151,8 @@ if ($_SESSION['CreateUser']) ?>
     <input type="text" name="markAddress" value="Свободен" /><br />
     <label>Адрес сети (первый адрес):</label><br />
     <input type="text" name="network" /><br />
-    <label>Префикс маски (например, /27):</label><br />
-    <input type="text" name="netmask" value="/" /><br />
+    <label>Бродкаст (последний адрес):</label><br />
+    <input type="text" name="broadcast" /><br />
     <label>Влан:</label><br />
     <input type="text" name="vlan" /><br />
     <label>Терминация:</label><br />
