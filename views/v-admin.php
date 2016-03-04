@@ -150,13 +150,13 @@ if ($_SESSION['CreateUser']) ?>
     <label>Метка адреса:</label><br />
     <input type="text" name="markAddress" value="Свободен" /><br />
     <label>Адрес сети (первый адрес):</label><br />
-    <input type="text" name="network" /><br />
+    <input type="text" name="network" value="<?=$_POST['network']?>" /><br />
     <label>Бродкаст (последний адрес):</label><br />
-    <input type="text" name="broadcast" /><br />
+    <input type="text" name="broadcast" value="<?=$_POST['broadcast']?>" /><br />
     <label>Влан:</label><br />
-    <input type="text" name="vlan" /><br />
+    <input type="text" name="vlan" value="<?=$_POST['vlan']?>" /><br />
     <label>Терминация:</label><br />
-    <input type="text" name="termination" /><br />    
+    <input type="text" name="termination" value="<?=$_POST['termination']?>" /><br />    
     <span class="bold">Шлюз будет отмечен как первый возможный адрес</span><br />
     <input type="submit"/>
 </form>
