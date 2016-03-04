@@ -1,6 +1,6 @@
 <?php
 
-//Функция записывает в БД запись о произведенном действии
+//Функция записывает в таблицу logs запись при добавлении, редактировании и удалении записей СПД
 function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new, $dt_action) {
     
     
@@ -90,6 +90,29 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
     
         
     //Выполнение запроса
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die('Не получилось :(' . mysqli_error());
+    }  
+    
+    return true;
+}
+
+/*функция записывает в таблицу logs_action следующие события: создание пользователя, редактирование прав,
+удаление пользователя, очиска старых логов, импорт .cvs в БД, генерация сети*/
+function loggingAction ($link, $user, $message, $dt_action) {
+    
+    //формируем запрос
+    $sql = "INSERT INTO `logs_action` (`login`, `message`, `dt_action`)
+                                    VALUES
+                                        ('%s', '%s', '%s')";
+    
+    $query = sprintf($sql,  mysqli_real_escape_string($link, $user['login']),
+                            mysqli_real_escape_string($link, $message),                            
+                            mysqli_real_escape_string($link, $dt_action));
+    
+   //Выполнение запроса
     $result = mysqli_query($link, $query);
     
     if (!$result) {

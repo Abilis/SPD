@@ -1174,7 +1174,45 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
         die(mysqli_errror());
     }
     
+    //если все успешно - записываем результат в сессию
     $_SESSION['CreateUser'] = "Пользователь $login успешно создан!"; 
+    
+    //и записываем в лог
+    
+    //устанавливаем дату
+    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
+    
+    //определяем переменную $access_level
+    if ($id_role == 1) {
+        $access_level = "пользователя";
+    }
+    elseif ($id_role == 2) {
+        $access_level = "оператора";
+    }
+    elseif ($id_role == 5) {
+        $access_level = "администратора";
+    }
+    elseif ($id_role == 10) {
+        $access_level = "главного администратора";
+    }
+    else {
+        $access_level = "неизвестного ползователя";
+    }
+    
+    //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
+    $userLogin = $user['login'];
+    
+    $message = "Создан новый пользователь с логином \"$login\", именем \"$username\", правами $access_level пользователем $userLogin";
+    
+    //подключение файла с функцией логирования
+    require_once('logging.php');
+    
+    //выполняем логирование
+    if (!loggingAction($link, $user, $message, $dt_action)) {
+        //запись неиспешности в сессию
+        $_SESSION['logging'] = 'Логирование действия не удалось!';
+    }
+    
     
     return true;
 }
