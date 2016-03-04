@@ -1411,7 +1411,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     $canDoNetworkGeneration = canDo($link, $user, 'NETWORK_GENERATION');
     
     if (!$canDoNetworkGeneration) {
-        $_SESSION['networkGeneration'] = "Недостаточно прав генерации сети!";
+        $_SESSION['networkGeneration'] = "Недостаточно прав для генерации сети!";
         return false;
     }
     
