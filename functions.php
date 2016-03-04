@@ -895,10 +895,13 @@ function getWhoIsOnline($link) {
 }
 
 //Функция возвращает массив с логами
-function getLogs($link) {
+function getLogs($link, $whichLog) {
+    
+    //подготовка
+    $whichLog = mysqli_real_escape_string($link, $whichLog);
     
     //Запрос
-    $query = "SELECT * FROM `logs` ORDER BY `id_log` DESC";
+    $query = "SELECT * FROM `$whichLog` ORDER BY `id_log` DESC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -907,14 +910,14 @@ function getLogs($link) {
     
     //Разбираем дескриптор в ассоциативный массив
     //Извлечение из БД
-    $n = mysqli_num_rows($result);
+    $n = mysqli_affected_rows($link);
     $logs = array();
     
     for ($i = 0; $i < $n; $i++) {
         $row = mysqli_fetch_assoc($result);
         $logs[] = $row;
-    }
-        
+    }    
+    
     return $logs;
 }
 
@@ -1583,5 +1586,6 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     
     return true;
 }
+
 
 ?>

@@ -78,7 +78,7 @@ $whoUsersOnline = $whoUsersOnline_arr[0];
 $numOnlineUsers = $whoUsersOnline_arr[1];
 
 //Вытаскиваем логи из БД
-$logs = getLogs($link);
+$logs = getLogs($link, logs);
 
 
 //Форматирование вытащенных записей логов в удобный вид
@@ -101,7 +101,20 @@ $numUsers = $users_arr[1];
 //Достаем общее количество логов
 $numLogs = getNumLogs($link);
 
+//Вытаскиваем логи действий из БД
+$logsAction = getLogs($link, logs_action);
 
+//Узнаем количество логов действий:
+$numLogsAction = count($logsAction);
+
+//вычисляем количество отображаемых логов действий в админке
+
+if($numLogsAction > 10) {
+    $numLogsActionInAdminPanel = 10;
+}
+else {
+    $numLogsActionInAdminPanel = $numLogsAction;
+}
 
 
 

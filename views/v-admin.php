@@ -72,6 +72,29 @@ if ($_SESSION['CreateUser']) ?>
     
 </table>
 <br />
+Последние 10 действий: (Всего логов действий: <?=$numLogsAction?>)
+<table>
+    <tr>
+        <th>Имя</th>
+        <th>Действие</th>
+        <th>Дата</th>
+    </tr>
+    
+    <?php for($i = 0; $i < $numLogsAction; $i++) { ?>
+     <tr>
+        <td>
+            <?=$i + 1 . ". <b>" . $logsAction[$i]['login'] . '</b>'?>
+        </td>
+        <td>
+            <?=$logsAction[$i]['message']?>
+        </td>
+        <td>
+            <?=$logsAction[$i]['dt_action']?>
+        </td>
+    </tr>
+    <?php } ?>
+
+</table>
 <br />
 
 Создать нового пользователя:

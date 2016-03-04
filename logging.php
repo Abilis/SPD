@@ -48,7 +48,7 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
         $dt_action = mysqli_real_escape_string($link, $dt_action);
         
         //формируем запрос
-        $query = "INSERT INTO logs
+        $query = "INSERT INTO `logs`
                                     (`login`, `action`, `entry_old_log`, `entry_new_log`, `dt_action`)
                                 VALUES 
                                     ('$login', '$action', '$entry_for_log_as_string_old', '$entry_for_log_as_string_new', '$dt_action')";        
@@ -76,7 +76,7 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
     
     
     //формируем запрос
-    $sql = "INSERT INTO logs
+    $sql = "INSERT INTO `logs`
                             (`login`, `action`, `$which_entry_log`, `dt_action`)
                             VALUES 
                                 ('%s', '%s', '%s', '%s')";
