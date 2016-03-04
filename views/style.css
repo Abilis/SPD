@@ -122,17 +122,17 @@ td {
 }
 
 .color1 {
-    background-color: bisque;
+    background-color: #CCFFFF;
 }
 
 .color1:hover {
-    background: #BCF5A9;
+    background: #F5ECCE;
 }
 
 .color2 {
-    background-color: #B4CDCD;
+    background-color: #CCFFCC;
 }
 
 .color2:hover {
-    background: #BCF5A9;
+    background: #F5ECCE;
 }
