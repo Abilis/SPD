@@ -1576,8 +1576,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     if (!loggingAction($link, $user, $message, $dt_action)) {
         //запись неиспешности в сессию
         $_SESSION['logging'] = 'Логирование действия не удалось!';
-    }
-    
+    }   
     
     
     return true;

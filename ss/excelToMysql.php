@@ -98,6 +98,27 @@ $numbers++;
 fclose($handle_o);
 unlink('spd.csv');
 
+
+//записываем в лог действий
+//вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
+$userLogin = $user['login'];
+
+//установка текущей даты
+$dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
+
+$message = "Пользователем $userLogin импортирован файл в БД. Добавлено строк: $numbers";
+
+//подключение файла с функцией логирования
+require_once('../logging.php');
+
+//выполняем логирование
+if (!loggingAction($link, $user, $message, $dt_action)) {
+    //запись неиспешности в сессию
+    $_SESSION['logging'] = 'Логирование действия не удалось!';
+}   
+
+
+
 include_once('views/v-header.php');
 
 echo 'Добавлено строк: ' . $numbers . '<br />';
