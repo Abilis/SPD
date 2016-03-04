@@ -15,3 +15,5 @@
 8. motd (id_motd, text, autor, dt_motd)
 
 9. logs_action (id_log, login, message, dt_action)
+
+10. addresses_of_nodes (id_node, ip_addresses, description, serial_number)
