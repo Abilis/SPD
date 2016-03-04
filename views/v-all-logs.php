@@ -20,7 +20,7 @@
  //   die();
     
     ?>
-    <tr>
+    <tr <?php if ($i % 2 == 0) echo 'class="color1"'; else echo 'class="color2"';?>>
         <td><?=($i + 1) . '&nbsp;&nbsp;&nbsp;<b>' . $logs[$i]['login']?></b></td>
         <td><?=$logs[$i]['action']?></td>
         
