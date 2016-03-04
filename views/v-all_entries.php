@@ -1,5 +1,5 @@
 <table>
-    <tr>
+    <tr class="color1">
         <th>№ дог</th>
         <th>Клиент</th>
         <th>Скорость</th>
