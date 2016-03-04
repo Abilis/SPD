@@ -28,6 +28,11 @@ th {
 
 .search {
     height: 60px;
+    background-color: #CCFFCC;
+}
+
+.search:hover {
+    background: #F5ECCE;
 }
 
 #numOrderSearch, #vlan_id {
