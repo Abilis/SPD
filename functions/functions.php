@@ -1577,11 +1577,11 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
         
         $query = sprintf($sql, mysqli_real_escape_string($link, $markAddress),
                              mysqli_real_escape_string($link, $ipAddressForQuery),
-                             mysqli_real_escape_string($link, $netmask), //вычислить
+                             mysqli_real_escape_string($link, $netmask),
                              mysqli_real_escape_string($link, $gateway),
                              mysqli_real_escape_string($link, $vlan),
-                             mysqli_real_escape_string($link, $termination), 
-                             mysqli_real_escape_string($link, $subnet), //вычислить
+                             mysqli_real_escape_string($link, $termination),
+                             mysqli_real_escape_string($link, $subnet),
                              mysqli_real_escape_string($link, $broadcast),
                              mysqli_real_escape_string($link, $dt_added),
                              mysqli_real_escape_string($link, $dt_last_edited),
