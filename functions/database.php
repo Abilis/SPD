@@ -35,7 +35,7 @@ function getByLogin($link, $login) {
     $login = mysqli_real_escape_string($link, $login);
        
     //Формируем запрос
-    $sql = "SELECT * FROM users WHERE login = '%s'";
+    $sql = "SELECT * FROM `users` WHERE login = '%s'";
     $query = sprintf($sql, $login);
     
     $result = mysqli_query($link, $query);
