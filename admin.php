@@ -67,7 +67,6 @@ if ($_POST['markAddress'] && $_POST['network'] && $_POST['broadcast'] && $_POST[
 }
 
 
-
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
 
