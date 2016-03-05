@@ -22,16 +22,14 @@
         </td>
         <td><form action="search.php" method="post">
             <input type="search" name="customer"/> <br />
-            <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="editor" />
+            <input type="submit" value="Поиск"/>            
             </form>        
         </td>
         <td></td>
         <td> 
             <form action="search.php" method="post">
             <input type="search" name="ip_address"/> <br />
-            <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="editor" />
+            <input type="submit" value="Поиск"/>            
             </form>   
         </td>
         <td></td>
@@ -40,7 +38,6 @@
             <form action="search.php" method="post">
             <input id="vlan_id" type="search" name="vlan_id"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="editor" />
             </form>         
         </td>
         <td></td>
@@ -50,7 +47,6 @@
             <form action="search.php" method="post">
             <input type="search" name="last_editor"/> <br />
             <input type="submit" value="Поиск"/>
-            <input type="hidden" name="search_from" value="editor" />
             </form>   
         </td>        
     </tr>
