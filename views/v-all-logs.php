@@ -6,7 +6,7 @@
     ?>
 Всего логов: <?=$numLogs?>
 <table>
-    <tr>
+    <tr class="color2">
         <th>Имя</th>
         <th>Действие</th>
         <th>Старая запись</th>
