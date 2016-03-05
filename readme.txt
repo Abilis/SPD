@@ -1,4 +1,4 @@
-Таблицы БД:
+РўР°Р±Р»РёС†С‹ Р‘Р”:
 1. users (id_user, login, password, id_role, name)
 2. roles (id_role, name, description)
 3. privs (id_privs, name, description)

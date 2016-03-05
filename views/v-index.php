@@ -59,9 +59,7 @@
     die();
     } ?>
     
-    <?php for ($i = 0; $i < count($entries); $i++) { ?> 
-    
-    
+    <?php for ($i = 0; $i < count($entries); $i++) { ?>        
     
         <tr <?php if ($i % 2 == 0) echo 'class="color1"'; else echo 'class="color2"';?>>
             <td> <?=$entries[$i]['numOrder']?> </td>

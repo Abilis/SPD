@@ -47,12 +47,8 @@ else {
 }
 
 
-
 //Выводим в шаблоны
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
-
-
-
 ?>
