@@ -8,7 +8,8 @@
         <th>Шлюз</th>
         <th>
             <form action="search.php" method="post">
-                <input type="submit" name="sortedByVlanAllEntries" value="Влан" />
+                <input type="hidden" name="sortedByVlan" value="allEntriesPage" />
+                <input type="submit" value="Влан" />
             </form>
         </th>        
         <th>Порт клиента</th>

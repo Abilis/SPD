@@ -6,8 +6,10 @@
         <th>IP-адрес</th>
         <th>Маска</th>
         <th>Шлюз</th>
-        <th><form action="search.php" method="post">
-                <input type="submit" name="sortedByVlan" value="Влан" />
+        <th>
+            <form action="search.php" method="post">
+                <input type="hidden" name="sortedByVlan" value="mainPage" />
+                <input type="submit" value="Влан" />
             </form>
         </th>
         <th>Порт клиента</th>
