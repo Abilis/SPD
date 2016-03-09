@@ -47,7 +47,7 @@ else if (!empty($_POST['commentary'])) {
     $entries = get_entries_by_commentary($link, $_POST['commentary']);    
 }
 //Обработка нажатия кнопки сортировки по влан
-elseif (!empty($_POST['sortedByVlan'])) { //для Index.php
+elseif (!empty($_POST['sortedByVlan'])) { //для index.php
     $entries_arr = sortedByVlan($link);
     $entries = $entries_arr[0];
     $page = $entries_arr[1]; //текущая страница
@@ -66,6 +66,7 @@ include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
 if (!empty($entries_arr[3])) {
-    echo $entries_arr[3];
+    $current_page = 'index.php';
+    include_once('ss/menu_navigation.php');
 }
 ?>
