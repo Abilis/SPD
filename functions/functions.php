@@ -167,7 +167,7 @@ function get_entry_by_order($link, $numOrder) {
 }
 
 //Вытаскиваем запись по названию клиента
-function get_entry_by_customer($link, $customer) {
+function get_entries_by_customer($link, $customer) {
 
     //подготовка и проверка
    $customer = trim($customer);
@@ -180,7 +180,7 @@ function get_entry_by_customer($link, $customer) {
     $customer = mysqli_real_escape_string($link, $customer);
     
     //Запрос
-    $query = "SELECT * FROM spd_table WHERE customer LIKE '%$customer%' ORDER BY id_entry DESC";
+    $query = "SELECT * FROM `spd_table` WHERE `customer` LIKE '%$customer%' ORDER BY `id_entry` DESC";
     
     $result = mysqli_query($link, $query);
     
@@ -209,7 +209,7 @@ function get_entries_by_tarif($link, $tarif) {
 }
 
 //Вытаскиваем запись с соответствующим IP-адресом
-function get_entry_by_ip($link, $ip_address) {
+function get_entries_by_ip($link, $ip_address) {
     
     //подготовка и проверка
    $ip_address = trim($ip_address);
@@ -256,7 +256,7 @@ function get_entries_by_vlan($link, $vlan_id) {
     }
     
     //Запрос
-    $query = "SELECT * FROM spd_table WHERE vlan_id='$vlan_id' ORDER BY id_entry DESC";
+    $query = "SELECT * FROM `spd_table` WHERE vlan_id='$vlan_id' ORDER BY `ip_address` ASC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -277,10 +277,37 @@ function get_entries_by_vlan($link, $vlan_id) {
 }
 
 //Вытаскиваем записи с соответствующей точкой терминации
-function get_entries_by_termination($link, $termination_point) {
+function get_entries_by_commentary($link, $commentary) {
     
+    //подготовка и проверка
+   $customer = trim($commentary);
     
+    if ($customer == '') {
+        header('Location: index.php');
+        die();
+    }
     
+    $customer = mysqli_real_escape_string($link, $commentary);
+    
+    //Запрос
+    $query = "SELECT * FROM `spd_table` WHERE `commentary` LIKE '%$commentary%' ORDER BY `id_entry` DESC";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $entries = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $entries[] = $row;
+    } 
+        
+    return $entries;    
 }
 
 //Поиск по автору
@@ -291,7 +318,7 @@ function get_entries_by_founder($link, $founder) {
 }
 
 //Поиск по последнему редактору
-function get_entry_by_last_editor($link, $last_editor) {
+function get_entries_by_last_editor($link, $last_editor) {
     
     //подготовка и проверка
    $last_editor = trim($last_editor);

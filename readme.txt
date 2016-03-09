@@ -1,3 +1,8 @@
+БД: spd
+
+user: root
+password: EYkW4Q5Pz6S9S2Sf
+
 Таблицы БД:
 1. users (id_user, login, password, id_role, name)
 2. roles (id_role, name, description)

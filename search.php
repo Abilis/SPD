@@ -28,11 +28,11 @@ if (!empty($_POST['numOrder'])) {
 }
 else if (!empty($_POST['customer'])) {
     //Поиск записей по название клиента
-    $entries = get_entry_by_customer($link, $_POST['customer']);    
+    $entries = get_entries_by_customer($link, $_POST['customer']);    
 }
 else if (!empty($_POST['ip_address'])) {
     //Поиск записей по IP-адресу
-    $entries = get_entry_by_ip($link, $_POST['ip_address']);    
+    $entries = get_entries_by_ip($link, $_POST['ip_address']);    
 }
 else if (!empty($_POST['vlan_id'])) {
     //Поиск записей по номеру влан
@@ -40,7 +40,11 @@ else if (!empty($_POST['vlan_id'])) {
 }
 else if (!empty($_POST['last_editor'])) {
     //Поиск записей по носледнему редактору
-    $entries = get_entry_by_last_editor($link, $_POST['last_editor']);    
+    $entries = get_entries_by_last_editor($link, $_POST['last_editor']);    
+}
+else if (!empty($_POST['commentary'])) {
+    //Поиск записей по носледнему редактору
+    $entries = get_entries_by_commentary($link, $_POST['commentary']);    
 }
 else {
    header('Location: ../index.php'); 
