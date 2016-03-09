@@ -1,18 +1,14 @@
 <?php
-//error_reporting(E_ERROR);
+error_reporting(E_ERROR);
 require_once('functions/database.php');
 require_once('functions/functions.php');
 require_once('functions/access.php');
 
-$_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сесси больше не нужна
-$_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
-
-
-var_dump($_SESSION['sortedByVlan']);
-//die();
-
 // подключение к БД
 $link = startup();
+
+$_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сесси больше не нужна
+$_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
 
 //очистка старых сессий
 clearSessionsInDB($link);

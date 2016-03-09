@@ -417,8 +417,7 @@ function sortedByVlan($link) {
     $entries_arr[2] = $total;
     
     //записываем в сессию, что идет сортировка по влан 
-    $_SESSION['sortedByVlan'] = 'mainPage';
-    //die('постраничная сортировка по влан');
+    $_SESSION['sortedByVlan'] = 'mainPage';    
     
     return $entries_arr; 
     

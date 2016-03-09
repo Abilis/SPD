@@ -1,5 +1,4 @@
-<?php
- 
+<?php 
 error_reporting(E_ERROR);
 
 require_once('functions/database.php');
@@ -8,6 +7,8 @@ require_once('functions/access.php');
 
 // подключение к БД
 $link = startup();
+
+$_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
 
 //Определение текущего пользователя
 $user = getCurrentUser($link);
