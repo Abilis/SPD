@@ -427,7 +427,7 @@ function sortedByVlan($link) {
 function sortedByVlanAllEntries($link) {    
     
     //Запрос
-    $query = "SELECT * FROM `spd_table` ORDER BY 'vlan_id' ASC";
+    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
