@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 
 //Сценарий для обработки запросов к БД из форм поисков
 require_once('functions/database.php');
@@ -46,6 +46,16 @@ else if (!empty($_POST['commentary'])) {
     //Поиск записей по носледнему редактору
     $entries = get_entries_by_commentary($link, $_POST['commentary']);    
 }
+//Обработка нажатия кнопки сортировки по влан
+elseif (!empty($_POST['sortedByVlan'])) { //для Index.php
+    $entries_arr = sortedByVlan($link);
+    $entries = $entries_arr[0];
+    $page = $entries_arr[1]; //текущая страница
+    $total = $entries_arr[2]; //всего страниц
+}
+elseif (!empty($_POST['sortedByVlanAllEntries'])) { //для all_entries.php
+    $entries = sortedByVlanAllEntries($link);    
+}
 else {
    header('Location: ../index.php'); 
 }
@@ -55,4 +65,7 @@ else {
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
+if (!empty($entries_arr[3])) {
+    echo $entries_arr[3];
+}
 ?>

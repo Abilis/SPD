@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 require_once('functions/database.php');
 require_once('functions/functions.php');
 require_once('functions/access.php');
@@ -33,7 +33,7 @@ $page = $entries_arr[1]; //текущая страница
 $total = $entries_arr[2]; //всего страниц
 
 
-//Если массив $_GET не пустой, то обработка правки и удаления статей.
+//Если массив $_GET не пустой, то обработка правки и удаления записей
 if (($_GET['action']) == 'edit') {
     //правка записи
     
@@ -79,7 +79,8 @@ elseif (($_GET['action']) == 'delete') {
     }
 }
 
-//обработка отправки формы
+
+//обработка отправки формы для редактирования записи
 elseif (!empty($_POST)) { //если массив не пустой
     if (entry_edit($link, $user, $_POST['id_entry'], $_POST['numOrder'], $_POST['customer'],
                    $_POST['tarif'], $_POST['ip_address'], $_POST['netmask'], $_POST['gateway'],
