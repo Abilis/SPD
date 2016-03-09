@@ -180,7 +180,7 @@ if ($_SESSION['CreateUser']) ?>
     <input type="text" name="vlan" value="<?=$_POST['vlan']?>" /><br />
     <label>Терминация:</label><br />
     <input type="text" name="termination" value="<?=$_POST['termination']?>" /><br />    
-    <span class="bold">Шлюз будет отмечен как первый возможный адрес</span><br />
+    <span class="bold">Шлюз будет отмечен как последний возможный адрес</span><br />
     <input type="submit"/>
 </form>
 <br />

@@ -1645,7 +1645,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     $last_editor = $user['login'];
     
     //установка шлюза
-    $gateway = $firstThreeOctetsOfNetwork . ($firstOctet + 1);
+    $gateway = $lastThreeOctetsOfBroadcast . ($lastOctet - 1);
         
     
     
@@ -1687,7 +1687,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     //Все проверки пройдены, теперь можно делать генерацию
     for ($i = 0; $i < $numAddresses; $i++) {
         
-        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i + 2);
+        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i + 1);
         $sql = "INSERT INTO `spd_table`
                             (`customer`, `ip_address`, `netmask`, `gateway`, `vlan_id`,
                             `termination_point`, `subnet`, `broadcast`, `dt_added`,
