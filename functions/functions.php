@@ -392,8 +392,7 @@ function sortedByVlan($link) {
     $start = $page * $num - $num;
     
     //Формируем запрос на выборку $num записей начиная с номера $start
-    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC LIMIT $start, $num";
-    
+    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` DESC LIMIT $start, $num";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -404,10 +403,10 @@ function sortedByVlan($link) {
     
     $num_rows = mysqli_num_rows($result); //число полученных строк
        
-    $entries = array(); //создаем вспомогательный массив для записи результата выборки
+    $entries_arr = array(); //создаем вспомогательный массив для записи результата выборки
     
     for ($i = 0; $i < $num_rows; $i++) {
-        $entries[] = mysqli_fetch_array($result);
+        $entries_arr[] = mysqli_fetch_array($result);
     }
      
     /*Поскольку для отрисовки навигации понадобятся переменные $page, $total и $entries,
@@ -415,9 +414,7 @@ function sortedByVlan($link) {
     $entries_arr[0] = $entries;
     $entries_arr[1] = $page;
     $entries_arr[2] = $total;
-    
-    //записываем в сессию, что идет сортировка по влан 
-    $_SESSION['sortedByVlan'] = 'mainPage';    
+    $entries_arr[3] = "include_once(/'ss/menu_navigation.php/')";
     
     return $entries_arr; 
     
@@ -427,7 +424,7 @@ function sortedByVlan($link) {
 function sortedByVlanAllEntries($link) {    
     
     //Запрос
-    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC";
+    $query = "SELECT * FROM `spd_table` ORDER BY 'vlan_id' DESC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -490,8 +487,8 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     $founder = $user['login'];
     $last_editor = $user['login'];
@@ -593,7 +590,7 @@ function delete_entry($link, $user, $id_entry) {
     require_once('logging.php');
     
     //установка текущей даты
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //Определение логина
     $founder = $user['login'];
@@ -666,7 +663,7 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //Определение логина
     $last_editor = $user['login'];
@@ -797,7 +794,7 @@ function login($link, $login, $password, $remember){
     
     //если было установлено "запомнить меня", вешаем куки на логин и пароль
     if ($remember) {
-        $expire = time() + 3600 * 24 * 7 + 3600 * 2;
+        $expire = time() + 3600 * 24 * 7 + 3600 * 3;
         setcookie('login', $login, $expire, '/');
         setcookie('password', md5($password), $expire, '/');
     }
@@ -815,7 +812,7 @@ function open_session($link, $id_user) {
     $sid = generateStr(15);
     
     //Вставляем SID в БД
-    $now = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $now = date('Y.m.d G:i:s', time() + 3600 * 3);
     $session = array();
     $session['id_user'] = $id_user;
     $session['sid'] = $sid;
@@ -912,7 +909,7 @@ function getSidInSession($link) {
     }
     
     //Если же в $sid что-то есть, делаем запрос в БД
-    $time_last = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $time_last = date('Y.m.d G:i:s', time() + 3600 * 3);
     $time_last = mysqli_real_escape_string($link, $time_last);
     
     //Формируем запрос
@@ -1192,7 +1189,7 @@ function updateMotd($link, $user, $motd) {
     $motd = htmlspecialchars($motd);
     
     //установка текущей даты
-    $dt_motd = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_motd = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //Установка Текущего пользователя в качестве автора
     $autor = $user['login'];
@@ -1307,7 +1304,7 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
     //и записываем в лог
     
     //устанавливаем дату
-    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     //определяем переменную $access_level
     if ($id_role == 1) {
@@ -1452,7 +1449,7 @@ function deleteOldLogs($link, $user) {
     }
     
     //установка даты
-    $dt_min = date('Y.m.d G:i:s', time() + 3600 * 4 - 3600 * 24 * 90);
+    $dt_min = date('Y.m.d G:i:s', time() + 3600 * 3 - 3600 * 24 * 90);
     
     //формируем запрос
     $sql = "DELETE FROM `logs` WHERE `dt_action` < '%s'";
@@ -1484,27 +1481,36 @@ function deleteOldLogs($link, $user) {
     $n = $n1 + $n2;
         
     //Запись в сессии
-    $_SESSION['deleteOldLogs'] = "Операция успешно завершена. Удалено $n строк.";
-    
+    if ($n != 0) {
+        $_SESSION['deleteOldLogs'] = "Операция успешно завершена. Удалено $n строк.";
+    }
+    else {
+        $_SESSION['deleteOldLogs'] = "Нет логов для удаления (старше 3 месяцев)!";
+    }
     
     //записываем в лог действий
     //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
     $userLogin = $user['login'];
     
-    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
     
-    $message = "Пользователем $userLogin удалены старые логи в количество $n строк ($n1 общих логов и $n2 логов действий).";
+    if ($n != 0) {
+        $message = "Пользователем $userLogin удалены старые логи в количество $n строк ($n1 общих логов и $n2 логов действий).";
+    }
+    else {
+        $message = "";
+    }
     
     //подключение файла с функцией логирования
     require_once('logging.php');
     
     //выполняем логирование
-    if (!loggingAction($link, $user, $message, $dt_action)) {
+    if ($message != "") {
+        if (!loggingAction($link, $user, $message, $dt_action)) {
         //запись неиспешности в сессию
         $_SESSION['logging'] = 'Логирование действия не удалось!';
-    }   
-    
-    
+        }
+    }
     
     return true;
 }
@@ -1526,7 +1532,7 @@ function getNumLogs($link) {
 }
 
 //Функция генерация сети из панели администратора
-function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination, $gateway) {   
+function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination) {
     
     //проверка прав
     require_once('access.php');
@@ -1638,16 +1644,15 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     }
     
     //установка переменных
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
     
     $founder = $user['login'];
     $last_editor = $user['login'];
     
-    //установка шлюза, если он не выбран    
-    if ($gateway == "") {    
-        $gateway = $lastThreeOctetsOfBroadcast . ($lastOctet - 1);
-    }
+    //установка шлюза
+    $gateway = $firstThreeOctetsOfNetwork . ($firstOctet + 1);
+        
     
     
     //установка маски и подсети. Здесь $numAddresses - полное количество адресов в сети
@@ -1682,19 +1687,13 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
         }
     
     
-    //корректируем число $numAddresses. Исключаем адреса сети и бродкаста
-    $numAddresses -= 2;
+    //корректируем число $numAddresses. Исключаем адреса сети, бродкаста и шлюза
+    $numAddresses -= 3;
     
     //Все проверки пройдены, теперь можно делать генерацию
     for ($i = 0; $i < $numAddresses; $i++) {
         
-        $ipAddressForQuery = $lastThreeOctetsOfBroadcast . ($lastOctet - 1 - $i);
-        
-        //исключаем из генерации шлюз
-        if ($ipAddressForQuery == $gateway) {
-            continue;
-        }
-        
+        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i + 2);
         $sql = "INSERT INTO `spd_table`
                             (`customer`, `ip_address`, `netmask`, `gateway`, `vlan_id`,
                             `termination_point`, `subnet`, `broadcast`, `dt_added`,
