@@ -392,7 +392,8 @@ function sortedByVlan($link) {
     $start = $page * $num - $num;
     
     //Формируем запрос на выборку $num записей начиная с номера $start
-    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` DESC LIMIT $start, $num";
+    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC LIMIT $start, $num";      
+    
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -403,10 +404,10 @@ function sortedByVlan($link) {
     
     $num_rows = mysqli_num_rows($result); //число полученных строк
        
-    $entries_arr = array(); //создаем вспомогательный массив для записи результата выборки
+    $entries = array(); //создаем вспомогательный массив для записи результата выборки
     
     for ($i = 0; $i < $num_rows; $i++) {
-        $entries_arr[] = mysqli_fetch_array($result);
+        $entries[] = mysqli_fetch_array($result);
     }
      
     /*Поскольку для отрисовки навигации понадобятся переменные $page, $total и $entries,
@@ -416,6 +417,9 @@ function sortedByVlan($link) {
     $entries_arr[2] = $total;
     $entries_arr[3] = "include_once(/'ss/menu_navigation.php/')";
     
+    //Записываем в сессию, что идет сортировка по влан
+    $_SESSION['sortedByVlan'] = "mainPage";    
+    
     return $entries_arr; 
     
 }
@@ -424,7 +428,7 @@ function sortedByVlan($link) {
 function sortedByVlanAllEntries($link) {    
     
     //Запрос
-    $query = "SELECT * FROM `spd_table` ORDER BY 'vlan_id' DESC";
+    $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {

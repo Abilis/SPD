@@ -9,6 +9,8 @@ require_once('functions/access.php');
 // подключение к БД
 $link = startup();
 
+
+
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
@@ -49,7 +51,7 @@ else if (!empty($_POST['commentary'])) {
 //Обработка нажатия кнопки сортировки по влан
 elseif (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
     $entries_arr = sortedByVlan($link);
-    $entries = $entries_arr[0];
+    $entries = $entries_arr[0];    
     $page = $entries_arr[1]; //текущая страница
     $total = $entries_arr[2]; //всего страниц    
 }
@@ -65,7 +67,7 @@ else {
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
-if ($_SESSION['sortedByVlan'] == 'mainPage') {    
+if ($_SESSION['sortedByVlan'] == 'mainPage') {   
     $current_page = 'search.php';
     include_once('ss/menu_navigation.php');
 }
