@@ -26,7 +26,7 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
         $entry_for_log_as_string_old = "";
         
         foreach ($entry_for_log_old as $key => $entry_for_log) {
-             $entry_for_log_as_string_old .= $key . " = " . $entry_for_log . "; ";         
+             $entry_for_log_as_string_old .= $key . " = " . $entry_for_log . "| ";         
         }
         
         
@@ -36,7 +36,7 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
         $entry_for_log_as_string_new = "";
         
         foreach ($entry_for_log_new as $key => $entry_for_log) {
-             $entry_for_log_as_string_new .= $key . " = " . $entry_for_log . "; ";         
+             $entry_for_log_as_string_new .= $key . " = " . $entry_for_log . "| ";         
         }
         
         
@@ -70,7 +70,7 @@ function logging ($link, $login, $action, $entry_for_log_old, $entry_for_log_new
     $entry_for_log_as_string = "";
         
     foreach ($entry_for_log as $key => $entry) {
-         $entry_for_log_as_string .= $key . " = " . $entry . "; ";         
+         $entry_for_log_as_string .= $key . " = " . $entry . "| ";         
     }
     
     

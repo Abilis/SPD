@@ -1055,7 +1055,7 @@ function format_log($logs, $whichLog, $num) {
         
         
 
-        $format_current_log = explode(";", $logs[$i][$whichLog]);
+        $format_current_log = explode("|", $logs[$i][$whichLog]);
 
         $arrayLogInside[0] = iconv_substr($format_current_log[1], 12);
         $arrayLogInside[1] = iconv_substr($format_current_log[2], 12);
@@ -1090,7 +1090,7 @@ function format_new_log($logs, $whichLog, $num) {
             
             if ($logs[$i]['action'] == "добавление") {
                 
-                $format_current_log = explode(";", $logs[$i]['entry_new_log']);
+                $format_current_log = explode("|", $logs[$i]['entry_new_log']);
             
                 $arrayLogInside[0] = iconv_substr($format_current_log[0], 10);
                 $arrayLogInside[1] = iconv_substr($format_current_log[1], 12);
@@ -1109,7 +1109,7 @@ function format_new_log($logs, $whichLog, $num) {
             
         else {
                                         
-                $format_current_log = explode(";", $logs[$i][$whichLog]);
+                $format_current_log = explode("|", $logs[$i][$whichLog]);
                 
                 $arrayLogInside[0] = iconv_substr($format_current_log[1], 12);
                 $arrayLogInside[1] = iconv_substr($format_current_log[2], 12);
