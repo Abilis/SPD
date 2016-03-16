@@ -50,7 +50,7 @@ function get_entry($link, $id_entry) {
     }
     
     //формируем запрос
-    $sql = "SELECT * FROM spd_table WHERE id_entry='$id_entry'";
+    $sql = "SELECT * FROM `spd_table` WHERE `id_entry`='$id_entry'";
     
     //Выполняем запрос
     $result = mysqli_query($link, $sql);
