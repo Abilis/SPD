@@ -8,8 +8,8 @@ $link = startup();
 
 
 //вхождение " в поле customer
-$searchString = "\"";
-$fixSubString = "\"";
+$searchString = '\"';
+$fixSubString = '\"';
 
 //устанавливаем счетчик строк
 $num = 0;
