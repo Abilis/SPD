@@ -78,6 +78,9 @@ $insertValues[]="'" . addslashes(trim($v)) . "'";
  
 
 $values=implode(',',$insertValues);
+
+//экранируем кавычки и прочую дрянь
+$values = htmlspecialchars($values);
     
 $sql = "INSERT INTO `$tableName` ( $columns ) VALUES ( $values )";
     
