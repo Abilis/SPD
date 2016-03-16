@@ -1,8 +1,22 @@
 <?php
 require_once('../functions/database.php');
+require_once('../functions/functions.php');
+require_once('../functions/access.php');
 
-// подключение к БД
+//подключение к БД
 $link = startup();
+
+//Определение текущего пользователя
+$user = getCurrentUser($link);
+
+//Определяем, может ли пользователь делать импорт
+$canDoImportInDb = canDo($link, $user, 'FIX_IN_DB');
+
+if (!$canDoImportInDb) {
+    $_SESSION['noAccessImportInDb'] = "Недостаточно прав для использования fixQuotes.php";
+    header('Location: ../admin.php');
+    die('не положено!');
+}
 
 //вытащить из БД все строки, где есть символы " и заменить их на &quot;
 
