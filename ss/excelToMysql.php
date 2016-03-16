@@ -38,7 +38,7 @@ if ($_FILES['filename']['type'] != application/vnd.ms-excel) {
 $tmpName = $_FILES['filename']['tmp_name'];
 $name = 'spd.csv';
 
-if (!move_uploaded_file($tmpName, $name)) {
+if (!move_uploaded_file($tmpName, $name)) {    
     
    die('Не получилось загрузить файл :(');
 }
