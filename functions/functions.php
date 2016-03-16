@@ -491,8 +491,8 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     $founder = $user['login'];
     $last_editor = $user['login'];
@@ -594,7 +594,7 @@ function delete_entry($link, $user, $id_entry) {
     require_once('logging.php');
     
     //установка текущей даты
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     //Определение логина
     $founder = $user['login'];
@@ -667,7 +667,7 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
     $commentary = htmlspecialchars($commentary);
     
     //установка текущей даты
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     //Определение логина
     $last_editor = $user['login'];
@@ -798,7 +798,7 @@ function login($link, $login, $password, $remember){
     
     //если было установлено "запомнить меня", вешаем куки на логин и пароль
     if ($remember) {
-        $expire = time() + 3600 * 24 * 30 + 3600 * 3;
+        $expire = time() + 3600 * 24 * 30 + 3600 * 4;
         setcookie('login', $login, $expire, '/');
         setcookie('password', md5($password), $expire, '/');
     }
@@ -816,7 +816,7 @@ function open_session($link, $id_user) {
     $sid = generateStr(15);
     
     //Вставляем SID в БД
-    $now = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $now = date('Y.m.d G:i:s', time() + 3600 * 4);
     $session = array();
     $session['id_user'] = $id_user;
     $session['sid'] = $sid;
@@ -913,7 +913,7 @@ function getSidInSession($link) {
     }
     
     //Если же в $sid что-то есть, делаем запрос в БД
-    $time_last = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $time_last = date('Y.m.d G:i:s', time() + 3600 * 4);
     $time_last = mysqli_real_escape_string($link, $time_last);
     
     //Формируем запрос
@@ -1193,7 +1193,7 @@ function updateMotd($link, $user, $motd) {
     $motd = htmlspecialchars($motd);
     
     //установка текущей даты
-    $dt_motd = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_motd = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     //Установка Текущего пользователя в качестве автора
     $autor = $user['login'];
@@ -1308,7 +1308,7 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
     //и записываем в лог
     
     //устанавливаем дату
-    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     //определяем переменную $access_level
     if ($id_role == 1) {
@@ -1453,7 +1453,7 @@ function deleteOldLogs($link, $user) {
     }
     
     //установка даты
-    $dt_min = date('Y.m.d G:i:s', time() + 3600 * 3 - 3600 * 24 * 90);
+    $dt_min = date('Y.m.d G:i:s', time() + 3600 * 4 - 3600 * 24 * 90);
     
     //формируем запрос
     $sql = "DELETE FROM `logs` WHERE `dt_action` < '%s'";
@@ -1496,7 +1496,7 @@ function deleteOldLogs($link, $user) {
     //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
     $userLogin = $user['login'];
     
-    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_action = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     if ($n != 0) {
         $message = "Пользователем $userLogin удалены старые логи в количество $n строк ($n1 общих логов и $n2 логов действий).";
@@ -1648,8 +1648,8 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     }
     
     //установка переменных
-    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 3);
-    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 3);
+    $dt_added = date('Y.m.d G:i:s', time() + 3600 * 4);
+    $dt_last_edited = date('Y.m.d G:i:s', time() + 3600 * 4);
     
     $founder = $user['login'];
     $last_editor = $user['login'];
