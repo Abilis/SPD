@@ -17,7 +17,8 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 //обработка отправки формы
 if (!empty($_POST)) {
    
-    if ( login($link, $_POST['login'], $_POST['password'], isset($_POST['remember'])) ) {
+    if ( login($link, $_POST['login'], $_POST['password'], isset($_POST['remember'])) ) {        
+
         header('Location: index.php');
         die();
     }

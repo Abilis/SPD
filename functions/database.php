@@ -79,7 +79,7 @@ function openSessionInDb($link, $session) {
 function clearSessionsInDB($link) {
     
     //время хранения сессий в БД
-    $min = date('Y.m.d G:i:s', time() + 3600 * 4 - 60 * 20);
+    $min = date('Y.m.d G:i:s', time() + 3600 * 3 - 60 * 20);
     
     $t = "time_last < '%s'";
     $where = sprintf($t, $min);

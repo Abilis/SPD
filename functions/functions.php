@@ -60,7 +60,7 @@ function get_entry($link, $id_entry) {
     }
     
     //Собираем из дескриптора ассоциативный массив
-    $entry = mysqli_fetch_assoc($result);    
+    $entry = mysqli_fetch_assoc($result);
     
     return $entry;
 }
@@ -777,7 +777,7 @@ function logout() {
 function login($link, $login, $password, $remember){
     
     //вытаскиваем пользователя из БД
-    $user = getByLogin($link, $login); //database.php
+    $user = getByLogin($link, $login); //database.php    
     
     if ($user == null) {
         
@@ -798,7 +798,7 @@ function login($link, $login, $password, $remember){
     
     //если было установлено "запомнить меня", вешаем куки на логин и пароль
     if ($remember) {
-        $expire = time() + 3600 * 24 * 7 + 3600 * 3;
+        $expire = time() + 3600 * 24 * 30 + 3600 * 3;
         setcookie('login', $login, $expire, '/');
         setcookie('password', md5($password), $expire, '/');
     }
