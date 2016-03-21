@@ -1536,7 +1536,7 @@ function getNumLogs($link) {
 }
 
 //Функция генерация сети из панели администратора
-function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination) {
+function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination, $gateway) {
     
     //проверка прав
     require_once('access.php');
@@ -1654,9 +1654,10 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     $founder = $user['login'];
     $last_editor = $user['login'];
     
-    //установка шлюза
-    $gateway = $firstThreeOctetsOfNetwork . ($firstOctet + 1);
-        
+    //установка шлюза, если он не выбран
+    if ($gateway == "") {
+        $gateway = $lastThreeOctetsOfBroadcast . ($lastOctet - 1);
+    }
     
     
     //установка маски и подсети. Здесь $numAddresses - полное количество адресов в сети
@@ -1691,13 +1692,21 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
         }
     
     
-    //корректируем число $numAddresses. Исключаем адреса сети, бродкаста и шлюза
-    $numAddresses -= 3;
+    //корректируем число $numAddresses. Исключаем адреса сети и бродкаста
+    $numAddresses -= 2;
     
     //Все проверки пройдены, теперь можно делать генерацию
     for ($i = 0; $i < $numAddresses; $i++) {
         
-        $ipAddressForQuery = $firstThreeOctetsOfNetwork . ($firstOctet + $i + 2);
+        
+        $ipAddressForQuery = $lastThreeOctetsOfBroadcast . ($lastOctet - 1 - $i);
+        
+        //исключаем из генерации шлюз
+        if ($ipAddressForQuery == $gateway) {
+            continue;
+        }
+        
+        
         $sql = "INSERT INTO `spd_table`
                             (`customer`, `ip_address`, `netmask`, `gateway`, `vlan_id`,
                             `termination_point`, `subnet`, `broadcast`, `dt_added`,
@@ -1733,8 +1742,11 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
 
     }
     
+    //Корректировка количества добавленных адресов
+    $numOfAddresses = $numAddresses - 1;
+    
     //Запись в сессию
-    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов \"$markAddress\" успешно создана! Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numAddresses";
+    $_SESSION['networkGeneration'] = "Сеть $network с пометкой свободных адресов \"$markAddress\" успешно создана! Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numOfAddresses";
     
     
     //записываем в лог действий
@@ -1743,7 +1755,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     
     $dt_action = $dt_added;
     
-    $message = "Пользователем $userLogin создана сеть $network с пометкой свободных адресов \"$markAddress\". Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numAddresses";
+    $message = "Пользователем $userLogin создана сеть $network с пометкой свободных адресов \"$markAddress\". Влан $vlan терминируется на $termination. Шлюз установлен как $gateway. Добавлено адресов: $numOfAddresses";
     
     //подключение файла с функцией логирования
     require_once('logging.php');
