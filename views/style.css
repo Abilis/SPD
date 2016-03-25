@@ -70,6 +70,13 @@ td {
 
 }
 
+.addFormCustomer {
+    width: 200px;
+    align-content: center;
+    margin-left: 4px;
+
+}
+
 #addNumOrder {
     width: 35px;
 }
@@ -88,8 +95,19 @@ td {
     color: red;
 }
 
+.boldSmall {
+    font-weight: bold;
+    color: red;
+    font-size: 12px;
+}
+
 .italic {
     font-style: italic;
+}
+
+.italicSmall {
+    font-style: italic;
+    font-size: 12px;
 }
 
 .small {
