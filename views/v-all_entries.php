@@ -73,7 +73,7 @@
     <?php for ($i = 0; $i < count($entries); $i++) { ?>
         <tr <?php if ($i % 2 == 0) echo 'class="color1"'; else echo 'class="color2"';?>>
             <td> <?=$entries[$i]['numOrder']?> </td>
-            <td <?php if (is_int(stripos($entries[$i]['customer'], 'вобод'))) { echo  'class="free"'; } ?> > <?=$entries[$i]['customer']?> <br />
+            <td <?php if (is_int(stripos($entries[$i]['customer'], 'вобод')) || is_int(stripos($entries[$i]['commentary'], 'астор'))) { echo  'class="free"'; } ?> > <?=$entries[$i]['customer']?> <br />
                 
                 <?php if ($canDoEdit) { ?>
                     <span class="small">
