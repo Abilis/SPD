@@ -270,7 +270,9 @@ function get_entries_by_vlan($link, $vlan_id) {
     for ($i = 0; $i < $n; $i++) {
         $row = mysqli_fetch_assoc($result);
         $entries[] = $row;
-    } 
+    }
+    
+    sortByIp($entries); //сортируем массив по последнему октету в IP-адресе в порядке увеличения
         
     return $entries;
     
@@ -1777,6 +1779,35 @@ function needToReplace($dt_last_edited, $last_editor) {
     } else {
         return false;
     }
+}
+
+//функция сортирует массив в порядке увеличения последнего октета IP-адреса
+//ToDo: переписать пузырек на что-нибудь нормальное
+function sortByIp(&$arr) {
+    
+    for ($i = 0; $i < count($arr); $i++) {
+        
+        for ($j = 1; $j < count($arr) - $i; $j++) {
+            $ipAddressLeft = $arr[$j - 1]["ip_address"];
+            $ipAddressAsArrLeft = explode( ".", $ipAddressLeft);
+            $lastOctetLeft = $ipAddressAsArrLeft[3];
+            
+            $ipAddressRight = $arr[$j]["ip_address"];
+            $ipAddressAsArrRight = explode( ".", $ipAddressRight);
+            $lastOctetRight = $ipAddressAsArrRight[3];
+            
+            $lastOctetLeft = (int) $lastOctetLeft;
+            $lastOctetRight = (int) $lastOctetRight;
+            
+            if ($lastOctetLeft > $lastOctetRight) {
+                $temp = $arr[$j - 1];
+                $arr[$j - 1] = $arr[$j];
+                $arr[$j] = $temp;
+            }
+            
+        }
+    }
+    
 }
 
 

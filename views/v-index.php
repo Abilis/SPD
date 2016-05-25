@@ -64,7 +64,7 @@
     <tr>
         <td colspan="11" id="nothingSearch">Ничего не найдено!</td>
     </tr>
-    <?php
+    <?php    
     die();
     } ?>
     

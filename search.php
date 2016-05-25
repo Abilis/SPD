@@ -71,4 +71,5 @@ if ($_SESSION['sortedByVlan'] == 'mainPage') {
     $current_page = 'search.php';
     include_once('ss/menu_navigation.php');
 }
+include_once('views/v-footer.php');
 ?>
