@@ -1770,5 +1770,14 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     return true;
 }
 
+//функция определяет, необходима ли замена значений даты редактирования и автора последнего редактора. True если оба значения дефолтные из БД
+function needToReplace($dt_last_edited, $last_editor) {
+    if ($dt_last_edited == "0000-00-00 00:00:00" || $last_editor == "") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 ?>

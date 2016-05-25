@@ -97,7 +97,16 @@
             <td><?=$entries[$i]['customer_port']?></td>
             <td><?=$entries[$i]['termination_point']?></td>
             <td><?=$entries[$i]['commentary']?></td>
-            <td><?=$entries[$i]['dt_last_edited'] . ' by ' . $entries[$i]['last_editor'] ?></td>
+            <td><?php 
+                        if (needToReplace($entries[$i]['dt_last_edited'], $entries[$i]['last_editor'])) {
+                            echo "<i>неизвестно</i>";
+                        } else {
+                             echo $entries[$i]['dt_last_edited'] . ' by ' . $entries[$i]['last_editor']; 
+                        }
+                       
+                           
+                ?>
+            </td>
                         
         </tr>
     <?php } ?>
