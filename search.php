@@ -27,27 +27,26 @@ $numEntriesAll = getEntriesAll($link);
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
     $entries = get_entry_by_order($link, $_POST['numOrder']);    
-}
-else if (!empty($_POST['customer'])) {
+} else if (!empty($_POST['customer'])) {
     //Поиск записей по название клиента
     $entries = get_entries_by_customer($link, $_POST['customer']);    
-}
-else if (!empty($_POST['ip_address'])) {
+} else if (!empty($_POST['ip_address'])) {
     //Поиск записей по IP-адресу
     $entries = get_entries_by_ip($link, $_POST['ip_address']);    
-}
-else if (!empty($_POST['vlan_id'])) {
+} else if (!empty($_POST['vlan_id'])) {
     //Поиск записей по номеру влан
     $entries = get_entries_by_vlan($link, $_POST['vlan_id']);    
-}
-else if (!empty($_POST['last_editor'])) {
+} else if (!empty($_POST['last_editor'])) {
     //Поиск записей по носледнему редактору
     $entries = get_entries_by_last_editor($link, $_POST['last_editor']);    
-}
-else if (!empty($_POST['commentary'])) {
+} else if (!empty($_POST['commentary'])) {
     //Поиск записей по носледнему редактору
     $entries = get_entries_by_commentary($link, $_POST['commentary']);    
+} else if (!empty($_POST['termPointForSearch'])) {
+    //Поиск свободных IP-адресов, терминирующихся на определенной точке терминации    
+    $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);    
 }
+
 //Обработка нажатия кнопки сортировки по влан
 elseif (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
     $entries_arr = sortedByVlan($link);

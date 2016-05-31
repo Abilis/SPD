@@ -45,7 +45,12 @@
             </form>         
         </td>
         <td></td>
-        <td></td>
+        <td>
+            <form action="search.php" method="post">
+                <input type="search" name="termPointForSearch"/> <br />
+                <input type="submit" value="Поиск свободных"/>
+            </form> 
+        </td>
         <td>
             <form action="search.php" method="post">
                 <input type="search" name="commentary"/> <br />

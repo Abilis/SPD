@@ -1810,5 +1810,37 @@ function sortByIp(&$arr) {
     
 }
 
+//функция вытаскивает записи, у которых в поле клиента есть вхождение "свобод" или в поле комментария "растор" и точка терминации установлена в конце как $termPointForSearch
+function searchFreeAddresses($link, $termPointForSearch) {
+    
+    //Подготовка и проверка
+    $termPointForSearch = trim($termPointForSearch);
+    if ($termPointForSearch == "") {
+        header('Location: index.php');
+        die();
+    }
+    
+    $termPointForSearch = mysqli_real_escape_string($link, $termPointForSearch);
+    
+    //Запрос
+    $query = "SELECT * FROM `spd_table` WHERE (`customer` LIKE '%свобод%' OR `commentary` LIKE '%растор%') AND `termination_point` LIKE '%$termPointForSearch' ORDER BY `id_entry` ASC;";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $entries = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $entries[] = $row;
+    } 
+        
+    return $entries;        
+}
 
 ?>
