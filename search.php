@@ -21,7 +21,7 @@ $canDoDelete = canDo($link, $user, 'DELETE_ENTRY');
 $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 
 //вытаскиваем полное число записей из БД
-$numEntriesAll = getEntriesAll($link);
+//$numEntriesAll = getEntriesAll($link);
 
 
 if (!empty($_POST['numOrder'])) {
@@ -44,20 +44,17 @@ if (!empty($_POST['numOrder'])) {
     $entries = get_entries_by_commentary($link, $_POST['commentary']);    
 } else if (!empty($_POST['termPointForSearch'])) {
     //Поиск свободных IP-адресов, терминирующихся на определенной точке терминации    
-    $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);    
-}
-
-//Обработка нажатия кнопки сортировки по влан
-elseif (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
+    $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);   
+    
+} else if (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
+    //Обработка нажатия кнопки сортировки по влан
     $entries_arr = sortedByVlan($link);
     $entries = $entries_arr[0];    
     $page = $entries_arr[1]; //текущая страница
     $total = $entries_arr[2]; //всего страниц    
-}
-elseif (isset($_POST['sortedByVlanAllEntries'])) { //для all_entries.php
+} else if (isset($_POST['sortedByVlanAllEntries'])) { //для all_entries.php
     $entries = sortedByVlanAllEntries($link);    
-}
-else {
+} else { //если ничего не подошло - кидаем на главную
    header('Location: ../index.php'); 
 }
 

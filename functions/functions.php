@@ -1822,8 +1822,37 @@ function searchFreeAddresses($link, $termPointForSearch) {
     
     $termPointForSearch = mysqli_real_escape_string($link, $termPointForSearch);
     
+    if (strcasecmp($termPointForSearch, "все") == 0 || strcasecmp($termPointForSearch, "всё") == 0 || strcasecmp($termPointForSearch, "all") == 0) {
+        return searchAllFreeAddresses($link);   //возвращаем все свободные адреса в любом месте терминации
+        die();
+    }
+    
     //Запрос
     $query = "SELECT * FROM `spd_table` WHERE (`customer` LIKE '%свобод%' OR `commentary` LIKE '%растор%') AND `termination_point` LIKE '%$termPointForSearch' ORDER BY `id_entry` ASC;";
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Извлечение из БД
+    $n = mysqli_num_rows($result);
+    $entries = array();
+    
+    for ($i = 0; $i < $n; $i++) {
+        $row = mysqli_fetch_assoc($result);
+        $entries[] = $row;
+    } 
+        
+    return $entries;        
+}
+
+//функция вытаскивает записи, у которых в поле клиента есть вхождение "свобод" или в поле комментария "растор" при этом терминация - любая
+function searchAllFreeAddresses($link) {
+    
+    //Запрос
+    $query = "SELECT * FROM `spd_table` WHERE (`customer` LIKE '%свобод%' OR `commentary` LIKE '%растор%') ORDER BY `id_entry` ASC;";
     
     $result = mysqli_query($link, $query);
     
