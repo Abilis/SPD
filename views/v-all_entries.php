@@ -14,7 +14,11 @@
         <th>Порт клиента</th>
         <th>Терминация</th>
         <th>Комментарий</th>
-        <th>Отредактировано</th>
+        <th>
+            <form action="search.php" method="post">                
+                <input type="submit" name="sortedByDateLastEdited" value="Отредактировано" />
+            </form>
+        </th>
     </tr>
     
     <tr class="search">

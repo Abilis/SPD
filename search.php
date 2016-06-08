@@ -23,6 +23,13 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 //вытаскиваем полное число записей из БД
 //$numEntriesAll = getEntriesAll($link);
 
+//работа с сессиями, чтобы отслеживать, какая кнопка была нажата в последний раз
+if ((isset($_POST['sortedByVlan']) || isset($_POST['sortedByVlanAllEntries'])) && !isset($_POST['sortedByDateLastEdited'])) {
+    $_SESSION['sortedByDateLastEdited'] = null;  //обнуляем запись в сессии, что идет сортировка по дате последней правки
+} else if ((!isset($_POST['sortedByVlan']) && !isset($_POST['sortedByVlanAllEntries'])) && isset($_POST['sortedByDateLastEdited'])) {
+    $_SESSION['sortedByVlan'] = null;  //обнуляем запись в сессии, что идет сортировка по влан
+}
+
 
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
@@ -53,8 +60,16 @@ if (!empty($_POST['numOrder'])) {
     $page = $entries_arr[1]; //текущая страница
     $total = $entries_arr[2]; //всего страниц    
 } else if (isset($_POST['sortedByVlanAllEntries'])) { //для all_entries.php
+    $_SESSION['sortedByDateLastEdited'] = null;  //обнуляем запись в сессии, что идет сортировка по дате последней правки
     $entries = sortedByVlanAllEntries($link);    
-} else { //если ничего не подошло - кидаем на главную
+} else if (isset($_POST['sortedByDateLastEdited']) || $_SESSION['sortedByDateLastEdited'] == 'mainPage') { //сортировка по дате последней правки для index.php
+    //Обработка нажатия кнопки сортировки по дате последней правки    
+    $entries_arr = sortedByDateLastEdited($link);
+    $entries = $entries_arr[0];    
+    $page = $entries_arr[1]; //текущая страница
+    $total = $entries_arr[2]; //всего страниц
+}
+else { //если ничего не подошло - кидаем на главную
    header('Location: ../index.php'); 
 }
 
@@ -63,7 +78,7 @@ if (!empty($_POST['numOrder'])) {
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
-if ($_SESSION['sortedByVlan'] == 'mainPage') {   
+if ($_SESSION['sortedByVlan'] == 'mainPage' || $_SESSION['sortedByDateLastEdited'] == "mainPage") {   
     $current_page = 'search.php';
     include_once('ss/menu_navigation.php');
 }

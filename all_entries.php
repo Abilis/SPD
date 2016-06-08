@@ -9,6 +9,7 @@ require_once('functions/access.php');
 $link = startup();
 
 $_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
+$_SESSION['sortedByDateLastEdited'] = null; // сброс данных в сессии, которые указывали, что была сортировка по дате последней правки
 
 //Определение текущего пользователя
 $user = getCurrentUser($link);

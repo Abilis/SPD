@@ -7,8 +7,9 @@ require_once('functions/access.php');
 // подключение к БД
 $link = startup();
 
-$_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сесси больше не нужна
+$_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сессии больше не нужна
 $_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
+$_SESSION['sortedByDateLastEdited'] = null; // сброс данных в сессии, которые указывали, что была сортировка по дате последней правки
 
 //очистка старых сессий
 clearSessionsInDB($link);

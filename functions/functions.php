@@ -354,7 +354,7 @@ function get_entries_by_last_editor($link, $last_editor) {
     
 }
 
-//Функция сортировки по влану в порядке возрастания номера. Вытаскиваются все записи для index.php
+//Функция сортировки по влану в порядке возрастания номера. Вытаскиваются записи для index.php
 function sortedByVlan($link) {    
     
     $num = 50; //число выводимых записей
@@ -447,6 +447,76 @@ function sortedByVlanAllEntries($link) {
     }
     
     return $entries;   
+    
+}
+
+//Функция сортировки по дате последней правки в порядке возрастания. Вытаскиваются записи для index.php. Из all_entryes.php формируется постраничная навигация
+function sortedByDateLastEdited($link) {
+    $num = 50; //число выводимых записей
+    
+    //Извлекаем из URL текущую страницу
+    $page = (int)($_GET['page']);
+    
+    //Определяем общее число записей в БД
+    $query = "SELECT COUNT(*) FROM spd_table";
+    $result = mysqli_query($link, $query);
+        
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    $m = mysqli_fetch_row($result);
+    $n = (int)$m[0]; //количество записей в БД
+            
+    
+    //Находим общее число страниц   
+    $total = (int)(($n - 1) / $num) + 1;
+     
+    //Определяем начало сообщений для текущей страницы    
+    $page = intval($page);
+    
+    //Если значение $page меньше 1 или 0, переходим на первую страницу
+    //А если слишком большое - на последнюю
+    if (empty($page) || $page < 0) {
+        $page = 1;
+    }
+    elseif ($page > $total) {
+        $page = $total;
+    }
+    
+    //Вычисляем начиная с какого номера следует выводить записи
+    $start = $page * $num - $num;
+    
+    //Формируем запрос на выборку $num записей начиная с номера $start
+    $query = "SELECT * FROM `spd_table` ORDER BY `dt_last_edited` DESC LIMIT $start, $num";      
+    
+    $result = mysqli_query($link, $query);
+    
+    if (!$result) {
+        die(mysqli_error($link));
+    }
+    
+    //Разбираем полученный дескриптор в индексный массив    
+    $num_rows = mysqli_num_rows($result); //число полученных строк
+       
+    $entries = array(); //создаем вспомогательный массив для записи результата выборки
+    
+    for ($i = 0; $i < $num_rows; $i++) {
+        $entries[] = mysqli_fetch_array($result);
+    }
+     
+    /*Поскольку для отрисовки навигации понадобятся переменные $page, $total и $entries,
+    а передать наружу можно только одну переменную, придется собирать массив*/
+    $entries_arr[0] = $entries;
+    $entries_arr[1] = $page;
+    $entries_arr[2] = $total;
+    $entries_arr[3] = "include_once(/'ss/menu_navigation.php/')";
+    
+    //Записываем в сессию, что идет сортировка по влан
+    $_SESSION['sortedByDateLastEdited'] = "mainPage";
+    
+    return $entries_arr; 
+    
     
 }
 
