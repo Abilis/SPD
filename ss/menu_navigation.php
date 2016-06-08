@@ -1,5 +1,4 @@
-<?php
-  
+<?php  
     //Проверяем, нужны ли стрелки назад
     if ($page != 1) { 
         $pervpage = '<a href= ./' . $current_page . '?page=1>В начало</a>' . ' | ' . '<a href= ./' . $current_page . '?page=' . ($page - 1) . '>Назад</a> ' . ' | ';
@@ -29,6 +28,6 @@
 
     
     // Вывод меню 
-    echo $pervpage . $page2left . $page1left . '<b>' . $page . '</b>' . $page1right . $page2right . $nextpage; 
+    echo $pervpage . $page2left . $page1left . '<b>' . $page . '</b>' . $page1right . $page2right . $nextpage;
 
 ?>
