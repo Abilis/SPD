@@ -33,25 +33,32 @@ if ((isset($_POST['sortedByVlan']) || isset($_POST['sortedByVlanAllEntries'])) &
 
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
-    $entries = get_entry_by_order($link, $_POST['numOrder']);    
+    $entries = get_entry_by_order($link, $_POST['numOrder']);
+    $searchStringNumOrder = $_POST['numOrder'];
 } else if (!empty($_POST['customer'])) {
     //Поиск записей по название клиента
-    $entries = get_entries_by_customer($link, $_POST['customer']);    
+    $entries = get_entries_by_customer($link, $_POST['customer']);
+    $searchStringCustomer = $_POST['customer'];
 } else if (!empty($_POST['ip_address'])) {
     //Поиск записей по IP-адресу
-    $entries = get_entries_by_ip($link, $_POST['ip_address']);    
+    $entries = get_entries_by_ip($link, $_POST['ip_address']);
+    $searchStringIpAddress = $_POST['ip_address'];
 } else if (!empty($_POST['vlan_id'])) {
     //Поиск записей по номеру влан
-    $entries = get_entries_by_vlan($link, $_POST['vlan_id']);    
+    $entries = get_entries_by_vlan($link, $_POST['vlan_id']);
+    $searchStringVlanId = $_POST['vlan_id'];
 } else if (!empty($_POST['last_editor'])) {
     //Поиск записей по носледнему редактору
-    $entries = get_entries_by_last_editor($link, $_POST['last_editor']);    
+    $entries = get_entries_by_last_editor($link, $_POST['last_editor']);
+    $searchStringLastEditor = $_POST['last_editor'];
 } else if (!empty($_POST['commentary'])) {
     //Поиск записей по носледнему редактору
-    $entries = get_entries_by_commentary($link, $_POST['commentary']);    
+    $entries = get_entries_by_commentary($link, $_POST['commentary']);
+    $searchStringCommentary = $_POST['commentary'];
 } else if (!empty($_POST['termPointForSearch'])) {
     //Поиск свободных IP-адресов, терминирующихся на определенной точке терминации    
-    $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);   
+    $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);
+    $searchStringTermPoint = $_POST['termPointForSearch'];
     
 } else if (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
     //Обработка нажатия кнопки сортировки по влан

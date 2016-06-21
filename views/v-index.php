@@ -24,19 +24,19 @@
     <tr class="search">
         <td>
             <form action="search.php" method="post">
-                <input id="numOrderSearch" type="search" name="numOrder"/> <br />
+                <input id="numOrderSearch" type="search" name="numOrder" value="<?=$searchStringNumOrder?>"/> <br />
                 <input id="numOrderSearchButton" type="submit" value="Поиск"/>
             </form>  
         </td>
         <td><form action="search.php" method="post">
-                <input type="search" name="customer"/> <br />
+                <input type="search" name="customer" value="<?=$searchStringCustomer?>"/> <br />
                 <input type="submit" value="Поиск"/>            
             </form>        
         </td>
         <td></td>
         <td> 
             <form action="search.php" method="post">
-                <input type="search" name="ip_address"/> <br />
+                <input type="search" name="ip_address" value="<?=$searchStringIpAddress?>"/> <br />
                 <input type="submit" value="Поиск"/>            
             </form>   
         </td>
@@ -44,26 +44,26 @@
         <td></td>
         <td>
             <form action="search.php" method="post">
-                <input id="vlan_id" type="search" name="vlan_id"/> <br />
+                <input id="vlan_id" type="search" name="vlan_id" value="<?=$searchStringVlanId?>"/> <br />
                 <input type="submit" value="Поиск"/>
             </form>         
         </td>
         <td></td>
         <td>
             <form action="search.php" method="post">
-                <input type="search" name="termPointForSearch"/> <br />
+                <input type="search" name="termPointForSearch" value="<?=$searchStringTermPoint?>"/> <br />
                 <input type="submit" value="Поиск свободных"/>
             </form>
         </td>
         <td>
             <form action="search.php" method="post">
-                <input type="search" name="commentary"/> <br />
+                <input type="search" name="commentary" value="<?=$searchStringCommentary?>"/> <br />
                 <input type="submit" value="Поиск"/>
             </form> 
         </td>
         <td>
             <form action="search.php" method="post">
-                <input type="search" name="last_editor"/> <br />
+                <input type="search" name="last_editor" value="<?=$searchStringLastEditor?>"/> <br />
                 <input type="submit" value="Поиск"/>
             </form>   
         </td>        
