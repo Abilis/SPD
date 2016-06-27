@@ -1,9 +1,11 @@
-БД: spd
+MySQL
+
+Database name: spd
 
 user: root
 password: EYkW4Q5Pz6S9S2Sf
 
-Таблицы БД:
+Database tables:
 1. users (id_user, login, password, id_role, name)
 2. roles (id_role, name, description)
 3. privs (id_privs, name, description)
@@ -22,3 +24,4 @@ password: EYkW4Q5Pz6S9S2Sf
 9. logs_action (id_log, login, message, dt_action)
 
 10. addresses_of_nodes (id_node, ip_addresses, description, serial_number)
+(not used now)

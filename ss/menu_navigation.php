@@ -1,4 +1,4 @@
-<?php  
+<?php
     //Проверяем, нужны ли стрелки назад
     if ($page != 1) { 
         $pervpage = '<a href= ./' . $current_page . '?page=1>В начало</a>' . ' | ' . '<a href= ./' . $current_page . '?page=' . ($page - 1) . '>Назад</a> ' . ' | ';
