@@ -63,9 +63,15 @@ if ($_POST['markAddress'] && $_POST['network'] && $_POST['broadcast'] && $_POST[
         die();
     }
     
-    
 }
 
+//обработка формы смены терминации влана
+if ($_POST['vlanNumber'] && $_POST['terminationPoint']) {
+    if (changeTerminationPoint($link, $user, $_POST['vlanNumber'], $_POST['terminationPoint'])) {
+        header('Location: admin.php');
+        die();
+    }
+}
 
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
