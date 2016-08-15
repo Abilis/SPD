@@ -1943,7 +1943,7 @@ function searchAllFreeAddresses($link) {
 }
 
 //функция изменяет точку терминации на $newTerminationPoint для влана с номером $vlanNumber
-function changeTerminationPoint($link, $user, $vlanNumber, $newTerminationPoint) {    
+function changeTerminationPoint($link, $user, $vlanNumber, $newTerminationPoint) {
     //проверка на наличие прав
     require_once('access.php');
     $canDoEdit = canDo($link, $user, 'EDIT_ENTRY');
@@ -2002,7 +2002,9 @@ function changeTerminationPoint($link, $user, $vlanNumber, $newTerminationPoint)
         }
     } else {
         $_SESSION['updateTerminationForVlan'] = "Не удалось сменить терминацию для влана " . $vlanNumber . ". Возможно, такого влана нет.";
-    }    
+        return false;
+    }
+    return true;
     
 }
 

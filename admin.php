@@ -35,9 +35,7 @@ if ($_GET['action'] == 'edit') {
         if (!$canDoEditMotd) {
             header('Location: admin.php');
             die();
-        }
-        else {
-
+        } else {
             //Вытаскивание сообщения дня
             $motd = get_motd($link);
 
@@ -56,18 +54,18 @@ if ($_GET['action'] == 'edit') {
 }
 
 //обработка формы генерации сети
-if ($_POST['markAddress'] && $_POST['network'] && $_POST['broadcast'] && $_POST['vlan'] && $_POST['termination']) {
-    
+if ($_POST['markAddress'] && $_POST['network'] && $_POST['broadcast'] && $_POST['vlan'] && $_POST['termination']) {    
     if (networkGeneration($link, $user, $_POST['markAddress'], $_POST['network'], $_POST['broadcast'], $_POST['vlan'], $_POST['termination'], $_POST['gateway'])) {
         header('Location: admin.php');
         die();
-    }
-    
+    }    
 }
 
 //обработка формы смены терминации влана
 if ($_POST['vlanNumber'] && $_POST['terminationPoint']) {
     if (changeTerminationPoint($link, $user, $_POST['vlanNumber'], $_POST['terminationPoint'])) {
+        $_POST['vlanNumber'] = null;
+        $_POST['terminationPoint'] = null;
         header('Location: admin.php');
         die();
     }
@@ -116,12 +114,9 @@ $numLogsAction = count($logsAction);
 
 if($numLogsAction > 10) {
     $numLogsActionInAdminPanel = 10;
-}
-else {
+} else {
     $numLogsActionInAdminPanel = $numLogsAction;
 }
-
-
 
 //Устанавливаем значение радиоточки по умолчанию
 $checkedAccessUser = 'checked';
