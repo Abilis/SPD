@@ -1961,6 +1961,12 @@ function changeTerminationPoint($link, $user, $vlanNumber, $newTerminationPoint)
         die();
     }
     
+    //узнаем текущую терминацию
+    $queryForCurrentTerminationPoint = "SELECT termination_point FROM spd_table WHERE vlan_id=$vlanNumber";
+    $resultForCurrentTerminationPoint = mysqli_query($link, $queryForCurrentTerminationPoint);
+    
+    $currentTermination = mysqli_fetch_assoc($resultForCurrentTerminationPoint)['termination_point'];
+    
     $newTerminationPoint = trim($newTerminationPoint);
     $newTerminationPoint = mysqli_real_escape_string($link, $newTerminationPoint);
     
@@ -1977,27 +1983,27 @@ function changeTerminationPoint($link, $user, $vlanNumber, $newTerminationPoint)
     //запись в сессию
     if ($affected_rows != 0) {
         $_SESSION['updateTerminationForVlan'] = "Терминация успешно изменена для " . $affected_rows . " записей! Влан " . $vlanNumber . " теперь терминируется на " . $newTerminationPoint . "!";
+        
+        //запись в лог действий
+        //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
+        $userLogin = $user['login'];
+
+        $dt_action = getCurrentDate();
+
+        $message = "Пользователем $userLogin сменена точка терминации c \"$currentTermination\" на \"$newTerminationPoint\" для влана $vlanNumber.";
+
+        //подключение файла с функцией логирования
+        require_once('logging.php');
+
+        //выполняем логирование
+        if (!loggingAction($link, $user, $message, $dt_action)) {
+            //запись неиспешности в сессию
+            $_SESSION['logging'] = 'Логирование действия не удалось!';
+        }
     } else {
         $_SESSION['updateTerminationForVlan'] = "Не удалось сменить терминацию для влана " . $vlanNumber . ". Возможно, такого влана нет.";
     }    
     
-    //запись в лог действий
-    //вытаскиваем имя текущего пользователя, чтобы можно было подставить значение в строку сообщения
-    $userLogin = $user['login'];
-    
-    $dt_action = getCurrentDate();
-    
-    $message = "Пользователем $userLogin сменена точка терминации на $newTerminationPoint для влана $vlanNumber.";
-    
-    //подключение файла с функцией логирования
-    require_once('logging.php');
-
-    //выполняем логирование
-	if (!loggingAction($link, $user, $message, $dt_action)) {
-	//запись неиспешности в сессию
-	$_SESSION['logging'] = 'Логирование действия не удалось!';
-	}
-
 }
 
 //функция возвращает текущую дату
