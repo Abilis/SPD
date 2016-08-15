@@ -26,6 +26,13 @@ if ($_SESSION['CreateUser']) ?>
     $_SESSION['CreateUser'] = null;
 ?>
 
+<?php
+if ($_SESSION['updateTerminationForVlan']) ?>
+    <span class="bold"><?=$_SESSION['updateTerminationForVlan']?></span>
+<?php
+    $_SESSION['updateTerminationForVlan'] = null;
+?>
+
 <br />
 <table>Сообщение дня <a href="admin.php?action=edit">[править]</a>
     <tr>
@@ -203,4 +210,13 @@ if ($_SESSION['CreateUser']) ?>
     
     Допускается отсутствие одного или нескольких столбцов    
 </p>
+
+<b>Сменить точку терминации для влана</b>
+<form action=admin.php method="post">
+    <label>Влан:</label><br />
+    <input type="text" name="vlanNumber" value="<?=$_POST['vlanNumber']?>"/> <br />
+    <label>Терминация:</label><br />
+    <input type="text" name="terminationPoint" value='<?=$_POST['terminationPoint']?>'/> <br />
+    <input type="submit"/>
+</form>
 <?php } ?>
