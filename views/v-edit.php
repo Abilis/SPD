@@ -8,8 +8,7 @@
         <th>Шлюз</th>
         <th>Влан</th>
         <th>Порт клиента</th>
-        <th>Терминация</th>
-        
+        <th>Терминация</th>        
         <th>Комментарий</th>
     </tr>
     <form action="index.php" method="post">
@@ -40,8 +39,7 @@
             </td>
             <td><input class="addForm" type="text" name="termination_point" value="<?=$termination_point?>"/> <br />
                 <div class="italic">Рекомендуется к заполнению</div>
-            </td>
-            
+            </td>            
             <td><textarea id="addCommentary" class="addForm" type="text" name="commentary" rows="4"><?=$commentary?></textarea> <br />
                 <div class="italic">Рекомендуется к заполнению</div>
             </td>
@@ -49,7 +47,5 @@
         <br />
         <input type="hidden" name="id_entry" value="<?=$id_entry?>" />
         <input type="submit" value="Отредактировать" />
-    </form>
-    
-    
+    </form>    
 </table>
