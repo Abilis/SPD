@@ -45,10 +45,8 @@ $log_name = createLogName();
 if ($_POST['deleteOldLogs']) {
     deleteOldLogs($link, $user);
     header('Location: all_logs.php');
-    die();
-    
+    die();    
 }
-
 
 //Выводим в шаблоны
 include_once('views/v-header.php');
