@@ -106,7 +106,7 @@ if ($_SESSION['updateTerminationForVlan']) ?>
 
 <div class="left">
     <div>
-        Создать нового пользователя:
+        <b>Создать нового пользователя:</b>
         <form action="ss/users.php" method="post">
             <label class="italic">Логин:</label><br />
             <input type="text" name="login" value="<?=$login?>" /><br>
