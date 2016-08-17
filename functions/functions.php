@@ -1,7 +1,6 @@
 <?php
 //Вытаскиваем все записи из БД
-function get_entryes_all($link) {
-    
+function get_entryes_all($link) {    
     //Запрос
     $query = "SELECT * FROM `spd_table` ORDER BY `dt_last_edited` DESC";
     $result = mysqli_query($link, $query);
@@ -22,8 +21,7 @@ function get_entryes_all($link) {
     return $entries;
 }
 
-function getEntriesAll($link) {
-    
+function getEntriesAll($link) {    
     $query = "SELECT COUNT(*) FROM `spd_table`";
     $result = mysqli_query($link, $query);
         
@@ -37,8 +35,7 @@ function getEntriesAll($link) {
     return $n;    
 }
 
-function get_entry($link, $id_entry) {
-    
+function get_entry($link, $id_entry) {    
     //Подготовка
     $id_entry = trim($id_entry);
     $id_entry = (int)($id_entry);
@@ -66,8 +63,7 @@ function get_entry($link, $id_entry) {
 
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
 //Эта функция использовалась для отображения записей по умолчанию, теперь не используется. Вместо нее используется sortedByDateLastEdited($link);
-function get_entries_num_start($link) {
-    
+function get_entries_num_start($link) {    
     $num = 50; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
@@ -88,8 +84,7 @@ function get_entries_num_start($link) {
     //Находим общее число страниц   
     $total = (int)(($n - 1) / $num) + 1;
      
-    //Определяем начало сообщений для текущей страницы
-    
+    //Определяем начало сообщений для текущей страницы    
     $page = intval($page);
     
     //Если значение $page меньше 1 или 0, переходим на первую страницу
@@ -112,8 +107,7 @@ function get_entries_num_start($link) {
         die(mysqli_error($link));
     }
     
-    //Разбираем полученный дескриптор в индексный массив
-    
+    //Разбираем полученный дескриптор в индексный массив    
     $num_rows = mysqli_num_rows($result); //число полученных строк
        
     $entries = array(); //создаем вспомогательный массив для записи результата выборки
@@ -133,8 +127,7 @@ function get_entries_num_start($link) {
 
 
 //Вытаскиваем запись с соответствующим номером договора
-function get_entry_by_order($link, $numOrder) {
-    
+function get_entry_by_order($link, $numOrder) {    
     //подготовка и проверка
     $numOrder = trim($numOrder);
     $numOrder = (int)($numOrder); //приведение к числу
@@ -168,7 +161,6 @@ function get_entry_by_order($link, $numOrder) {
 
 //Вытаскиваем запись по названию клиента
 function get_entries_by_customer($link, $customer) {
-
     //подготовка и проверка
    $customer = trim($customer);
     
@@ -202,8 +194,7 @@ function get_entries_by_customer($link, $customer) {
 }
 
 //Вытаскиваем запись с соответствующим IP-адресом
-function get_entries_by_ip($link, $ip_address) {
-    
+function get_entries_by_ip($link, $ip_address) {    
     //подготовка и проверка
    $ip_address = trim($ip_address);
     
@@ -232,13 +223,11 @@ function get_entries_by_ip($link, $ip_address) {
         $entries[] = $row;
     } 
         
-    return $entries;
-    
+    return $entries;    
 }
 
 //Вытаскиваем записи с соответствующим вланом
-function get_entries_by_vlan($link, $vlan_id) {
-    
+function get_entries_by_vlan($link, $vlan_id) {    
     //подготовка и проверка
     $numOrder = trim($vlan_id);
     $numOrder = (int)($vlan_id); //приведение к числу
@@ -305,16 +294,8 @@ function get_entries_by_commentary($link, $commentary) {
     return $entries;    
 }
 
-//Поиск по автору
-function get_entries_by_founder($link, $founder) {
-    
-    
-    
-}
-
 //Поиск по последнему редактору
-function get_entries_by_last_editor($link, $last_editor) {
-    
+function get_entries_by_last_editor($link, $last_editor) {    
     //подготовка и проверка
    $last_editor = trim($last_editor);
     
@@ -343,13 +324,11 @@ function get_entries_by_last_editor($link, $last_editor) {
         $entries[] = $row;
     } 
         
-    return $entries;   
-    
+    return $entries;    
 }
 
 //Функция сортировки по влану в порядке возрастания номера. Вытаскиваются записи для index.php
 function sortedByVlan($link) {    
-    
     $num = 50; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
@@ -415,13 +394,11 @@ function sortedByVlan($link) {
     //Записываем в сессию, что идет сортировка по влан
     $_SESSION['sortedByVlan'] = "mainPage";    
     
-    return $entries_arr; 
-    
+    return $entries_arr;    
 }
 
 //Функция сортировки по влану в порядке возрастания номера. Вытаскиваются все записи для all_entries.php
-function sortedByVlanAllEntries($link) {    
-    
+function sortedByVlanAllEntries($link) {
     //Запрос
     $query = "SELECT * FROM `spd_table` ORDER BY `vlan_id` ASC";
     $result = mysqli_query($link, $query);
@@ -439,8 +416,7 @@ function sortedByVlanAllEntries($link) {
         $entries[] = $row;
     }
     
-    return $entries;   
-    
+    return $entries;
 }
 
 //Функция сортировки по дате последней правки в порядке возрастания. Вытаскиваются записи для index.php. Из all_entryes.php формируется постраничная навигация
@@ -506,15 +482,13 @@ function sortedByDateLastEdited($link) {
     $entries_arr[3] = "include_once(/'ss/menu_navigation.php/')";
     
     //Записываем в сессию, что идет сортировка по влан
-    $_SESSION['sortedByDateLastEdited'] = "mainPage";
+//    $_SESSION['sortedByDateLastEdited'] = "mainPage";
     
     return $entries_arr;    
 }
 
-function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
-    
-    /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
-    
+function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {    
+    /*обязательные аргументы: $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */    
     //проверка на наличие прав
     require_once('access.php');
     $canDoAdd = canDo($link, $user, 'ADD_ENTRY');
@@ -624,8 +598,7 @@ function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $net
     return true;
 }
 
-function delete_entry($link, $user, $id_entry) {
-    
+function delete_entry($link, $user, $id_entry) {    
     //проверка на наличие прав
     require_once('access.php');
     $canDoAdd = canDo($link, $user, 'DELETE_ENTRY');
@@ -686,8 +659,7 @@ function delete_entry($link, $user, $id_entry) {
     return true;
 }
 
-function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {
-    
+function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {    
     /*обязательные аргументы: $id_entry, $customer, $ip_address, $vlan_id. Если они не переданы - запись в БД невозможа. Если что-то из остальных равно null, запись возможна */
     
     //проверка на наличие прав
@@ -823,8 +795,6 @@ function entry_edit($link, $user, $id_entry, $numOrder, $customer, $tarif, $ip_a
     return true;
 }
 
-
-
 //функция разлогинивания
 function logout() { 
     setcookie('login', '', time() - 1, '/');
@@ -837,8 +807,7 @@ function logout() {
 
 //функция залогинивания
 //return true - залогинивание успешно, return false - неуспешно
-function login($link, $login, $password, $remember){
-    
+function login($link, $login, $password, $remember){    
     //вытаскиваем пользователя из БД
     $user = getByLogin($link, $login); //database.php    
     
@@ -873,8 +842,7 @@ function login($link, $login, $password, $remember){
 }
 
 //Открытие новой сессии. Результат SID
-function open_session($link, $id_user) {
-    
+function open_session($link, $id_user) {    
     //генерируем SID
     $sid = generateStr(15);
     
@@ -911,8 +879,7 @@ function generateStr($length) {
 }
 
 //Определение имени текущего пользователя
-function getCurrentUser($link) {
-    
+function getCurrentUser($link) {    
     //Сначала ищем sid в $_SESSION
     $sid = getSidInSession($link);
     
@@ -924,9 +891,7 @@ function getCurrentUser($link) {
             if ($sid == null) {
                 //если и в куках не удалось найти, значит, пользователь неавторизован
                 return null;
-            }
-            
-        
+            }        
         
     } //конец поиска sid в куках
     //раз мы пришли сюда, значит, в $sid что-то есть
@@ -967,8 +932,7 @@ function getCurrentUser($link) {
 }
 
 //Поиск $sid в $_SESSION
-function getSidInSession($link) {
-    
+function getSidInSession($link) {    
     $sid = $_SESSION['sid'];
     
     if ($sid == null) {
@@ -1029,8 +993,7 @@ function getSidInSession($link) {
 }
 
 //Поиск $sid в куках
-function getSidInCookie($link) {
-    
+function getSidInCookie($link) {    
     $login = $_COOKIE['login'];
     $password = $_COOKIE['password'];
     
@@ -1051,8 +1014,7 @@ function getSidInCookie($link) {
 }
 
 //функция возвращает массив пользователей онлайн
-function getWhoIsOnline($link) {
-    
+function getWhoIsOnline($link) {    
     //формируем запрос для вытаскивания логинов залогиненных пользователей
     $query = "SELECT DISTINCT `login` FROM `users` JOIN `sessions` ON users.id_user = sessions.id_user";
     
@@ -1081,8 +1043,7 @@ function getWhoIsOnline($link) {
 }
 
 //Функция возвращает массив с логами
-function getLogs($link, $whichLog) {
-    
+function getLogs($link, $whichLog) {    
     //подготовка
     $whichLog = mysqli_real_escape_string($link, $whichLog);
     
@@ -1108,15 +1069,12 @@ function getLogs($link, $whichLog) {
 }
 
 //функция преобразует старые логи в массив массивов логов для показа в панели администратора
-function format_log($logs, $whichLog, $num) { 
-
+function format_log($logs, $whichLog, $num) {
     //Создание массивов
     $arrayLogInside = array();
     $arrayLogs = array();
 
-    for ($i = 0; $i < $num; $i++) {
-        
-        
+    for ($i = 0; $i < $num; $i++) {        
 
         $format_current_log = explode("|", $logs[$i][$whichLog]);
 
@@ -1133,20 +1091,16 @@ function format_log($logs, $whichLog, $num) {
 
         $arrayLogs[$i] = $arrayLogInside;
 
-    }
-    
-    
+    }    
     
     return $arrayLogs;
 }
 
 //функция преобразует новые логи в массив массивов логов для показа в панели администратора
-function format_new_log($logs, $whichLog, $num) {
-    
+function format_new_log($logs, $whichLog, $num) {    
     //Создание массивов
     $arrayLogInside = array();
-    $arrayLogs = array();
-    
+    $arrayLogs = array();    
     
     //магия! не трогать!
         for ($i = 0; $i < $num; $i++) {
@@ -1189,17 +1143,13 @@ function format_new_log($logs, $whichLog, $num) {
 
             }            
                         
-        }
-    
-    
+        }    
     
     return $arrayLogs;
 }
 
-
 //Функция создает названия полей для отображения логов в панели администратора
-function createLogName() {
-    
+function createLogName() {    
     $log_name = array();
     $log_name[0] = "№ дог.";
     $log_name[1] = "Клиент";
@@ -1216,8 +1166,7 @@ function createLogName() {
 }
 
 //функция вытаскивает из БД сообщение дня в панели администратор
-function get_motd($link) {
-    
+function get_motd($link) {    
    //формируем запрос
     $sql = "SELECT * FROM `motd`";
         
@@ -1235,8 +1184,7 @@ function get_motd($link) {
 }
 
 //Функция обновляет сообщение дня в панели администратора
-function updateMotd($link, $user, $motd) {
-    
+function updateMotd($link, $user, $motd) {    
     //Подготовка
     $motd = trim($motd);
     
@@ -1279,8 +1227,7 @@ function updateMotd($link, $user, $motd) {
 }
 
 //функция создает нового пользователя
-function createNewUser($link, $user, $login, $password, $confirmPassword, $username, $access) {
-  
+function createNewUser($link, $user, $login, $password, $confirmPassword, $username, $access) {  
     //Определяем, может ли пользователь управлять пользователями
     $canDoUsersControl = canDo($link, $user, 'USERS_CONTROL');
     
@@ -1409,8 +1356,7 @@ function createNewUser($link, $user, $login, $password, $confirmPassword, $usern
 }
 
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода логов на странице all-logs.php
-function get_logs_num_start($link) {
-    
+function get_logs_num_start($link) {    
     $num = 50; //число выводимых записей
     
     //Извлекаем из URL текущую страницу
@@ -1503,8 +1449,7 @@ function getUsers($link) {
 }
 
 //Функция, очищающие логи, старше 3х месяцев
-function deleteOldLogs($link, $user) {
-    
+function deleteOldLogs($link, $user) {    
     //Проверка прав
     require_once('access.php');
     $canDoDeleteOldLogs = canDo($link, $user, 'DELETE_OLD_LOGS');
@@ -1583,8 +1528,7 @@ function deleteOldLogs($link, $user) {
 }
 
 //функция возвращает количество логов
-function getNumLogs($link) {
-    
+function getNumLogs($link) {    
     //Запрос
     $query = "SELECT COUNT(*) FROM `logs`";
     $result = mysqli_query($link, $query);
@@ -1599,8 +1543,7 @@ function getNumLogs($link) {
 }
 
 //Функция генерация сети из панели администратора
-function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination, $gateway) {
-    
+function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vlan, $termination, $gateway) {    
     //проверка прав
     require_once('access.php');
     $canDoNetworkGeneration = canDo($link, $user, 'NETWORK_GENERATION');
@@ -1682,8 +1625,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
             return false;
         }
         
-    }
-    
+    }    
     
     //проверка на существование влан
     if ($vlan < 2 || $vlan > 4095) {
@@ -1720,8 +1662,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     //установка шлюза, если он не выбран
     if ($gateway == "") {
         $gateway = $lastThreeOctetsOfBroadcast . ($lastOctet - 1);
-    }
-    
+    }    
     
     //установка маски и подсети. Здесь $numAddresses - полное количество адресов в сети
     
@@ -1747,10 +1688,8 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
                 case 256:   $netmask = '255.255.255.0';
                             $subnet = $network . '/24';
                             break;
-                default:  $_SESSION['networkGeneration'] = "Не удалось вычислить маску для полного числа адресов                                                            $numAddresses";
-                            return false;
-                
-                
+                default:  $_SESSION['networkGeneration'] = "Не удалось вычислить маску для полного числа адресов $numAddresses";
+                            return false;                
                 
         }
     
@@ -1759,8 +1698,7 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
     $numAddresses -= 2;
     
     //Все проверки пройдены, теперь можно делать генерацию
-    for ($i = 0; $i < $numAddresses; $i++) {
-        
+    for ($i = 0; $i < $numAddresses; $i++) {        
         
         $ipAddressForQuery = $lastThreeOctetsOfBroadcast . ($lastOctet - 1 - $i);
         
@@ -1791,8 +1729,8 @@ function networkGeneration($link, $user, $markAddress, $network, $broadcast, $vl
                              mysqli_real_escape_string($link, $dt_last_edited),
                              mysqli_real_escape_string($link, $founder),
                              mysqli_real_escape_string($link, $last_editor),
-                             mysqli_real_escape_string($link, $markAddress)  );
-        
+                             mysqli_real_escape_string($link, $markAddress)
+                        );        
         
         
         $result = mysqli_query($link, $query);
@@ -1872,8 +1810,7 @@ function sortByIp(&$arr) {
 }
 
 //функция вытаскивает записи, у которых в поле клиента есть вхождение "свобод" или в поле комментария "растор" и точка терминации установлена в конце как $termPointForSearch
-function searchFreeAddresses($link, $termPointForSearch) {
-    
+function searchFreeAddresses($link, $termPointForSearch) {    
     //Подготовка и проверка
     $termPointForSearch = trim($termPointForSearch);
     if ($termPointForSearch == "") {

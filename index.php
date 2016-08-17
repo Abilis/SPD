@@ -9,7 +9,7 @@ $link = startup();
 
 $_SESSION['noAccessImportInDb'] = null; //если произошел редирект с admin.php, то эта запись в сессии больше не нужна
 $_SESSION['sortedByVlan'] = null; //сброс данных в сессии, которые указывали, что была сортировка по влан
-$_SESSION['sortedByDateLastEdited'] = null; // сброс данных в сессии, которые указывали, что была сортировка по дате последней правки
+//$_SESSION['sortedByDateLastEdited'] = null; // сброс данных в сессии, которые указывали, что была сортировка по дате последней правки
 
 //очистка старых сессий
 clearSessionsInDB($link);
@@ -27,7 +27,7 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 $numEntriesAll = getEntriesAll($link);
 
 //Вытаскиваем записи из БД для постраничной навигации
-//$entries_arr = get_entries_num_start($link); //сортировка идет по первичном ключу записей
+//$entries_arr = get_entries_num_start($link); //сортировка идет по первичному ключу записей
 $entries_arr = sortedByDateLastEdited($link);  //сортировка идет по дате последней правки
 
 //Разбираем полученный массив. Подробнее в functions.php
@@ -46,8 +46,7 @@ if (($_GET['action']) == 'edit') {
         die();
     }
     
-    $entry = get_entry($link, $_GET['id_entry']); //вытаскиваем конкретную запись из БД
-    
+    $entry = get_entry($link, $_GET['id_entry']); //вытаскиваем конкретную запись из БД    
     
     //Разбираем массив в переменные
     $id_entry = $entry['id_entry'];
@@ -67,12 +66,9 @@ if (($_GET['action']) == 'edit') {
     include_once('views/v-menu.php');
     include_once('views/v-edit.php');
     include_once('views/v-footer.php');
-    die();
-    
-    
-    
-    
+    die();    
 }
+
 elseif (($_GET['action']) == 'delete') {
     if ($canDoDelete) { //проверка, есть ли права удалять записи
             if (delete_entry($link, $user, $_GET['id_entry'])) {        
@@ -81,7 +77,6 @@ elseif (($_GET['action']) == 'delete') {
             }
     }
 }
-
 
 //обработка отправки формы для редактирования записи
 elseif (!empty($_POST)) { //если массив не пустой
