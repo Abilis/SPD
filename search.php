@@ -58,8 +58,7 @@ if (!empty($_POST['numOrder'])) {
 } else if (!empty($_POST['termPointForSearch'])) {
     //Поиск свободных IP-адресов, терминирующихся на определенной точке терминации    
     $entries = searchFreeAddresses($link, $_POST['termPointForSearch']);
-    $searchStringTermPoint = $_POST['termPointForSearch'];
-    
+    $searchStringTermPoint = $_POST['termPointForSearch'];    
 } else if (isset($_POST['sortedByVlan']) || $_SESSION['sortedByVlan'] == 'mainPage') { //для index.php
     //Обработка нажатия кнопки сортировки по влан
     $entries_arr = sortedByVlan($link);
