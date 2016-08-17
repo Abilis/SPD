@@ -27,7 +27,8 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 $numEntriesAll = getEntriesAll($link);
 
 //Вытаскиваем записи из БД для постраничной навигации
-$entries_arr = get_entries_num_start($link);
+//$entries_arr = get_entries_num_start($link); //сортировка идет по первичном ключу записей
+$entries_arr = sortedByDateLastEdited($link);  //сортировка идет по дате последней правки
 
 //Разбираем полученный массив. Подробнее в functions.php
 $entries = $entries_arr[0];

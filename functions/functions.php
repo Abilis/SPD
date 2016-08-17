@@ -3,7 +3,7 @@
 function get_entryes_all($link) {
     
     //Запрос
-    $query = "SELECT * FROM `spd_table` ORDER BY `id_entry` DESC";
+    $query = "SELECT * FROM `spd_table` ORDER BY `dt_last_edited` DESC";
     $result = mysqli_query($link, $query);
     
     if (!$result) {
@@ -34,8 +34,7 @@ function getEntriesAll($link) {
     $m = mysqli_fetch_row($result);
     $n = (int)$m[0]; //количество записей в БД
     
-    return $n;
-    
+    return $n;    
 }
 
 function get_entry($link, $id_entry) {
@@ -66,6 +65,7 @@ function get_entry($link, $id_entry) {
 }
 
 //Вытаскиваем из БД $num строк начиная с номера $start для постраничного вывода записей
+//Эта функция использовалась для отображения записей по умолчанию, теперь не используется. Вместо нее используется sortedByDateLastEdited($link);
 function get_entries_num_start($link) {
     
     $num = 50; //число выводимых записей
@@ -198,13 +198,6 @@ function get_entries_by_customer($link, $customer) {
     } 
         
     return $entries;
-    
-}
-
-//Вытаскиваем записи с соответствующим тарифом
-function get_entries_by_tarif($link, $tarif) {
-    
-    
     
 }
 
@@ -515,9 +508,7 @@ function sortedByDateLastEdited($link) {
     //Записываем в сессию, что идет сортировка по влан
     $_SESSION['sortedByDateLastEdited'] = "mainPage";
     
-    return $entries_arr; 
-    
-    
+    return $entries_arr;    
 }
 
 function entry_add($link, $user, $numOrder, $customer, $tarif, $ip_address, $netmask, $gateway, $vlan_id, $customer_port, $termination_point, $commentary) {

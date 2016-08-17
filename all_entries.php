@@ -23,11 +23,8 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 //вытаскиваем полное число записей из БД
 $numEntriesAll = getEntriesAll($link);
 
-
-
 //Вытаскиваем все записи из БД
 $entries = get_entryes_all($link);
-
     
 //Выводим в шаблоны
 include_once('views/v-header.php');
