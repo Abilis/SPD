@@ -22,13 +22,6 @@ $canDoViewAdminPanel = canDo($link, $user, 'ADMIN_PANEL');
 //вытаскиваем полное число записей из БД
 //$numEntriesAll = getEntriesAll($link);
 
-//работа с сессиями, чтобы отслеживать, какая кнопка была нажата в последний раз
-if ((isset($_POST['sortedByVlan']) || isset($_POST['sortedByVlanAllEntries'])) && !isset($_POST['sortedByDateLastEdited'])) {
-    $_SESSION['sortedByDateLastEdited'] = null;  //обнуляем запись в сессии, что идет сортировка по дате последней правки
-} else if ((!isset($_POST['sortedByVlan']) && !isset($_POST['sortedByVlanAllEntries'])) && isset($_POST['sortedByDateLastEdited'])) {
-    $_SESSION['sortedByVlan'] = null;  //обнуляем запись в сессии, что идет сортировка по влан
-}
-
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
     $entries = get_entry_by_order($link, $_POST['numOrder']);
@@ -73,7 +66,7 @@ if (!empty($_POST['numOrder'])) {
 include_once('views/v-header.php');
 include_once('views/v-menu.php');
 include_once('views/v-index.php');
-if ($_SESSION['sortedByVlan'] == 'mainPage' || $_SESSION['sortedByDateLastEdited'] == "mainPage") {   
+if ($_SESSION['sortedByVlan'] == 'mainPage') {   
     $current_page = 'search.php';
     include_once('ss/menu_navigation.php');
 }
