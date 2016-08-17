@@ -482,7 +482,7 @@ function sortedByDateLastEdited($link) {
     $entries_arr[3] = "include_once(/'ss/menu_navigation.php/')";
     
     //Записываем в сессию, что идет сортировка по влан
-    $_SESSION['sortedByDateLastEdited'] = "mainPage";
+//    $_SESSION['sortedByDateLastEdited'] = "mainPage";
     
     return $entries_arr;    
 }

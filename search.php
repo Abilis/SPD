@@ -10,7 +10,6 @@ require_once('functions/access.php');
 $link = startup();
 
 
-
 //Определение текущего пользователя
 $user = getCurrentUser($link);
 
@@ -29,7 +28,6 @@ if ((isset($_POST['sortedByVlan']) || isset($_POST['sortedByVlanAllEntries'])) &
 } else if ((!isset($_POST['sortedByVlan']) && !isset($_POST['sortedByVlanAllEntries'])) && isset($_POST['sortedByDateLastEdited'])) {
     $_SESSION['sortedByVlan'] = null;  //обнуляем запись в сессии, что идет сортировка по влан
 }
-
 
 if (!empty($_POST['numOrder'])) {
     //Поиск записей по номеру договора
@@ -66,19 +64,10 @@ if (!empty($_POST['numOrder'])) {
     $page = $entries_arr[1]; //текущая страница
     $total = $entries_arr[2]; //всего страниц    
 } else if (isset($_POST['sortedByVlanAllEntries'])) { //для all_entries.php
-    $_SESSION['sortedByDateLastEdited'] = null;  //обнуляем запись в сессии, что идет сортировка по дате последней правки
     $entries = sortedByVlanAllEntries($link);    
-} else if (isset($_POST['sortedByDateLastEdited']) || $_SESSION['sortedByDateLastEdited'] == 'mainPage') { //сортировка по дате последней правки для index.php
-    //Обработка нажатия кнопки сортировки по дате последней правки    
-    $entries_arr = sortedByDateLastEdited($link);
-    $entries = $entries_arr[0];    
-    $page = $entries_arr[1]; //текущая страница
-    $total = $entries_arr[2]; //всего страниц
-}
-else { //если ничего не подошло - кидаем на главную
+} else { //если ничего не подошло - кидаем на главную
    header('Location: ../index.php'); 
 }
-
 
 //Выводим в шаблоны
 include_once('views/v-header.php');
